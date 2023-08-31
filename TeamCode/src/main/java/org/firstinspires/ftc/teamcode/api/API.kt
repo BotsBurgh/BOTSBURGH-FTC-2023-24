@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.hardware.HardwareMap
 
 /**
  * An API is a shared class used between multiple components.
@@ -9,8 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
  */
 abstract class API {
     private var uninitializedOpMode: OpMode? = null
+
     protected val opMode: OpMode
-        get() = uninitializedOpMode ?: throw NullPointerException("<API> has not been initialized with the OpMode before being used.")
+        get() = uninitializedOpMode
+            ?: throw NullPointerException("<API> has not been initialized with the OpMode before being used.")
+
+    protected val hardwareMap: HardwareMap
+        get() = this.opMode.hardwareMap
 
     /**
      * Initializes the API to use the given [opMode].
@@ -19,12 +25,12 @@ abstract class API {
      *
      * @throws IllegalStateException If called more than once.
      */
-    fun init(opMode: OpMode) {
+    open fun init(opMode: OpMode) {
         // You can only initialize an API once. If it is initialized more than once, throw an error.
         if (uninitializedOpMode != null) {
             throw IllegalStateException("Tried to initialize an <API> more than once.")
         }
 
-        uninitializedOpMode = opMode
+        this.uninitializedOpMode = opMode
     }
 }
