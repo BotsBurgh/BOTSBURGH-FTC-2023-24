@@ -23,6 +23,11 @@ abstract class API {
      *
      * This must be called before any other function provided by the API.
      *
+     * ## Note to Implementors
+     *
+     * Make sure to call `super.init(opMode)` at the beginning of the overloaded function, or the
+     * API will not properly store a reference to the op-mode.
+     *
      * @throws IllegalStateException If called more than once.
      */
     open fun init(opMode: OpMode) {
