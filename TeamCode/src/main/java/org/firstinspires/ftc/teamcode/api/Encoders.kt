@@ -13,14 +13,14 @@ object Encoders : API() {
     private lateinit var wheel2: DcMotor
     private lateinit var wheel3: DcMotor
 
-    private const val tickPerInch: Float = 39f
-    private const val tickPerDegree: Float = 6.5f
+    private const val tickPerInch: Double = 39.0
+    private const val tickPerDegree: Double = 6.5
 
-    var wheelFinalDistance1: Double = 0.0
-    var wheelFinalDistance2: Double = 0.0
-    var wheelFinalDistance3: Double = 0.0
+    private var wheelFinalDistance1: Double = 0.0
+    private var wheelFinalDistance2: Double = 0.0
+    private var wheelFinalDistance3: Double = 0.0
 
-    var tick: Double = 0.0
+    private var tick: Double = 0.0
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
@@ -67,6 +67,7 @@ object Encoders : API() {
 
         if (power > 0) {
             while (wheel1.currentPosition <= wheelFinalDistance1 || wheel2.currentPosition <= wheelFinalDistance2 /*&& ctx.teleop.opModeIsActive()*/) {
+                //TODO("Add Telemetry Support")
                 /* telemetry.addData("Wheel One Current", wheel1.currentPosition)
                  ctx.teleop.telemetry.addData("Wheel One Final", wheelFinalDistance1)
                  ctx.teleop.telemetry.addData("Wheel Two Current", wheel2.currentPosition)
@@ -119,26 +120,26 @@ object Encoders : API() {
         wheel1 = TriWheels.getWheel(1)
         wheel2 = TriWheels.getWheel(2)
         wheel3 = TriWheels.getWheel(3)
-        wheel1!!.direction = DcMotorSimple.Direction.FORWARD
-        wheel2!!.direction = DcMotorSimple.Direction.FORWARD
-        wheel3!!.direction = DcMotorSimple.Direction.FORWARD
-
+        wheel1.direction = DcMotorSimple.Direction.FORWARD
+        wheel2.direction = DcMotorSimple.Direction.FORWARD
+        wheel3.direction = DcMotorSimple.Direction.FORWARD
+        //TODO("Add Sleep Support")
         /*ctx.teleop.sleep(1000)*/
 
         degreeToTick(degrees)
 
         if (power > 0) {
-            wheelFinalDistance1 = wheel1!!.currentPosition + tick!!
-            wheelFinalDistance2 = wheel2!!.currentPosition + tick!!
-            wheelFinalDistance3 = wheel3!!.currentPosition + tick!!
+            wheelFinalDistance1 = wheel1.currentPosition + tick
+            wheelFinalDistance2 = wheel2.currentPosition + tick
+            wheelFinalDistance3 = wheel3.currentPosition + tick
 
-            while (wheel1!!.currentPosition < wheelFinalDistance1!! /*&& ctx.teleop.opModeIsActive()*/) {
+            while (wheel1.currentPosition < wheelFinalDistance1 /*&& ctx.teleop.opModeIsActive()*/) {
                 TriWheels.power(power)
             }
 
             TriWheels.stop(); /*ctx.teleop.sleep(1000)*/
 
-            while (wheel1!!.currentPosition > wheelFinalDistance1!! /*&& ctx.teleop.opModeIsActive()*/) {
+            while (wheel1.currentPosition > wheelFinalDistance1 /*&& ctx.teleop.opModeIsActive()*/) {
                 TriWheels.power(-0.1)
             }
 
@@ -146,18 +147,18 @@ object Encoders : API() {
             /*ctx.teleop.sleep(1000)*/
 
         } else if (power < 0) {
-            wheelFinalDistance1 = wheel1!!.currentPosition - tick!!
-            wheelFinalDistance2 = wheel2!!.currentPosition - tick!!
-            wheelFinalDistance3 = wheel3!!.currentPosition - tick!!
+            wheelFinalDistance1 = wheel1.currentPosition - tick
+            wheelFinalDistance2 = wheel2.currentPosition - tick
+            wheelFinalDistance3 = wheel3.currentPosition - tick
 
-            while (wheel1!!.currentPosition >= wheelFinalDistance1!! /*&& ctx.teleop.opModeIsActive()*/) {
+            while (wheel1.currentPosition >= wheelFinalDistance1 /*&& ctx.teleop.opModeIsActive()*/) {
                 TriWheels.power(power)
             }
 
             TriWheels.stop()
             /*ctx.teleop.sleep(1000)*/
 
-            while (wheel1!!.currentPosition <= wheelFinalDistance1!! /*&& ctx.teleop.opModeIsActive()*/) {
+            while (wheel1.currentPosition <= wheelFinalDistance1 /*&& ctx.teleop.opModeIsActive()*/) {
                 TriWheels.power(power)
             }
             TriWheels.stop()
