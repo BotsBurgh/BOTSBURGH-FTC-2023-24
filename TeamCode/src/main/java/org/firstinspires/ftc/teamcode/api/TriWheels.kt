@@ -24,6 +24,10 @@ object TriWheels : API() {
         this.wheel1 = hardwareMap.get(DcMotor::class.java, "wheel1")
         this.wheel2 = hardwareMap.get(DcMotor::class.java, "wheel2")
         this.wheel3 = hardwareMap.get(DcMotor::class.java, "wheel3")
+
+        this.wheel1.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.wheel2.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.wheel3.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     /**
@@ -60,5 +64,38 @@ object TriWheels : API() {
      */
     fun stop() {
         this.power(0.0)
+    }
+
+    /**
+     * Getter for the wheels
+     */
+    fun getWheel (wheel: Int): DcMotor {
+        when (wheel) {
+            1 -> {
+                return wheel1
+            }
+            2 -> {
+                return wheel2
+            }
+            3 -> {
+                return wheel3
+            }
+        }
+        return wheel1
+    }
+
+    /**
+     * Stops the wheels and resets their encoder values.
+     */
+    fun stopAndResetEncoders() {
+        stop()
+
+        wheel1.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        wheel2.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        wheel3.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+        wheel1.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        wheel2.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        wheel3.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 }
