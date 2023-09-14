@@ -14,9 +14,9 @@ object TriWheels : API() {
     private lateinit var wheel3: DcMotor
 
     // The angles of each wheel
-    private const val MOTOR_1_ANGLE: Double = 0.0
-    private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
-    private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
+    const val MOTOR_1_ANGLE: Double = 0.0
+    const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
+    const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
