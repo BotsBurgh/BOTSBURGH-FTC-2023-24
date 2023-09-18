@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.api
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 
@@ -14,6 +15,17 @@ object DemoQuadWheels : API() {
     private lateinit var fr: DcMotor
     private lateinit var bl: DcMotor
     private lateinit var br: DcMotor
+
+    // This is how you define FTC Dashboard configuration.
+    // Uncomment the following line to enable it.
+    // @Config
+    private object DemoQuadWheelsConfig {
+        @JvmField
+        var MAGIC_NUMBER = 5
+
+        @JvmField
+        var SOME_NAME = "Bob"
+    }
 
     override fun init(opMode: OpMode) {
         // You must call super.init(opMode), or the API will not initialize correctly.
