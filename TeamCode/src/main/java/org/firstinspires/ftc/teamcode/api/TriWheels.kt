@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.sin
 
 /**
  * An API for controlling the wheels of a triangle robot.
