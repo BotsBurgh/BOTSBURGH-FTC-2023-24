@@ -7,6 +7,11 @@ import kotlin.math.atan2
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+/**
+ * Moves the robot wheels based on gamepad input.
+ *
+ * Requires the [TriWheels] API.
+ */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
     private const val SLOW_TURN_AMOUNT = 0.3
