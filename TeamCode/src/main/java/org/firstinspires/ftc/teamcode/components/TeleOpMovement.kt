@@ -8,18 +8,20 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 object TeleOpMovement : Component {
-    override fun loop(opMode : OpMode) {
+    private const val ROTATION_GAIN = 0.6
+    private const val SLOW_TURN_AMOUNT = 0.3
 
+    override fun loop(opMode: OpMode) {
         // renaming gamepad1
         val gamepad = opMode.gamepad1
-        var rotationPower = 0.6 * -gamepad.right_stick_x.toDouble()
+        var rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
 
         // right bumper and left bumper movement
         // will slowly turn the robot
         if (gamepad.left_bumper) {
-            rotationPower += 0.3
+            rotationPower += SLOW_TURN_AMOUNT
         } else if (gamepad.right_bumper) {
-            rotationPower -= 0.3
+            rotationPower -= SLOW_TURN_AMOUNT
         }
 
         // joystick input
