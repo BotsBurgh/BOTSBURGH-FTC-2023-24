@@ -39,9 +39,9 @@ object TeleOpMovement : Component {
 
         // all movement of the wheels
         TriWheels.power(
-            joyMagnitude * sin(TriWheels.MOTOR_1_ANGLE - joyRadians) + rotationPower,
-            joyMagnitude * sin(TriWheels.MOTOR_2_ANGLE - joyRadians) + rotationPower,
-            joyMagnitude * sin(TriWheels.MOTOR_3_ANGLE - joyRadians) + rotationPower,
+            joyMagnitude * sin(TriWheels.RED_ANGLE - joyRadians) + rotationPower,
+            joyMagnitude * sin(TriWheels.GREEN_ANGLE - joyRadians) + rotationPower,
+            joyMagnitude * sin(TriWheels.BLUE_ANGLE - joyRadians) + rotationPower,
         )
     }
 }
