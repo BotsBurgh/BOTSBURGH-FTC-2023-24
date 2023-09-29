@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.api.GamepadEx.update
  * update. See [pressed], [justPressed], and [justReleased].
  *
  * Beyond initialization, please call [update] every loop to use this API correctly.
+ *
+ * This class is inspired by the [`bevy_input` system](https://docs.rs/bevy_input/latest/bevy_input/struct.Input.html).
  */
 object GamepadEx : API() {
     /** A list of all inputs being tracked by [GamepadEx]. */
