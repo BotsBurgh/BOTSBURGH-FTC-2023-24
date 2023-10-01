@@ -10,30 +10,34 @@ import kotlin.math.sin
  */
 object TriWheels : API() {
     // All 3 wheels on the robot
-    private lateinit var wheel1: DcMotor
-    private lateinit var wheel2: DcMotor
-    private lateinit var wheel3: DcMotor
+    lateinit var red: DcMotor
+        private set
+    lateinit var green: DcMotor
+        private set
+    lateinit var blue: DcMotor
+        private set
 
     // The angles of each wheel
-    const val MOTOR_1_ANGLE: Double = 0.0
-    const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
-    const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
+    const val RED_ANGLE: Double = 0.0
+    // TODO: Check that these two angles aren't swapped
+    const val GREEN_ANGLE: Double = PI * (2.0 / 3.0)
+    const val BLUE_ANGLE: Double = 2.0 * GREEN_ANGLE
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.wheel1 = hardwareMap.get(DcMotor::class.java, "wheel1")
-        this.wheel2 = hardwareMap.get(DcMotor::class.java, "wheel2")
-        this.wheel3 = hardwareMap.get(DcMotor::class.java, "wheel3")
+        this.red = hardwareMap.get(DcMotor::class.java, "redWheel")
+        this.green = hardwareMap.get(DcMotor::class.java, "greenWheel")
+        this.blue = hardwareMap.get(DcMotor::class.java, "blueWheel")
     }
 
     /**
      * Sets the power of each wheel respectively.
      */
-    fun power(power1: Double, power2: Double, power3: Double) {
-        this.wheel1.power = power1
-        this.wheel2.power = power2
-        this.wheel3.power = power3
+    fun power(redPower: Double, greenPower: Double, bluePower: Double) {
+        this.red.power = redPower
+        this.green.power = greenPower
+        this.blue.power = bluePower
     }
 
     /**
@@ -48,9 +52,9 @@ object TriWheels : API() {
      */
     fun moveDirection(radians: Double, magnitude: Double) {
         this.power(
-            magnitude * sin(this.MOTOR_1_ANGLE - radians),
-            magnitude * sin(this.MOTOR_2_ANGLE - radians),
-            magnitude * sin(this.MOTOR_3_ANGLE - radians),
+            magnitude * sin(this.RED_ANGLE - radians),
+            magnitude * sin(this.GREEN_ANGLE - radians),
+            magnitude * sin(this.BLUE_ANGLE - radians),
         )
     }
 
