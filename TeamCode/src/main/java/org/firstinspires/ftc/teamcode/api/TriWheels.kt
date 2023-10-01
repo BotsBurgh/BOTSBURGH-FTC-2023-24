@@ -19,9 +19,8 @@ object TriWheels : API() {
 
     // The angles of each wheel
     const val RED_ANGLE: Double = 0.0
-    // TODO: Check that these two angles aren't swapped
-    const val GREEN_ANGLE: Double = PI * (2.0 / 3.0)
-    const val BLUE_ANGLE: Double = 2.0 * GREEN_ANGLE
+    const val GREEN_ANGLE: Double = PI * (4.0 / 3.0)
+    const val BLUE_ANGLE: Double = PI * (2.0 / 3.0)
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
