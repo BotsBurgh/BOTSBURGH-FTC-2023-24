@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -17,6 +18,16 @@ object TeleOpMovement : Component {
     private const val SLOW_TURN_AMOUNT = 0.3
 
     override fun loop(opMode: OpMode) {
+        when (TeleOpState.state) {
+            // When in the default state, do normal controls
+            TeleOpState.State.Default -> default_loop(opMode)
+        }
+    }
+
+    /**
+     * The movement functionality run by default when [TeleOpState] is default.
+     */
+    private fun default_loop(opMode: OpMode) {
         // renaming gamepad1
         val gamepad = opMode.gamepad1
         var rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
