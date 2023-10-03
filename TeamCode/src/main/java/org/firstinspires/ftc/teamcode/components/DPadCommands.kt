@@ -12,8 +12,15 @@ import org.firstinspires.ftc.teamcode.api.TeleOpState
  * Pressing DPad down will reset the group selection. There are no other groups yet.
  */
 object DPadCommands : Component {
+    /**
+     * All possible command groups.
+     *
+     * There can be up to 3 command groups through the DPad. DPad down, which resets the selection,
+     * does not count as a group.
+     */
     private enum class CommandGroup {}
 
+    /** The current selected command group. */
     private var selected_group: CommandGroup? = null
 
     override fun loop(opMode: OpMode) {
