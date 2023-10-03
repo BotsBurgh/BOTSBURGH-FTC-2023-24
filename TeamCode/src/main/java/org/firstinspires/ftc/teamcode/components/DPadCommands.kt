@@ -31,6 +31,8 @@ object DPadCommands : Component {
             this.selected_group = null
         }
 
+        // Add command and command group logic here
+
         // Log selected group
         opMode.telemetry.addData("Command Group", this.selected_group)
     }
