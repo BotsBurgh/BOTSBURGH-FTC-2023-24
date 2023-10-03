@@ -17,6 +17,6 @@ class TeleOpMain : OpMode() {
     // loop will run repetitively overtime while the robot runs
     override fun loop() {
         // the component
-        TeleOpMovement.init(this)
+        TeleOpMovement.loop(this)
     }
 }
