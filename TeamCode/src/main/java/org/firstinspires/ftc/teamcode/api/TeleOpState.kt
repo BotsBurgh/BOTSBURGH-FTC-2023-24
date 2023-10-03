@@ -9,7 +9,6 @@ package org.firstinspires.ftc.teamcode.api
 object TeleOpState : API() {
     enum class State {
         Default,
-        AprilTagLock,
     }
 
     /**
