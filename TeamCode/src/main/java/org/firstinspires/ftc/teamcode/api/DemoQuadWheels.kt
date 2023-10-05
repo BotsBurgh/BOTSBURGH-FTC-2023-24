@@ -3,20 +3,20 @@ package org.firstinspires.ftc.teamcode.api
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 
-// APIs are shared code used by components.
-// As compared to components, which can be disabled, APIs usually aren't.
-// As such, using them should have no side-effects. (An API shouldn't make the robot move unless
-// told to by a component.)
-// This API is used to control a four-wheeled robot.
+/**
+ * This is a demo API used for controlling a robot with four mecanum wheels.
+ */
 object DemoQuadWheels : API() {
     // The wheel motors
+    // `lateinit` means the variable does not have to be initialized in the constructor
+    // See: https://github.com/BotsBurgh/BOTSBURGH-FTC-2023-24/pull/7#discussion_r1342154226
     private lateinit var fl: DcMotor
     private lateinit var fr: DcMotor
     private lateinit var bl: DcMotor
     private lateinit var br: DcMotor
 
     // This is how you define FTC Dashboard configuration.
-    // Uncomment the following line to enable it.
+    // Uncomment the following line to enable it:
     // @Config
     private object DemoQuadWheelsConfig {
         @JvmField
@@ -26,6 +26,8 @@ object DemoQuadWheels : API() {
         var SOME_NAME = "Bob"
     }
 
+    // `init()` is run once at the beginning of the program.
+    // It initializes things and sets up configuration
     override fun init(opMode: OpMode) {
         // You must call super.init(opMode), or the API will not initialize correctly.
         super.init(opMode)

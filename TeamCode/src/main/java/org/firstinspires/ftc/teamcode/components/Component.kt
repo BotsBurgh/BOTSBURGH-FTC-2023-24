@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode.components
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 
 /**
- * A component is a class that makes the robot do something.
+ * A component is a class that makes the robot do something during teleop.
  *
  * Components provoke visible change from the robot, like moving the wheels or arms. To share code
  * between components, see the API folder.
+ *
+ * If a component depends on another API, it should say so in the object documentation.
  */
 interface Component {
     /**

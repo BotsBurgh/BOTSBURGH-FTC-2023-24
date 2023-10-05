@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
 
 /**
- * An API is a shared class used between multiple components.
+ * An API is shared code used by components.
  *
- * An API needs to be initialized with the [init] function before it can be used.
+ * An API needs to be initialized with the [init] function before it can be used. In general, APIs
+ * should not have side-effects unless told to by a component.
+ *
+ * If an API depends on another API, it should say so in the object documentation.
  */
 abstract class API {
     private var uninitializedOpMode: OpMode? = null
