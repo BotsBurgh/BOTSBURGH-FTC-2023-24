@@ -18,9 +18,9 @@ object TriWheels : API() {
         private set
 
     // The angles of each wheel
-    const val RED_ANGLE: Double = 0.0
-    const val GREEN_ANGLE: Double = PI * (4.0 / 3.0)
-    const val BLUE_ANGLE: Double = PI * (2.0 / 3.0)
+    const val RED_ANGLE: Double = PI / 2.0
+    const val GREEN_ANGLE: Double = PI * (11.0 / 6.0)
+    const val BLUE_ANGLE: Double = PI * (7.0 / 6.0)
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
