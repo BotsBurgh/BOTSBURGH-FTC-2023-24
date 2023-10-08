@@ -47,7 +47,7 @@ object TeleOpMovement : Component {
         val joyY = gamepad.left_stick_y.toDouble()
 
         // angle and strength
-        val joyRadians = atan2(joyY, joyX) - (PI / 3.0) - (PI / 2.0)
+        val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
         // all movement of the wheels
