@@ -15,7 +15,6 @@ import kotlin.math.sqrt
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
-    private const val SLOW_TURN_AMOUNT = 0.3
 
     override fun loop(opMode: OpMode) {
         // This prevents the normal movement from running when the robot is target-locking an april
@@ -30,17 +29,9 @@ object TeleOpMovement : Component {
      * The movement functionality run by default when [TeleOpState] is default.
      */
     private fun default_loop(opMode: OpMode) {
-        // renaming gamepad1
+        // alias gamepad1
         val gamepad = opMode.gamepad1
-        var rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
-
-        // right bumper and left bumper movement
-        // will slowly turn the robot
-        if (gamepad.left_bumper) {
-            rotationPower += SLOW_TURN_AMOUNT
-        } else if (gamepad.right_bumper) {
-            rotationPower -= SLOW_TURN_AMOUNT
-        }
+        val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
 
         // joystick input
         val joyX = gamepad.left_stick_x.toDouble()
