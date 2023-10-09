@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.api
 
+import org.firstinspires.ftc.teamcode.utils.Resettable
+
 /**
  * A state machine for teleop used to configure behavior.
  *
@@ -16,5 +18,5 @@ object TeleOpState : API() {
      *
      * Be very careful about changing this value, as it affects many other things.
      */
-    var state = State.Default
+    var state: State by Resettable { State.Default }
 }

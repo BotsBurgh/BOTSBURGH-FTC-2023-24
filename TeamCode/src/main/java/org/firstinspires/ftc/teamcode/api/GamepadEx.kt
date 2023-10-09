@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.api.GamepadEx.justPressed
 import org.firstinspires.ftc.teamcode.api.GamepadEx.justReleased
 import org.firstinspires.ftc.teamcode.api.GamepadEx.pressed
 import org.firstinspires.ftc.teamcode.api.GamepadEx.update
+import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**
  * A [Gamepad] extension for more complex inputs.
@@ -40,9 +41,9 @@ object GamepadEx : API() {
     private val gamepad: Gamepad
         get() = this.opMode.gamepad1
 
-    private val pressed = mutableSetOf<Inputs>()
-    private val justPressed = mutableSetOf<Inputs>()
-    private val justReleased = mutableSetOf<Inputs>()
+    private val pressed: MutableSet<Inputs> by Resettable { mutableSetOf() }
+    private val justPressed: MutableSet<Inputs> by Resettable { mutableSetOf() }
+    private val justReleased: MutableSet<Inputs> by Resettable { mutableSetOf() }
 
     /** Returns true if input it pressed. */
     fun pressed(input: Inputs): Boolean = input in this.pressed
