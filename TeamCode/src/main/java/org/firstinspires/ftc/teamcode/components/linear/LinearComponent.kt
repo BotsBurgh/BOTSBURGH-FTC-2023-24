@@ -15,5 +15,5 @@ interface LinearComponent {
      * This function will be run once. Unless programmed otherwise, this component will have
      * complete control of the robot when [run] is called.
      */
-    fun run(opMode: LinearOpMode)
+    fun run(linearOpMode: LinearOpMode)
 }
