@@ -40,9 +40,9 @@ object TriWheels : API() {
     }
 
     /**
-     * Sets the power of all 3 wheels to the same value.
+     * Rotates the wheels with a given power.
      */
-    fun power(power: Double) {
+    fun rotate(power: Double) {
         this.power(power, power, power)
     }
 
@@ -63,6 +63,20 @@ object TriWheels : API() {
      * This is shorthand for setting the power to 0.
      */
     fun stop() {
-        this.power(0.0)
+        this.power(0.0, 0.0, 0.0)
+    }
+
+    /**
+     * Sets the power of all 3 wheels to the same value.
+     *
+     * @see rotate
+     */
+    @Deprecated(
+        message = "This function has been renamed.",
+        replaceWith = ReplaceWith("this.rotate(power)"),
+        level = DeprecationLevel.WARNING,
+    )
+    fun power(power: Double) {
+        this.rotate(power)
     }
 }
