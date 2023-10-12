@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.DPadCommands
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
+import org.firstinspires.ftc.teamcode.components.Telemetry
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
@@ -22,6 +23,9 @@ class TeleOpMain : OpMode() {
 
         // Advanced gamepad inputs
         GamepadEx.init(this)
+
+        // Log that we are initialized
+        Telemetry.init(this)
     }
 
     // loop will run repetitively overtime while the robot runs
@@ -34,5 +38,8 @@ class TeleOpMain : OpMode() {
 
         // Default movement controls
         TeleOpMovement.loop(this)
+
+        // Log that we are running
+        Telemetry.loop(this)
     }
 }
