@@ -50,10 +50,17 @@ object TriWheels : API() {
      * Makes the robot drive in a certain direction [radians] with a given strength [magnitude].
      */
     fun drive(radians: Double, magnitude: Double) {
+        this.driveWithRotation(radians, magnitude, 0.0)
+    }
+
+    /**
+     * Does the same thing as [drive] but it rotates the robot with a given [rotation] too.
+     */
+    fun driveWithRotation(radians: Double, magnitude: Double, rotation: Double) {
         this.power(
-            magnitude * sin(this.RED_ANGLE - radians),
-            magnitude * sin(this.GREEN_ANGLE - radians),
-            magnitude * sin(this.BLUE_ANGLE - radians),
+            magnitude * sin(this.RED_ANGLE - radians) + rotation,
+            magnitude * sin(this.GREEN_ANGLE - radians) + rotation,
+            magnitude * sin(this.BLUE_ANGLE - radians) + rotation,
         )
     }
 
