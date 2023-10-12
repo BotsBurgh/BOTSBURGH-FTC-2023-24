@@ -47,9 +47,9 @@ object TriWheels : API() {
     }
 
     /**
-     * Makes the robot move in a certain direction [radians] with a given strength [magnitude].
+     * Makes the robot drive in a certain direction [radians] with a given strength [magnitude].
      */
-    fun moveDirection(radians: Double, magnitude: Double) {
+    fun drive(radians: Double, magnitude: Double) {
         this.power(
             magnitude * sin(this.RED_ANGLE - radians),
             magnitude * sin(this.GREEN_ANGLE - radians),
@@ -66,11 +66,6 @@ object TriWheels : API() {
         this.power(0.0, 0.0, 0.0)
     }
 
-    /**
-     * Sets the power of all 3 wheels to the same value.
-     *
-     * @see rotate
-     */
     @Deprecated(
         message = "This function has been renamed.",
         replaceWith = ReplaceWith("this.rotate(power)"),
@@ -78,5 +73,14 @@ object TriWheels : API() {
     )
     fun power(power: Double) {
         this.rotate(power)
+    }
+
+    @Deprecated(
+        message = "This function has been renamed.",
+        replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
+        level = DeprecationLevel.WARNING,
+    )
+    fun moveDirection(radians: Double, magnitude: Double) {
+        this.drive(radians, magnitude)
     }
 }
