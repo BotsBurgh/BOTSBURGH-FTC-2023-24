@@ -20,16 +20,16 @@ object GamepadEx : API() {
     /** A list of all inputs being tracked by [GamepadEx]. */
     enum class Inputs {
         DPadUp {
-            override fun pressed() = GamepadEx.gamepad.dpad_up
+            override fun pressed() = gamepad.dpad_up
         },
         DPadDown {
-            override fun pressed() = GamepadEx.gamepad.dpad_down
+            override fun pressed() = gamepad.dpad_down
         },
         DPadLeft {
-            override fun pressed() = GamepadEx.gamepad.dpad_left
+            override fun pressed() = gamepad.dpad_left
         },
         DPadRight {
-            override fun pressed() = GamepadEx.gamepad.dpad_right
+            override fun pressed() = gamepad.dpad_right
         };
 
         /** Returns true if button is pressed. */

@@ -18,7 +18,7 @@ object DPadCommands : Component {
      * There can be up to 3 command groups through the DPad. DPad down, which resets the selection,
      * does not count as a group.
      */
-    private enum class CommandGroup {}
+    private enum class CommandGroup
 
     /** The current selected command group. */
     private var selected_group: CommandGroup? = null
