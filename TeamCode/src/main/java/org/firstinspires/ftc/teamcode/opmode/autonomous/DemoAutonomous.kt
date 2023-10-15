@@ -6,11 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
 import org.firstinspires.ftc.teamcode.components.Telemetry
 import org.firstinspires.ftc.teamcode.components.linear.DemoSpinLinear
+import org.firstinspires.ftc.teamcode.utils.Reset
 
 @Autonomous(name = "Demo Autonomous")
 @Disabled
 class DemoAutonomous : LinearOpMode() {
     override fun runOpMode() {
+        // Reset is a special utility necessary in all opmodes.
+        Reset.init(this)
+
         // APIs are initialized here
         DemoQuadWheels.init(this)
 

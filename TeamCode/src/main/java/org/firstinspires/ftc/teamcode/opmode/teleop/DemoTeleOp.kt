@@ -8,12 +8,16 @@ import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.components.DemoForward
 import org.firstinspires.ftc.teamcode.components.Telemetry
+import org.firstinspires.ftc.teamcode.utils.Reset
 
 @TeleOp(name = "Demo TeleOp")
 @Disabled
 class DemoTeleOp : OpMode() {
     // Run once, when "Init" is pressed on driver hub.
     override fun init() {
+        // Reset is a special utility necessary in all opmodes.
+        Reset.init(this)
+
         // Initializes an API, shared code used by components.
         DemoQuadWheels.init(this)
 

@@ -8,12 +8,14 @@ import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.DPadCommands
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
 import org.firstinspires.ftc.teamcode.components.Telemetry
+import org.firstinspires.ftc.teamcode.utils.Reset
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
     // init will run once
     override fun init() {
         // APIs (code that can be used in components)
+        Reset.init(this)
 
         // Triangle wheel controls
         TriWheels.init(this)

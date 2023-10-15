@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**
  * An API is shared code used by components.
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
  * If an API depends on another API, it should say so in the object documentation.
  */
 abstract class API {
-    private var uninitializedOpMode: OpMode? = null
+    private var uninitializedOpMode: OpMode? by Resettable { null }
 
     protected val opMode: OpMode
         get() = uninitializedOpMode

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.components
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.TeleOpState
+import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**
  * A component that changes the state of the robot based on DPad inputs.
@@ -21,7 +22,7 @@ object DPadCommands : Component {
     private enum class CommandGroup
 
     /** The current selected command group. */
-    private var selected_group: CommandGroup? = null
+    private var selected_group: CommandGroup? by Resettable { null }
 
     override fun loop(opMode: OpMode) {
         GamepadEx.update()
