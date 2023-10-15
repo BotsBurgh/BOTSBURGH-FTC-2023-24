@@ -26,7 +26,7 @@ object Reset {
     fun init(opMode: OpMode) {
         // Check that, if Reset has been called before, it is not called on the same opmode run by
         // ensuring the opmode references are different.
-        if (opModeReference != null && opModeReference == opMode) {
+        if (opModeReference == opMode) {
             throw IllegalStateException("Tried to initialize the Reset API more than once in a single run.")
         }
 
