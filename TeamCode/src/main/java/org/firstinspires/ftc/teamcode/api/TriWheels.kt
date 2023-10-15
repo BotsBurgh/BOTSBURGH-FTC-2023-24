@@ -18,9 +18,9 @@ object TriWheels : API() {
         private set
 
     // The angles of each wheel
-    const val RED_ANGLE: Double = PI / 2.0
-    const val GREEN_ANGLE: Double = PI * (11.0 / 6.0)
-    const val BLUE_ANGLE: Double = PI * (7.0 / 6.0)
+    private const val RED_ANGLE: Double = PI / 2.0
+    private const val GREEN_ANGLE: Double = PI * (11.0 / 6.0)
+    private const val BLUE_ANGLE: Double = PI * (7.0 / 6.0)
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
@@ -40,20 +40,27 @@ object TriWheels : API() {
     }
 
     /**
-     * Sets the power of all 3 wheels to the same value.
+     * Rotates the wheels with a given power.
      */
-    fun power(power: Double) {
+    fun rotate(power: Double) {
         this.power(power, power, power)
     }
 
     /**
-     * Makes the robot move in a certain direction [radians] with a given strength [magnitude].
+     * Makes the robot drive in a certain direction [radians] with a given strength [magnitude].
      */
-    fun moveDirection(radians: Double, magnitude: Double) {
+    fun drive(radians: Double, magnitude: Double) {
+        this.driveWithRotation(radians, magnitude, 0.0)
+    }
+
+    /**
+     * Does the same thing as [drive] but it rotates the robot with a given [rotation] too.
+     */
+    fun driveWithRotation(radians: Double, magnitude: Double, rotation: Double) {
         this.power(
-            magnitude * sin(this.RED_ANGLE - radians),
-            magnitude * sin(this.GREEN_ANGLE - radians),
-            magnitude * sin(this.BLUE_ANGLE - radians),
+            magnitude * sin(this.RED_ANGLE - radians) + rotation,
+            magnitude * sin(this.GREEN_ANGLE - radians) + rotation,
+            magnitude * sin(this.BLUE_ANGLE - radians) + rotation,
         )
     }
 
@@ -63,6 +70,24 @@ object TriWheels : API() {
      * This is shorthand for setting the power to 0.
      */
     fun stop() {
-        this.power(0.0)
+        this.power(0.0, 0.0, 0.0)
+    }
+
+    @Deprecated(
+        message = "This function has been renamed.",
+        replaceWith = ReplaceWith("this.rotate(power)"),
+        level = DeprecationLevel.WARNING,
+    )
+    fun power(power: Double) {
+        this.rotate(power)
+    }
+
+    @Deprecated(
+        message = "This function has been renamed.",
+        replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
+        level = DeprecationLevel.WARNING,
+    )
+    fun moveDirection(radians: Double, magnitude: Double) {
+        this.drive(radians, magnitude)
     }
 }

@@ -5,7 +5,6 @@ import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import kotlin.math.PI
 import kotlin.math.atan2
-import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
@@ -43,10 +42,6 @@ object TeleOpMovement : Component {
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
         // all movement of the wheels
-        TriWheels.power(
-            joyMagnitude * sin(TriWheels.RED_ANGLE - joyRadians) + rotationPower,
-            joyMagnitude * sin(TriWheels.GREEN_ANGLE - joyRadians) + rotationPower,
-            joyMagnitude * sin(TriWheels.BLUE_ANGLE - joyRadians) + rotationPower,
-        )
+        TriWheels.driveWithRotation(joyRadians, joyMagnitude, rotationPower)
     }
 }
