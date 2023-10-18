@@ -28,6 +28,10 @@ object TriWheels : API() {
         this.red = hardwareMap.get(DcMotor::class.java, "redWheel")
         this.green = hardwareMap.get(DcMotor::class.java, "greenWheel")
         this.blue = hardwareMap.get(DcMotor::class.java, "blueWheel")
+
+        this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     /**
