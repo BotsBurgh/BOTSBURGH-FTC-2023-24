@@ -2,12 +2,8 @@ package org.firstinspires.ftc.teamcode.api
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode
-import org.firstinspires.ftc.robotcore.external.Telemetry
-import  org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.linear.LinearComponent
 import kotlin.math.PI
 
@@ -26,16 +22,16 @@ object Encoder : LinearComponent {
     private var tick: Double = 0.0
 
     override fun run(linearOpMode: LinearOpMode) {
-        moveDirection(linearOpMode,PI/4, 24.0, 0.25)
-        moveDegree(linearOpMode,90.0, -0.25)
-        moveDegree(linearOpMode,90.0, -0.25)
-        moveDirection(linearOpMode,PI/4, 24.0, 0.25)
-        moveDegree(linearOpMode,90.0, -0.25)
-        moveDirection(linearOpMode, PI/4, 22.0, 0.25)
-        moveDegree(linearOpMode,90.0, -0.25)
-        moveDirection(linearOpMode, PI/4,22.0,0.25)
+        moveDirection(linearOpMode, PI / 4, 24.0, 0.25)
+        moveDegree(linearOpMode, 90.0, -0.25)
+        moveDegree(linearOpMode, 90.0, -0.25)
+        moveDirection(linearOpMode, PI / 4, 24.0, 0.25)
+        moveDegree(linearOpMode, 90.0, -0.25)
+        moveDirection(linearOpMode, PI / 4, 22.0, 0.25)
+        moveDegree(linearOpMode, 90.0, -0.25)
+        moveDirection(linearOpMode, PI / 4, 22.0, 0.25)
         moveDegree(linearOpMode, 90.0, 0.25)
-        moveDirection(linearOpMode, PI/4, 58.0, 0.25)
+        moveDirection(linearOpMode, PI / 4, 58.0, 0.25)
         moveDegree(linearOpMode, 180.0, -0.25)
     }
 
@@ -169,12 +165,13 @@ object Encoder : LinearComponent {
             TriWheels.stop()
             linearOpMode.sleep(1000)
 
-  /*          while (wheel1.currentPosition <= wheelFinalDistance1 && linearOpMode.opModeIsActive()) {
-                TriWheels.power(0.1)
-            }
-            TriWheels.stop()
-            linearOpMode.sleep(1000)
-        */}
+            /*          while (wheel1.currentPosition <= wheelFinalDistance1 && linearOpMode.opModeIsActive()) {
+                          TriWheels.power(0.1)
+                      }
+                      TriWheels.stop()
+                      linearOpMode.sleep(1000)
+                  */
+        }
     }
 
     private fun wheelDefine(front: Double) {
