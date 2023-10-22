@@ -29,9 +29,19 @@ object TriWheels : API() {
         this.green = hardwareMap.get(DcMotor::class.java, "greenWheel")
         this.blue = hardwareMap.get(DcMotor::class.java, "blueWheel")
 
+        this.configMotors()
+    }
+
+    private fun configMotors() {
+        // Use encoders to make all wheels consistent
         this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
         this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
         this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+        // Make wheels brake when stopped
+        this.red.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        this.green.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
 
     /**
@@ -77,6 +87,16 @@ object TriWheels : API() {
         this.power(0.0, 0.0, 0.0)
     }
 
+    fun stopAndResetEncoders() {
+        stop()
+
+        this.red.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        this.blue.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        this.green.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+        this.configMotors()
+    }
+
     @Deprecated(
         message = "This function has been renamed.",
         replaceWith = ReplaceWith("this.rotate(power)"),
@@ -93,17 +113,5 @@ object TriWheels : API() {
     )
     fun moveDirection(radians: Double, magnitude: Double) {
         this.drive(radians, magnitude)
-    }
-
-    fun stopAndResetEncoders() {
-        stop()
-
-        red.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        blue.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        green.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-
-        red.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        green.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 }
