@@ -16,6 +16,6 @@ abstract class LinearAPI {
             throw IllegalStateException("Tried to initialize an <API> more than once.")
         }
 
-        this.uninitializedOpMode = this.linearOpMode
+        this.uninitializedOpMode = linearOpMode
     }
 }
