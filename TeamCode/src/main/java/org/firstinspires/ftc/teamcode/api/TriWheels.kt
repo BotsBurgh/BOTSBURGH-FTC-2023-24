@@ -30,24 +30,7 @@ object TriWheels : API() {
         this.green = hardwareMap.get(DcMotor::class.java, "greenWheel")
         this.blue = hardwareMap.get(DcMotor::class.java, "blueWheel")
 
-        this.configMotors()
-    }
-
-    private fun configMotors() {
-        // Use encoders to make all wheels consistent
-        this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
-
-        // Make wheels brake when stopped
-        this.red.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.green.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-
-        // Configure direction
-        this.red.direction = DcMotorSimple.Direction.FORWARD
-        this.green.direction = DcMotorSimple.Direction.FORWARD
-        this.blue.direction = DcMotorSimple.Direction.FORWARD
+        this.stopAndResetMotors()
     }
 
     /**
@@ -93,14 +76,42 @@ object TriWheels : API() {
         this.power(0.0, 0.0, 0.0)
     }
 
-    fun stopAndResetEncoders() {
+    /**
+     * This function resets all 3 motors.
+     *
+     * That includes:
+     *
+     * - Their encoder position
+     * - Their run mode
+     * - Their braking behavior
+     * - Their direction
+     *
+     * If you manually changed something like a motor's direction, you'll have to do it again after
+     * calling this function. This also stops all the wheels, due to the nature of resetting
+     * encoder values.
+     */
+    fun stopAndResetMotors() {
         stop()
 
+        // Reset encoder values
         this.red.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         this.blue.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         this.green.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
 
-        this.configMotors()
+        // Use encoders to make all wheels consistent
+        this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+        // Make wheels brake when stopped
+        this.red.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        this.green.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
+        // Configure direction
+        this.red.direction = DcMotorSimple.Direction.FORWARD
+        this.green.direction = DcMotorSimple.Direction.FORWARD
+        this.blue.direction = DcMotorSimple.Direction.FORWARD
     }
 
     @Deprecated(
