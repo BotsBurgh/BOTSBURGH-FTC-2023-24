@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -35,13 +36,18 @@ object TriWheels : API() {
     private fun configMotors() {
         // Use encoders to make all wheels consistent
         this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
         this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
 
         // Make wheels brake when stopped
         this.red.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         this.green.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
+        // Configure direction
+        this.red.direction = DcMotorSimple.Direction.FORWARD
+        this.green.direction = DcMotorSimple.Direction.FORWARD
+        this.blue.direction = DcMotorSimple.Direction.FORWARD
     }
 
     /**
