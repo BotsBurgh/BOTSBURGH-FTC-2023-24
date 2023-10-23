@@ -18,6 +18,13 @@ object Encoders : LinearAPI() {
     private fun inchesToTick(inches: Double): Int = (this.TICKS_PER_INCH * inches).toInt()
     private fun degreesToTick(degrees: Double): Int = (this.TICKS_PER_DEGREE * degrees).toInt()
 
+    /**
+     * Drives the robot in a given [direction] a certain amount of [inches].
+     *
+     * This function will take full control of the robot, and has a few side-effects. All wheel
+     * motors will be reset with [TriWheels.stopAndResetMotors]. Furthermore, this function will not
+     * return until the robot has finished moving.
+     */
     fun driveTo(direction: Direction, inches: Double) {
         TriWheels.stopAndResetMotors()
 
@@ -60,6 +67,12 @@ object Encoders : LinearAPI() {
         }
     }
 
+    /**
+     * Spins the robot a certain number of [degrees].
+     *
+     * Like [driveTo], this function will not return until the robot has finished moving. It will
+     * also reset all wheel motors' configuration, including rotation and encoders.
+     */
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
 
@@ -73,36 +86,38 @@ object Encoders : LinearAPI() {
         TriWheels.green.targetPosition = ticks
         TriWheels.blue.targetPosition = ticks
 
-        while (
-            TriWheels.red.isBusy &&
-            TriWheels.green.isBusy &&
-            TriWheels.blue.isBusy &&
-            linearOpMode.opModeIsActive()
-        ) {
-            TriWheels.rotate(abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN)
+        try {
+            while (
+                TriWheels.red.isBusy &&
+                TriWheels.green.isBusy &&
+                TriWheels.blue.isBusy &&
+                linearOpMode.opModeIsActive()
+            ) {
+                TriWheels.rotate(abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN)
 
-            with(linearOpMode.telemetry) {
-                addData("Status", "Encoder Rotating")
+                with(linearOpMode.telemetry) {
+                    addData("Status", "Encoder Rotating")
 
-                addData(
-                    "Power",
-                    Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power)
-                )
-                addData(
-                    "Current",
-                    Triple(
-                        TriWheels.red.currentPosition,
-                        TriWheels.green.currentPosition,
-                        TriWheels.blue.currentPosition
+                    addData(
+                        "Power",
+                        Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power)
                     )
-                )
-                addData("Target", ticks)
+                    addData(
+                        "Current",
+                        Triple(
+                            TriWheels.red.currentPosition,
+                            TriWheels.green.currentPosition,
+                            TriWheels.blue.currentPosition
+                        )
+                    )
+                    addData("Target", ticks)
 
-                update()
+                    update()
+                }
             }
+        } finally {
+            TriWheels.stopAndResetMotors()
         }
-
-        TriWheels.stopAndResetMotors()
     }
 
     private fun defineWheels(direction: Direction): Triple<DcMotor, DcMotor, DcMotor> =
