@@ -60,6 +60,51 @@ object Encoders : LinearAPI() {
         }
     }
 
+    fun spinTo(degrees: Double) {
+        TriWheels.stopAndResetEncoders()
+
+        val ticks = this.degreesToTick(degrees)
+
+        TriWheels.red.mode = DcMotor.RunMode.RUN_TO_POSITION
+        TriWheels.green.mode = DcMotor.RunMode.RUN_TO_POSITION
+        TriWheels.blue.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+        TriWheels.red.targetPosition = ticks
+        TriWheels.green.targetPosition = ticks
+        TriWheels.blue.targetPosition = ticks
+
+        while (
+            TriWheels.red.isBusy &&
+            TriWheels.green.isBusy &&
+            TriWheels.blue.isBusy &&
+            linearOpMode.opModeIsActive()
+        ) {
+            TriWheels.rotate(abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN)
+
+            with(linearOpMode.telemetry) {
+                addData("Status", "Encoder Rotating")
+
+                addData(
+                    "Power",
+                    Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power)
+                )
+                addData(
+                    "Current",
+                    Triple(
+                        TriWheels.red.currentPosition,
+                        TriWheels.green.currentPosition,
+                        TriWheels.blue.currentPosition
+                    )
+                )
+                addData("Target", ticks)
+
+                update()
+            }
+        }
+
+        TriWheels.stopAndResetEncoders()
+    }
+
     private fun defineWheels(direction: Direction): Triple<DcMotor, DcMotor, DcMotor> =
         when (direction) {
             Direction.Red -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
