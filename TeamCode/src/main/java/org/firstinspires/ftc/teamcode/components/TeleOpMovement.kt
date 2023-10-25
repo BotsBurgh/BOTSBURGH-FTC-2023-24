@@ -49,6 +49,5 @@ object TeleOpMovement : Component {
 
         // movement of all wheels
         TriWheels.driveWithRotation(joyRadians, joyMagnitude, rotationPower)
-        }
     }
 }
