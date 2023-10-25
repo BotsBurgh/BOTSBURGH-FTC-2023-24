@@ -14,6 +14,7 @@ import kotlin.math.sqrt
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
+    private const val SLOW_MULTIPLIER = 0.4
 
     override fun loop(opMode: OpMode) {
         // This prevents the normal movement from running when the robot is target-locking an april
@@ -39,9 +40,14 @@ object TeleOpMovement : Component {
         // angle and strength
         // PI / 3 because 0 radians is right, not forward
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
-        val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
+        var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
-        // all movement of the wheels
+        // if the right bumper is pressed move slower
+        if (gamepad.right_bumper) {
+            joyMagnitude *= SLOW_MULTIPLIER
+        }
+
+        // movement of all wheels
         TriWheels.driveWithRotation(joyRadians, joyMagnitude, rotationPower)
     }
 }
