@@ -43,7 +43,7 @@ object TeleOpMovement : Component {
         var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
         // if the right bumper is pressed move slower
-        if (gamepad.right_bumper) {
+        if (gamepad.left_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
         }
 
