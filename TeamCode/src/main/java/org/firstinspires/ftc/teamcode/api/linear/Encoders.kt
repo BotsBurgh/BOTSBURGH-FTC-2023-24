@@ -62,7 +62,7 @@ object Encoders : LinearAPI() {
                 }
             }
         } finally {
-            right.direction = DcMotorSimple.Direction.FORWARD
+            // This reset encoders but also changes the right motor direction back to forward
             TriWheels.stopAndResetMotors()
         }
     }
