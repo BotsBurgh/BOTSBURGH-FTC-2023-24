@@ -9,10 +9,10 @@ import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
  * It requires the [DemoQuadWheels] API.
  */
 object DemoSpinLinear : LinearComponent {
-    override fun run(linearOpMode: LinearOpMode) {
+    override fun run(opMode: LinearOpMode) {
         DemoQuadWheels.drive(1.0, -1.0, 1.0, -1.0)
 
-        linearOpMode.sleep(2 * 1000)
+        opMode.sleep(2 * 1000)
 
         DemoQuadWheels.drive(0.0)
     }
