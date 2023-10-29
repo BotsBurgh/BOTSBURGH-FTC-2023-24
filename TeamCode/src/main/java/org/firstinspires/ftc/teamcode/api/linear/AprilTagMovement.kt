@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.components.linear
+package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.Range
@@ -11,7 +11,7 @@ import kotlin.math.abs
  *
  * Requires [AprilVision], Vision, and [TriWheels] APIs.
  */
-object AprilTagMovement : LinearComponent {
+object AprilTagMovement : LinearAPI() {
     /** A multiplier of how much the robot should turn versus how much it needs to. */
     private const val TURN_GAIN: Double = 0.01
 
@@ -20,10 +20,6 @@ object AprilTagMovement : LinearComponent {
 
     /** How close the robot needs to be to the desired turn to stop moving. */
     private const val TURN_ERROR: Double = 0.2
-
-    override fun run(linearOpMode: LinearOpMode) {
-        throw NotImplementedError("Do not run AprilTagMovement. Instead")
-    }
 
     /**
      * Points the robot towards the given april tag.
