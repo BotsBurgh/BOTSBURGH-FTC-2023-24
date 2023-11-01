@@ -8,12 +8,12 @@ abstract class LinearAPI {
 
     protected val linearOpMode: LinearOpMode
         get() = uninitializedOpMode
-            ?: throw NullPointerException("<API> has not been initialized with the OpMode before being used.")
+            ?: throw NullPointerException("<LinearAPI> has not been initialized with the OpMode before being used.")
 
     open fun init(linearOpMode: LinearOpMode) {
         // You can only initialize an API once. If it is initialized more than once, throw an error.
         if (uninitializedOpMode != null) {
-            throw IllegalStateException("Tried to initialize an <API> more than once.")
+            throw IllegalStateException("Tried to initialize a <LinearAPI> more than once.")
         }
 
         this.uninitializedOpMode = linearOpMode
