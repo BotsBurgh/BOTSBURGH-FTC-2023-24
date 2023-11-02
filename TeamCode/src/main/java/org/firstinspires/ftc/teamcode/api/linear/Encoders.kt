@@ -19,7 +19,7 @@ object Encoders : LinearAPI() {
     private fun degreesToTick(degrees: Double): Int = (this.TICKS_PER_DEGREE * degrees).toInt()
 
     fun driveTo(direction: Direction, inches: Double) {
-        TriWheels.stopAndResetEncoders()
+
 
         val (left, right, _) = this.defineWheels(direction)
         val ticks = this.inchesToTick(inches)
@@ -56,7 +56,7 @@ object Encoders : LinearAPI() {
             }
         } finally {
             right.direction = DcMotorSimple.Direction.FORWARD
-            TriWheels.stopAndResetEncoders()
+
         }
     }
 

@@ -31,6 +31,9 @@ object GamepadEx : API() {
         },
         DPadRight {
             override fun pressed() = gamepad.dpad_right
+        },
+        RightBumper {
+            override fun pressed() = gamepad.right_bumper
         };
 
         /** Returns true if button is pressed. */

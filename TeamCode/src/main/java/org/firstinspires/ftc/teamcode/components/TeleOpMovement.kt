@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.OutTake
+import org.firstinspires.ftc.teamcode.api.GamepadEx.justPressed
+import org.firstinspires.ftc.teamcode.api.GamepadEx.update
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -43,13 +46,15 @@ object TeleOpMovement : Component {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
         var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
+        update()
+
         // if the right bumper is pressed move slower
         if (gamepad.left_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
         }
 
         // OutTake drop
-        if (gamepad.left_bumper) {
+        if (justPressed(GamepadEx.Inputs.RightBumper)) {
             OutTake.drop()
         }
 
