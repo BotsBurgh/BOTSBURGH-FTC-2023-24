@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import kotlin.math.abs
+import kotlin.math.min
 
 /**
  * Requires the [TriWheels] API.
@@ -14,6 +16,9 @@ object Encoders : LinearAPI() {
 
     private const val ENCODER_GAIN: Double = 0.0004
     private const val ENCODER_ERROR: Int = 10
+
+    // It takes 2 seconds to reach top speed
+    private const val TIME_GAIN: Double = 1.0 / 2.0
 
     private fun inchesToTick(inches: Double): Int = (this.TICKS_PER_INCH * inches).toInt()
     private fun degreesToTick(degrees: Double): Int = (this.TICKS_PER_DEGREE * degrees).toInt()
@@ -38,13 +43,20 @@ object Encoders : LinearAPI() {
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
 
+            val runtime = ElapsedTime()
+
             while (
                 abs(left.currentPosition - leftTarget) > this.ENCODER_ERROR &&
                 abs(right.currentPosition - rightTarget) > this.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
-                left.power = abs(left.currentPosition - leftTarget) * this.ENCODER_GAIN
-                right.power = abs(right.currentPosition - rightTarget) * this.ENCODER_GAIN
+                // Accelerate the longer the robot has been running
+                val timeSpeed = runtime.seconds() * this.TIME_GAIN
+
+                left.power =
+                    min(abs(left.currentPosition - leftTarget) * this.ENCODER_GAIN, timeSpeed)
+                right.power =
+                    min(abs(right.currentPosition - rightTarget) * this.ENCODER_GAIN, timeSpeed)
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
