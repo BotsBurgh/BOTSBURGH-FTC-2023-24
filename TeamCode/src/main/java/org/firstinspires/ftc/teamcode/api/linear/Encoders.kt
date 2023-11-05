@@ -99,13 +99,23 @@ object Encoders : LinearAPI() {
         TriWheels.blue.targetPosition = ticks
 
         try {
+            val runtime = ElapsedTime()
+
             while (
                 TriWheels.red.isBusy &&
                 TriWheels.green.isBusy &&
                 TriWheels.blue.isBusy &&
                 linearOpMode.opModeIsActive()
             ) {
-                TriWheels.rotate(abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN)
+                // Accelerate the longer the robot has been running
+                val timeSpeed = runtime.seconds() * this.TIME_GAIN
+
+                TriWheels.rotate(
+                    min(
+                        abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN,
+                        timeSpeed
+                    )
+                )
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Rotating")
