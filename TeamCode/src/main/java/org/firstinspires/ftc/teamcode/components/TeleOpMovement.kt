@@ -5,8 +5,6 @@ import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.OutTake
-import org.firstinspires.ftc.teamcode.api.GamepadEx.justPressed
-import org.firstinspires.ftc.teamcode.api.GamepadEx.update
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -14,7 +12,7 @@ import kotlin.math.sqrt
 /**
  * Moves the robot wheels based on gamepad input.
  *
- * Requires the [TriWheels] API. It optionally uses the [TeleOpState] API.
+ * Requires the [TriWheels] and [GamepadEx] APIs. It optionally uses the [TeleOpState] API.
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
@@ -33,6 +31,9 @@ object TeleOpMovement : Component {
      * The movement functionality run by default when [TeleOpState] is default.
      */
     private fun default_loop(opMode: OpMode) {
+
+        GamepadEx.update()
+
         // alias gamepad1
         val gamepad = opMode.gamepad1
         val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
@@ -46,15 +47,13 @@ object TeleOpMovement : Component {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
         var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
-        update()
-
         // if the right bumper is pressed move slower
         if (gamepad.left_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
         }
 
         // OutTake drop
-        if (justPressed(GamepadEx.Inputs.RightBumper)) {
+        if (GamepadEx.justPressed(GamepadEx.Inputs.RightBumper)) {
             OutTake.drop()
         }
 
