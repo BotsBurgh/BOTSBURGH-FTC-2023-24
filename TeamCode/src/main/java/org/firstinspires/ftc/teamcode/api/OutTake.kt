@@ -24,4 +24,7 @@ object OutTake : API() {
     fun drop() {
         outTakeBelt.setPosition(outTakeBelt.position + outTakePosition)
     }
+    fun resetBelt() {
+        outTakeBelt.setPosition(0.0)
+    }
 }
