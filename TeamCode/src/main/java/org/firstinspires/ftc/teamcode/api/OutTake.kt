@@ -15,14 +15,13 @@ object OutTake : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.outTakeBelt = hardwareMap.get(Servo::class.java, "OutTakeBelt")
+        this.outTakeBelt = hardwareMap.get(Servo::class.java, "ServoBelt")
     }
 
     /*
     drops a pixel
      */
     fun drop() {
-
         outTakeBelt.setPosition(outTakeBelt.position + outTakePosition)
     }
 }
