@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.linear
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -11,17 +12,28 @@ import kotlin.math.min
  * Requires the [TriWheels] API.
  */
 object Encoders : LinearAPI() {
-    private const val TICKS_PER_INCH: Double = 39.0
-    private const val TICKS_PER_DEGREE: Double = 6.5
+    @Config
+    private object EncodersConfig {
+        @JvmField
+        var TICKS_PER_INCH: Double = 44.0
+        @JvmField
+        var TICKS_PER_DEGREE: Double = 6.64
 
-    private const val ENCODER_GAIN: Double = 0.0004
-    private const val ENCODER_ERROR: Int = 10
+        @JvmField
+        var ENCODER_GAIN: Double = 0.0003
+        @JvmField
+        var ENCODER_ERROR: Int = 10
 
-    // It takes 2 seconds to reach top speed
-    private const val TIME_GAIN: Double = 1.0 / 2.0
+        @JvmField
+        var MAX_SPEED: Double = 0.3
 
-    private fun inchesToTick(inches: Double): Int = (this.TICKS_PER_INCH * inches).toInt()
-    private fun degreesToTick(degrees: Double): Int = (this.TICKS_PER_DEGREE * degrees).toInt()
+        @JvmField
+        var TIME_GAIN: Double = 0.4
+    }
+
+    private fun inchesToTick(inches: Double): Int = (EncodersConfig.TICKS_PER_INCH * inches).toInt()
+    private fun degreesToTick(degrees: Double): Int =
+        (EncodersConfig.TICKS_PER_DEGREE * degrees).toInt()
 
     /**
      * Drives the robot in a given [direction] a certain amount of [inches].
@@ -46,17 +58,27 @@ object Encoders : LinearAPI() {
             val runtime = ElapsedTime()
 
             while (
-                abs(left.currentPosition - leftTarget) > this.ENCODER_ERROR &&
-                abs(right.currentPosition - rightTarget) > this.ENCODER_ERROR &&
+                abs(left.currentPosition - leftTarget) > EncodersConfig.ENCODER_ERROR &&
+                abs(right.currentPosition - rightTarget) > EncodersConfig.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
                 // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * this.TIME_GAIN
+                val timeSpeed = runtime.seconds() * EncodersConfig.TIME_GAIN
 
                 left.power =
-                    min(abs(left.currentPosition - leftTarget) * this.ENCODER_GAIN, timeSpeed)
+                    min(
+                        min(
+                            abs(left.currentPosition - leftTarget) * EncodersConfig.ENCODER_GAIN,
+                            timeSpeed
+                        ), EncodersConfig.MAX_SPEED
+                    )
                 right.power =
-                    min(abs(right.currentPosition - rightTarget) * this.ENCODER_GAIN, timeSpeed)
+                    min(
+                        min(
+                            abs(right.currentPosition - rightTarget) * EncodersConfig.ENCODER_GAIN,
+                            timeSpeed
+                        ), EncodersConfig.MAX_SPEED
+                    )
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
@@ -108,11 +130,11 @@ object Encoders : LinearAPI() {
                 linearOpMode.opModeIsActive()
             ) {
                 // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * this.TIME_GAIN
+                val timeSpeed = runtime.seconds() * EncodersConfig.TIME_GAIN
 
                 TriWheels.rotate(
                     min(
-                        abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * this.ENCODER_GAIN,
+                        abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * EncodersConfig.ENCODER_GAIN,
                         timeSpeed
                     )
                 )
