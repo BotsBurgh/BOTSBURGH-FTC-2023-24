@@ -16,16 +16,21 @@ object Encoders : LinearAPI() {
     private object EncodersConfig {
         @JvmField
         var TICKS_PER_INCH: Double = 44.0
+
         @JvmField
         var TICKS_PER_DEGREE: Double = 6.64
 
         @JvmField
         var ENCODER_GAIN: Double = 0.0003
+
         @JvmField
         var ENCODER_ERROR: Int = 10
 
         @JvmField
-        var MAX_SPEED: Double = 0.3
+        var MAX_DRIVE_SPEED: Double = 0.3
+
+        @JvmField
+        var MAX_SPIN_SPEED: Double = 0.8
 
         @JvmField
         var TIME_GAIN: Double = 0.4
@@ -70,14 +75,14 @@ object Encoders : LinearAPI() {
                         min(
                             abs(left.currentPosition - leftTarget) * EncodersConfig.ENCODER_GAIN,
                             timeSpeed
-                        ), EncodersConfig.MAX_SPEED
+                        ), EncodersConfig.MAX_DRIVE_SPEED
                     )
                 right.power =
                     min(
                         min(
                             abs(right.currentPosition - rightTarget) * EncodersConfig.ENCODER_GAIN,
                             timeSpeed
-                        ), EncodersConfig.MAX_SPEED
+                        ), EncodersConfig.MAX_DRIVE_SPEED
                     )
 
                 with(linearOpMode.telemetry) {
@@ -134,8 +139,11 @@ object Encoders : LinearAPI() {
 
                 TriWheels.rotate(
                     min(
-                        abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * EncodersConfig.ENCODER_GAIN,
-                        timeSpeed
+                        min(
+                            abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * EncodersConfig.ENCODER_GAIN,
+                            timeSpeed,
+                        ),
+                        EncodersConfig.MAX_SPIN_SPEED
                     )
                 )
 
