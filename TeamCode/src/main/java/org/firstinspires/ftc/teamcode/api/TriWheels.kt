@@ -117,7 +117,7 @@ object TriWheels : API() {
     @Deprecated(
         message = "This function has been renamed.",
         replaceWith = ReplaceWith("this.rotate(power)"),
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     fun power(power: Double) {
         this.rotate(power)
@@ -126,7 +126,7 @@ object TriWheels : API() {
     @Deprecated(
         message = "This function has been renamed.",
         replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     fun moveDirection(radians: Double, magnitude: Double) {
         this.drive(radians, magnitude)
