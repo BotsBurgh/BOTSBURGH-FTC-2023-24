@@ -3,6 +3,16 @@ package org.firstinspires.ftc.teamcode.api.linear
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.utils.Resettable
 
+/**
+ * A linear API is shared code used by linear components.
+ *
+ * It is specifically designed to only work in autonomous scenarios. It allows linear components to
+ * call specific methods unique to [LinearOpMode].
+ *
+ * If a linear API depends on another API, it should say so in the documentation.
+ *
+ * @see API
+ */
 abstract class LinearAPI {
     private var uninitializedOpMode: LinearOpMode? by Resettable { null }
 

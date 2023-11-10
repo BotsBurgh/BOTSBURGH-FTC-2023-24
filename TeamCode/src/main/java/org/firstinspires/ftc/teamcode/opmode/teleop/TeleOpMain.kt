@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.utils.Reset
 class TeleOpMain : OpMode() {
     // init will run once
     override fun init() {
-        // APIs (code that can be used in components)
+        // Resets property states of the robot
         Reset.init(this)
 
         // Triangle wheel controls
@@ -32,13 +32,11 @@ class TeleOpMain : OpMode() {
 
     // loop will run repetitively overtime while the robot runs
     override fun loop() {
-        // Components
-
         // Allows changing state through the DPad
         // This should be run before TeleOpMovement
         DPadCommands.loop(this)
 
-        // Default movement controls
+        // Movement controls
         TeleOpMovement.loop(this)
 
         // Log that we are running

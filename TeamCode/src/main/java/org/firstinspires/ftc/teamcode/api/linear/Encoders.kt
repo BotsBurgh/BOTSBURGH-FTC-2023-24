@@ -5,11 +5,21 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.TriWheels
+import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
+import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
 import kotlin.math.abs
 import kotlin.math.min
 
 /**
+ * An API for manipulating wheels using encoders.
+ *
+ * This helps when writing autonomous that needs to move a specific distance, or turn a specific
+ * amount.
+ *
  * Requires the [TriWheels] API.
+ *
+ * @see driveTo
+ * @see spinTo
  */
 object Encoders : LinearAPI() {
     @Config
@@ -46,6 +56,8 @@ object Encoders : LinearAPI() {
      * This function will take full control of the robot, and has a few side-effects. All wheel
      * motors will be reset with [TriWheels.stopAndResetMotors]. Furthermore, this function will not
      * return until the robot has finished moving.
+     *
+     * Due to current restrictions, [inches] cannot be a negative number.
      */
     fun driveTo(direction: Direction, inches: Double) {
         TriWheels.stopAndResetMotors()
@@ -111,6 +123,8 @@ object Encoders : LinearAPI() {
      *
      * Like [driveTo], this function will not return until the robot has finished moving. It will
      * also reset all wheel motors' configuration, including rotation and encoders.
+     *
+     * Unlike [driveTo], [degrees] can be a negative or positive number.
      */
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
@@ -172,6 +186,12 @@ object Encoders : LinearAPI() {
         }
     }
 
+    /**
+     * A function used by [driveTo] to figure out which two wheels are in the front, and which is
+     * behind.
+     *
+     * The returned [Triple] is in the format `Triple<Left, Right, Back>`.
+     */
     private fun defineWheels(direction: Direction): Triple<DcMotor, DcMotor, DcMotor> =
         when (direction) {
             Direction.Red -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
@@ -179,6 +199,11 @@ object Encoders : LinearAPI() {
             Direction.Blue -> Triple(TriWheels.green, TriWheels.red, TriWheels.blue)
         }
 
+    /**
+     * An enum representing which axis a robot will drive along in [driveTo].
+     *
+     * The colors correspond to the wheel names.
+     */
     enum class Direction {
         Red,
         Green,
