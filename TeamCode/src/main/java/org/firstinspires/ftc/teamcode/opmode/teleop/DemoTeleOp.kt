@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
+import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.components.DemoForward
-import org.firstinspires.ftc.teamcode.components.Telemetry
 import org.firstinspires.ftc.teamcode.utils.Reset
 
 @TeleOp(name = "Demo TeleOp")
@@ -17,6 +17,9 @@ class DemoTeleOp : OpMode() {
     override fun init() {
         // Reset is a special utility necessary in all opmodes.
         Reset.init(this)
+
+        // Setup special telemetry
+        Telemetry.init(this)
 
         // Initializes an API, shared code used by components.
         DemoQuadWheels.init(this)
@@ -28,7 +31,7 @@ class DemoTeleOp : OpMode() {
         Vision.init(this, AprilVision)
 
         // Log that we are initialized
-        Telemetry.init(this)
+        Telemetry.sayInitialized()
     }
 
     // Run repeatedly while the robot is running.
@@ -37,6 +40,6 @@ class DemoTeleOp : OpMode() {
         DemoForward.loop(this)
 
         // Log that we are running
-        Telemetry.loop(this)
+        Telemetry.sayRunning()
     }
 }
