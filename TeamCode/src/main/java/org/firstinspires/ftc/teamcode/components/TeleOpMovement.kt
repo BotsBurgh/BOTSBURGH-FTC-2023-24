@@ -34,7 +34,7 @@ object TeleOpMovement : Component {
         val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
 
         // joystick input
-        val joyX = gamepad.left_stick_x.toDouble()
+        val joyX = -gamepad.left_stick_x.toDouble()
         val joyY = gamepad.left_stick_y.toDouble()
 
         // angle and strength
