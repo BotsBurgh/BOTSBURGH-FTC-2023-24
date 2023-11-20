@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.Servo
 
 object OutTake : API() {
-    // servo
+
+    // the belt that is used to drop a pixel
     lateinit var outTakeBelt: Servo
         private set
 
@@ -15,7 +16,7 @@ object OutTake : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.outTakeBelt = hardwareMap.get(Servo::class.java, "ServoBelt")
+        this.outTakeBelt = hardwareMap.get(Servo::class.java, "outTakeConvey")
     }
 
     /*
