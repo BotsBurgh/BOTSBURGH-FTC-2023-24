@@ -34,7 +34,7 @@ object InTake : API() {
     /*
 }   stop movement of Conveyor Belt
     */
-    fun ConveyorStop() {
+    fun conveyorStop() {
         inTakeConvey.power = 0.0
     }
     /*
@@ -54,8 +54,9 @@ object InTake : API() {
 
     // functions to be used during auto to move flyWheel and Conveyor Belt
     fun flyWheelPosition(final: Int) {
-      //  while ( flyWheelEncoder.currentPosition < final) {
-        //    flyWheelMovement()
+        // commented out as no current way to check for position
+        //while ( flyWheelEncoder.currentPosition < final) {
+            //flyWheelMovement()
        // }
     }
     fun conveyPosition(final: Int) {
