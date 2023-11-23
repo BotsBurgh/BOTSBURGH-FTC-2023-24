@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
 import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.Reset
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.Team
 import org.firstinspires.ftc.vision.getVisionPortalCamera
 
@@ -50,6 +51,7 @@ abstract class AutoMain : LinearOpMode() {
         Telemetry.sayInitialized()
 
         waitForStart()
+        sleep(RobotConfig.auto.AUTO_WAIT_TIME)
 
         // TODO: Scan team game element
         val teamElementPos = 2

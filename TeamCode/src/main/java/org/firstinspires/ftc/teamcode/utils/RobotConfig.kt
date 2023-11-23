@@ -117,6 +117,12 @@ object RobotConfig {
         var OPTIMUM_GAIN: Int = 255
     }
 
+    @Config
+    object auto {
+        @JvmField
+        var AUTO_WAIT_TIME: Long = 5000
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
