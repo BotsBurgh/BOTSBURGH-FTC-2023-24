@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.api.Telemetry.sayInitialized
 import org.firstinspires.ftc.teamcode.api.Telemetry.sayRunning
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
 /**
  * An API for handling telemetry feedback.
@@ -28,8 +29,13 @@ object Telemetry : API() {
         )
     }
 
+    /** This additionally logs the current [RobotConfig]. */
     fun sayInitialized() = with(opMode.telemetry) {
         addData("Status", "Initialized")
+
+        // Log the current robot configuration
+        addData("Config", RobotConfig.toString())
+
         update()
     }
 
