@@ -22,6 +22,14 @@ object RobotConfig {
      */
     val model: Model = Model.RobotB
 
+    /**
+     * Creates a string representing the current robot configuration.
+     *
+     * This should include all standalone properties like [model], but should not contain any FTC
+     * Dashboard configuration due to how much more complicated they are.
+     */
+    override fun toString() = "RobotConfig(model=$model)"
+
     /** Configuration related to moving the wheels using encoders. */
     @Config
     object Encoders {
