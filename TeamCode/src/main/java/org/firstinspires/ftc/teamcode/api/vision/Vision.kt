@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api.vision
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.vision.VisionPortal
 
@@ -23,9 +24,12 @@ object Vision : API() {
     fun init(opMode: OpMode, vararg visionAPIs: VisionAPI) {
         super.init(opMode)
 
+        val webcam = opMode.hardwareMap.get(WebcamName::class.java, "Webcam 1")
+
         // Configure the builder with settings
         val builder = VisionPortal.Builder()
-            .setCamera(BuiltinCameraDirection.BACK)
+            .setCamera(webcam)
+            .enableLiveView(true)
 
         // Add all of the processors
         for (visionAPI in visionAPIs) {

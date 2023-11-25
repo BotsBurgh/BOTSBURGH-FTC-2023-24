@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.api.linear
 
-import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -22,33 +22,11 @@ import kotlin.math.min
  * @see spinTo
  */
 object Encoders : LinearAPI() {
-    @Config
-    private object EncodersConfig {
-        @JvmField
-        var TICKS_PER_INCH: Double = 44.0
+    private fun inchesToTick(inches: Double): Int =
+        (RobotConfig.Encoders.TICKS_PER_INCH * inches).toInt()
 
-        @JvmField
-        var TICKS_PER_DEGREE: Double = 6.64
-
-        @JvmField
-        var ENCODER_GAIN: Double = 0.0003
-
-        @JvmField
-        var ENCODER_ERROR: Int = 10
-
-        @JvmField
-        var MAX_DRIVE_SPEED: Double = 0.3
-
-        @JvmField
-        var MAX_SPIN_SPEED: Double = 0.8
-
-        @JvmField
-        var TIME_GAIN: Double = 0.4
-    }
-
-    private fun inchesToTick(inches: Double): Int = (EncodersConfig.TICKS_PER_INCH * inches).toInt()
     private fun degreesToTick(degrees: Double): Int =
-        (EncodersConfig.TICKS_PER_DEGREE * degrees).toInt()
+        (RobotConfig.Encoders.TICKS_PER_DEGREE * degrees).toInt()
 
     /**
      * Drives the robot in a given [direction] a certain amount of [inches].
@@ -75,26 +53,26 @@ object Encoders : LinearAPI() {
             val runtime = ElapsedTime()
 
             while (
-                abs(left.currentPosition - leftTarget) > EncodersConfig.ENCODER_ERROR &&
-                abs(right.currentPosition - rightTarget) > EncodersConfig.ENCODER_ERROR &&
+                abs(left.currentPosition - leftTarget) > RobotConfig.Encoders.ENCODER_ERROR &&
+                abs(right.currentPosition - rightTarget) > RobotConfig.Encoders.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
                 // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * EncodersConfig.TIME_GAIN
+                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
 
                 left.power =
                     min(
                         min(
-                            abs(left.currentPosition - leftTarget) * EncodersConfig.ENCODER_GAIN,
+                            abs(left.currentPosition - leftTarget) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed
-                        ), EncodersConfig.MAX_DRIVE_SPEED
+                        ), RobotConfig.Encoders.MAX_DRIVE_SPEED
                     )
                 right.power =
                     min(
                         min(
-                            abs(right.currentPosition - rightTarget) * EncodersConfig.ENCODER_GAIN,
+                            abs(right.currentPosition - rightTarget) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed
-                        ), EncodersConfig.MAX_DRIVE_SPEED
+                        ), RobotConfig.Encoders.MAX_DRIVE_SPEED
                     )
 
                 with(linearOpMode.telemetry) {
@@ -149,15 +127,15 @@ object Encoders : LinearAPI() {
                 linearOpMode.opModeIsActive()
             ) {
                 // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * EncodersConfig.TIME_GAIN
+                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
 
                 TriWheels.rotate(
                     min(
                         min(
-                            abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * EncodersConfig.ENCODER_GAIN,
+                            abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed,
                         ),
-                        EncodersConfig.MAX_SPIN_SPEED
+                        RobotConfig.Encoders.MAX_SPIN_SPEED
                     )
                 )
 
