@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -12,17 +13,11 @@ object DepositPixelBackdrop : LinearComponent {
     private const val TAG_ID = 1
     private const val DESIRED_DISTANCE = 12.0
 
-    private const val SPEED_GAIN = 0.01
-    private const val STRAFE_GAIN = 0.007
-    private const val TURN_GAIN = 0.005
-
     private const val MAX_AUTO_SPEED = 0.3
-    private const val MAX_AUTO_STRAFE = 0.3
-    private const val MAX_AUTO_TURN = 0.2
+    private const val MAX_AUTO_STRAFE = 0.4
+    private const val MAX_AUTO_TURN = 0.5
 
     override fun run(linearOpMode: LinearOpMode) = with(linearOpMode) {
-        // TODO: Calibrate camera
-
         while (opModeIsActive()) {
             val tag = AprilVision.detect(TAG_ID)
 
@@ -43,12 +38,25 @@ object DepositPixelBackdrop : LinearComponent {
             val yawError = tag.ftcPose.yaw
 
             // Calculate how fast motors need to move
-            val drive = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED)
-            val turn = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN)
-            val strafe = Range.clip(yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE)
+            val drive = Range.clip(
+                rangeError * RobotConfig.DepositPixelBackdrop.SPEED_GAIN,
+                -MAX_AUTO_SPEED,
+                MAX_AUTO_SPEED
+            )
+            val turn = Range.clip(
+                headingError * RobotConfig.DepositPixelBackdrop.TURN_GAIN,
+                -MAX_AUTO_TURN,
+                MAX_AUTO_TURN
+            )
+            val strafe = Range.clip(
+                yawError * RobotConfig.DepositPixelBackdrop.STRAFE_GAIN,
+                -MAX_AUTO_STRAFE,
+                MAX_AUTO_STRAFE
+            )
 
             // Log values
-            with (telemetry) {
+            with(telemetry) {
+                addData("Status", "Tag found with id ${tag.id}")
                 addData("Drive", drive)
                 addData("Turn", turn)
                 addData("Strafe", strafe)

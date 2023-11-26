@@ -85,6 +85,18 @@ object RobotConfig {
         var TIME_GAIN: Double = 0.4
     }
 
+    @Config
+    object DepositPixelBackdrop {
+        @JvmField
+        var SPEED_GAIN: Double = 0.003
+
+        @JvmField
+        var STRAFE_GAIN: Double = 0.005
+
+        @JvmField
+        var TURN_GAIN: Double = 0.01
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
