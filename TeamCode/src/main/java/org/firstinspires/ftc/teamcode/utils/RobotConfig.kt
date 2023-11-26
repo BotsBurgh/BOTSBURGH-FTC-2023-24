@@ -88,13 +88,19 @@ object RobotConfig {
     @Config
     object DepositPixelBackdrop {
         @JvmField
-        var SPEED_GAIN: Double = 0.003
+        var SPEED_GAIN: Double = 0.01
 
         @JvmField
         var STRAFE_GAIN: Double = 0.005
 
         @JvmField
         var TURN_GAIN: Double = 0.01
+
+        @JvmField
+        var RANGE_ERROR: Double = 2.0
+
+        @JvmField
+        var HEADING_YAW_ERROR: Double = 5.0
     }
 
     /**

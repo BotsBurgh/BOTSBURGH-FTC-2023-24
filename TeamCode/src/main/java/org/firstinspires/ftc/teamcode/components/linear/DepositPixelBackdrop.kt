@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
-import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
@@ -17,12 +17,21 @@ object DepositPixelBackdrop : LinearComponent {
     private const val MAX_AUTO_TURN = 0.5
 
     fun run(linearOpMode: LinearOpMode, tagID: Int) = with(linearOpMode) {
-        while (opModeIsActive()) {
+        var rangeError = 9999.0
+        var headingError = 9999.0
+        var yawError = 9999.0
+
+        while ((
+                    abs(rangeError) > RobotConfig.DepositPixelBackdrop.RANGE_ERROR ||
+                            abs(headingError) > RobotConfig.DepositPixelBackdrop.HEADING_YAW_ERROR ||
+                            abs(yawError) > RobotConfig.DepositPixelBackdrop.HEADING_YAW_ERROR) &&
+            opModeIsActive()
+        ) {
             val tag = AprilVision.detect(tagID)
 
             // Sleep for 0.1 seconds if no tag is found
             if (tag == null) {
-                // TriWheels.stop()
+                TriWheels.stop()
 
                 telemetry.addData("Status", "Tag not found")
                 telemetry.update()
@@ -32,9 +41,9 @@ object DepositPixelBackdrop : LinearComponent {
             }
 
             // Figure out how far we are from where we want to be
-            val rangeError = tag.ftcPose.range - DESIRED_DISTANCE
-            val headingError = tag.ftcPose.bearing
-            val yawError = tag.ftcPose.yaw
+            rangeError = tag.ftcPose.range - DESIRED_DISTANCE
+            headingError = tag.ftcPose.bearing
+            yawError = tag.ftcPose.yaw
 
             // Calculate how fast motors need to move
             val drive = Range.clip(
@@ -56,19 +65,21 @@ object DepositPixelBackdrop : LinearComponent {
             // Log values
             with(telemetry) {
                 addData("Status", "Tag found with id ${tag.id}")
-                addData("Drive", drive)
-                addData("Turn", turn)
-                addData("Strafe", strafe)
+                addData("Range", rangeError)
+                addData("Heading", headingError)
+                addData("Yaw", yawError)
                 update()
             }
 
-            val radians = atan2(drive, strafe) - (PI / 3.0)
+            val radians = atan2(drive, strafe)
             val magnitude = sqrt(drive * drive + strafe * strafe)
 
             TriWheels.driveWithRotation(radians, magnitude, turn)
 
             sleep(100)
         }
+
+        TriWheels.stop()
     }
 
     override fun run(linearOpMode: LinearOpMode) {
