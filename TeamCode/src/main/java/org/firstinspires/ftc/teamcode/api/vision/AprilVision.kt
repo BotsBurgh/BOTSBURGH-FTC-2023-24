@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.api.vision
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
+import java.util.concurrent.TimeUnit
 
 /**
  * An API for detecting april tags.
@@ -37,4 +40,18 @@ object AprilVision : API(), VisionAPI {
 
     /** Returns the detection data of a specific tag id, or null if not found. */
     fun detect(id: Int): AprilTagDetection? = this.detections().firstOrNull { it.id == id }
+
+    /**
+     * Configures the camera's exposure and gain to be optimized for april tags.
+     */
+    fun Vision.optimizeForAprilTags() {
+        val exposureControl = portal.getCameraControl(ExposureControl::class.java)
+
+        exposureControl.mode = ExposureControl.Mode.Manual
+        exposureControl.setExposure(1, TimeUnit.MILLISECONDS)
+
+        val gainControl = portal.getCameraControl(GainControl::class.java)
+
+        gainControl.gain = 255
+    }
 }
