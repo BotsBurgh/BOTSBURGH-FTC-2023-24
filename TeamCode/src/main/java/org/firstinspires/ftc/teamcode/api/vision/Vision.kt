@@ -46,20 +46,13 @@ object Vision : API() {
             this::opModeSleep
         }
 
-
-        val cameraItem = opMode.telemetry.addData("Camera", this.portal.cameraState)
-        cameraItem.setRetained(true)
-
         // Wait until the camera has started.
         while (this.portal.cameraState != VisionPortal.CameraState.STREAMING) {
-            cameraItem.setValue(this.portal.cameraState)
+            opMode.telemetry.addData("Camera", this.portal.cameraState)
             opMode.telemetry.update()
 
             sleep(50)
         }
-
-        opMode.telemetry.removeItem(cameraItem)
-        opMode.telemetry.update()
     }
 
     // Vision must be initialized with at least one VisionAPI
