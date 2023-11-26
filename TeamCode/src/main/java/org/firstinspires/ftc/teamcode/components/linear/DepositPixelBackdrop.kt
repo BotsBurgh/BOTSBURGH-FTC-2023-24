@@ -10,16 +10,15 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 object DepositPixelBackdrop : LinearComponent {
-    private const val TAG_ID = 1
     private const val DESIRED_DISTANCE = 12.0
 
     private const val MAX_AUTO_SPEED = 0.3
     private const val MAX_AUTO_STRAFE = 0.4
     private const val MAX_AUTO_TURN = 0.5
 
-    override fun run(linearOpMode: LinearOpMode) = with(linearOpMode) {
+    fun run(linearOpMode: LinearOpMode, tagID: Int) = with(linearOpMode) {
         while (opModeIsActive()) {
-            val tag = AprilVision.detect(TAG_ID)
+            val tag = AprilVision.detect(tagID)
 
             // Sleep for 0.1 seconds if no tag is found
             if (tag == null) {
@@ -70,5 +69,9 @@ object DepositPixelBackdrop : LinearComponent {
 
             sleep(100)
         }
+    }
+
+    override fun run(linearOpMode: LinearOpMode) {
+        throw RuntimeException("Please call DepositPixelBackdrop.run with a tag ID.")
     }
 }
