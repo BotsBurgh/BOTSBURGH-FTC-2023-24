@@ -60,6 +60,9 @@ object Vision : API() {
         throw RuntimeException("Please initialize Vision with at least one VisionAPI.")
     }
 
+    /**
+     * A version of [LinearOpMode.sleep] that works for [OpMode]s.
+     */
     private fun opModeSleep(ms: Long) {
         try {
             Thread.sleep(ms)

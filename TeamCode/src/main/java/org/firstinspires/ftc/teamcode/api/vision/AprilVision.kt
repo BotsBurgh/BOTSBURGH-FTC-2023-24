@@ -43,6 +43,9 @@ object AprilVision : API(), VisionAPI {
 
     /**
      * Configures the camera's exposure and gain to be optimized for april tags.
+     *
+     * Note that this may affect OpenCV / Tensorflow operations since it greatly decreases the
+     * brightness of the image.
      */
     fun Vision.optimizeForAprilTags() {
         val exposureControl = portal.getCameraControl(ExposureControl::class.java)

@@ -85,6 +85,7 @@ object RobotConfig {
         var TIME_GAIN: Double = 0.4
     }
 
+    /** Configuration related to moving using april tags. */
     @Config
     object AprilMovement {
         @JvmField
