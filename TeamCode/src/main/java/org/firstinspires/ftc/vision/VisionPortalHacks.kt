@@ -9,6 +9,5 @@ import org.openftc.easyopencv.OpenCvCamera
  * [VisionPortalImpl.camera] property.
  */
 fun getVisionPortalCamera(visionPortal: VisionPortal): OpenCvCamera? =
+    // Return the camera if visionPortal is a VisionPortalImpl, else null
     (visionPortal as? VisionPortalImpl)?.camera
-
-fun getVisionPortalCamera(visionPortal: VisionPortalImpl): OpenCvCamera = visionPortal.camera
