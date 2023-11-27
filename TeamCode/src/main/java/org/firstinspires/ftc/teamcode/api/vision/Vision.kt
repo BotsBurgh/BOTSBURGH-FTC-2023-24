@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.vision
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.vision.VisionPortal
@@ -38,10 +38,36 @@ object Vision : API() {
 
         // Build the portal
         this.portal = builder.build()
+
+        // Use a different sleep function depending on whether its a linear opmode or not.
+        val sleep = if (opMode is LinearOpMode) {
+            opMode::sleep
+        } else {
+            this::opModeSleep
+        }
+
+        // Wait until the camera has started.
+        while (this.portal.cameraState != VisionPortal.CameraState.STREAMING) {
+            opMode.telemetry.addData("Camera", this.portal.cameraState)
+            opMode.telemetry.update()
+
+            sleep(50)
+        }
     }
 
     // Vision must be initialized with at least one VisionAPI
     override fun init(opMode: OpMode) {
         throw RuntimeException("Please initialize Vision with at least one VisionAPI.")
+    }
+
+    /**
+     * A version of [LinearOpMode.sleep] that works for [OpMode]s.
+     */
+    private fun opModeSleep(ms: Long) {
+        try {
+            Thread.sleep(ms)
+        } catch (e: InterruptedException) {
+            Thread.currentThread().interrupt()
+        }
     }
 }

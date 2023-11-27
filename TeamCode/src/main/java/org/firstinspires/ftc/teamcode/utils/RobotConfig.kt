@@ -85,6 +85,38 @@ object RobotConfig {
         var TIME_GAIN: Double = 0.4
     }
 
+    /** Configuration related to moving using april tags. */
+    @Config
+    object AprilMovement {
+        @JvmField
+        var RANGE_GAIN: Double = 0.01
+
+        @JvmField
+        var HEADING_GAIN: Double = 0.01
+
+        @JvmField
+        var STRAFE_GAIN: Double = 0.005
+
+        @JvmField
+        var RANGE_ERROR: Double = 2.0
+
+        @JvmField
+        var HEADING_ERROR: Double = 5.0
+
+        @JvmField
+        var STRAFE_ERROR: Double = 5.0
+    }
+
+    /** Configuration related to scanning april tags. */
+    @Config
+    object AprilVision {
+        @JvmField
+        var OPTIMUM_EXPOSURE: Long = 1
+
+        @JvmField
+        var OPTIMUM_GAIN: Int = 255
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
