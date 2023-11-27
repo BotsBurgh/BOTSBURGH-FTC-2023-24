@@ -86,21 +86,24 @@ object RobotConfig {
     }
 
     @Config
-    object DepositPixelBackdrop {
+    object AprilMovement {
         @JvmField
-        var SPEED_GAIN: Double = 0.01
+        var RANGE_GAIN: Double = 0.01
+
+        @JvmField
+        var HEADING_GAIN: Double = 0.01
 
         @JvmField
         var STRAFE_GAIN: Double = 0.005
 
         @JvmField
-        var TURN_GAIN: Double = 0.01
-
-        @JvmField
         var RANGE_ERROR: Double = 2.0
 
         @JvmField
-        var HEADING_YAW_ERROR: Double = 5.0
+        var HEADING_ERROR: Double = 5.0
+
+        @JvmField
+        var STRAFE_ERROR: Double = 5.0
     }
 
     /**
