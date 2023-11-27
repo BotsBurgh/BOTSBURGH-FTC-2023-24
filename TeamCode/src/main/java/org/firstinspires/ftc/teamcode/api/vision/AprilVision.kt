@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl
 import org.firstinspires.ftc.teamcode.api.API
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
@@ -51,10 +52,10 @@ object AprilVision : API(), VisionAPI {
         val exposureControl = portal.getCameraControl(ExposureControl::class.java)
 
         exposureControl.mode = ExposureControl.Mode.Manual
-        exposureControl.setExposure(1, TimeUnit.MILLISECONDS)
+        exposureControl.setExposure(RobotConfig.AprilVision.OPTIMUM_EXPOSURE, TimeUnit.MILLISECONDS)
 
         val gainControl = portal.getCameraControl(GainControl::class.java)
 
-        gainControl.gain = 255
+        gainControl.gain = RobotConfig.AprilVision.OPTIMUM_GAIN
     }
 }

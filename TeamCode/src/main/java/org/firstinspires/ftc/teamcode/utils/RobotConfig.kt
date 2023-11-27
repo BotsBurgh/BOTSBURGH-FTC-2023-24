@@ -107,6 +107,16 @@ object RobotConfig {
         var STRAFE_ERROR: Double = 5.0
     }
 
+    /** Configuration related to scanning april tags. */
+    @Config
+    object AprilVision {
+        @JvmField
+        var OPTIMUM_EXPOSURE: Long = 1
+
+        @JvmField
+        var OPTIMUM_GAIN: Int = 255
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
