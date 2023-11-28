@@ -30,18 +30,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # - name: Upload site artifact
-      #   uses: actions/upload-pages-artifact@v1
-      #   with:
-      #     path: ".output/public"
+      - name: Setup JDK 11
+        with:
+          java-version: 8
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Build documentation
+        run: |
+          chmod +x ./gradlew
+          ./gradlew dokkaHtml
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "TeamCode/build/dokka/html"
 
   # Download build's artifact and publish site
-  # deploy:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Deploy to Github Pages
-  #       uses: actions/deploy-pages@v2
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to Github Pages
+        uses: actions/deploy-pages@v2
