@@ -83,6 +83,8 @@ abstract class AutoMain : LinearOpMode() {
         // Red: 1, 2, 3. Blue: 4, 5, 6
         AprilMovement.driveTo(teamElementPos + pickTeam(0, 3))
 
+        // TODO: Deposit pixel
+
         // Back up to view all april tags
         Encoders.driveTo(forward, tiles(-1))
 
