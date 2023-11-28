@@ -1,12 +1,18 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
+import org.firstinspires.ftc.teamcode.api.linear.AprilMovement
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
+import org.firstinspires.ftc.teamcode.api.vision.AprilVision
+import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
+import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.Reset
 import org.firstinspires.ftc.teamcode.utils.Team
+import org.firstinspires.ftc.vision.getVisionPortalCamera
 
 abstract class AutoMain : LinearOpMode() {
     abstract val config: Config
@@ -27,12 +33,29 @@ abstract class AutoMain : LinearOpMode() {
         TriWheels.init(this)
         Encoders.init(this)
 
+        // Vision APIs
+        AprilVision.init(this)
+        Vision.init(this, AprilVision)
+
+        AprilMovement.init(this)
+
+        // Modify camera exposure for april tags
+        // This may interfere with other vision processes like Tensorflow
+        Vision.optimizeForAprilTags()
+
+        // Stream camera to FTC Dashboard
+        val camera = getVisionPortalCamera(Vision.portal)!!
+        FtcDashboard.getInstance().startCameraStream(camera, 0.0)
+
         Telemetry.sayInitialized()
 
         waitForStart()
 
         // TODO: Scan team game element
-        // val teamElementPos: Int = ...
+        val teamElementPos = 2
+
+        telemetry.log().add("No team game element scanned, defaulting to 2!")
+        telemetry.update()
 
         when (config.startPos) {
             StartPos.BackStage -> {
@@ -82,22 +105,22 @@ abstract class AutoMain : LinearOpMode() {
             }
         }
 
-        // TODO: Deposit pixel using april tag
+        // Deposit pixel using april tag
         // Red: 1, 2, 3. Blue: 4, 5, 6
-        // DepositPixel.run(this, teamElementPos + when (config.team) { Team.Red -> 3; Team.Blue -> 0 })
+        AprilMovement.driveTo(
+            teamElementPos + when (config.team) {
+                Team.Red -> 3
+                Team.Blue -> 0
+            }
+        )
 
         // Back up to view all april tags
         Encoders.driveTo(forward, tiles(-1))
 
-        // TODO: Center robot on middle april tag
+        // Center 1 tile away from middle april tag
         when (config.team) {
-            Team.Red -> {
-                // centerOnAprilTag(5, DepositPixel.APRIL_TAG_DISTANCE)
-            }
-
-            Team.Blue -> {
-                // centerOnAprilTag(2, DepositPixel.APRIL_TAG_DISTANCE)
-            }
+            Team.Red -> AprilMovement.driveTo(5, tiles(1))
+            Team.Blue -> AprilMovement.driveTo(2, tiles(1))
         }
 
         // Navigate to parking spot
