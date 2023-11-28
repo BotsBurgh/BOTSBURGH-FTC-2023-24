@@ -60,32 +60,11 @@ abstract class AutoMain : LinearOpMode() {
         when (config.startPos) {
             StartPos.BackStage -> {
                 Encoders.driveTo(forward, startingOffset)
-
-                Encoders.spinTo(
-                    when (config.team) {
-                        Team.Red -> 90.0
-                        Team.Blue -> -90.0
-                    }
-                )
-
+                Encoders.spinTo(pickTeam(90.0, -90.0))
                 Encoders.driveTo(forward, tiles(1))
-
-                Encoders.spinTo(
-                    when (config.team) {
-                        Team.Red -> -90.0
-                        Team.Blue -> 90.0
-                    }
-                )
-
+                Encoders.spinTo(pickTeam(-90.0, 90.0))
                 Encoders.driveTo(forward, tiles(1))
-
-                Encoders.spinTo(
-                    when (config.team) {
-                        Team.Red -> 90.0
-                        Team.Blue -> -90.0
-                    }
-                )
-
+                Encoders.spinTo(pickTeam(90.0, -90.0))
                 Encoders.driveTo(forward, tiles(2))
             }
 
@@ -94,12 +73,7 @@ abstract class AutoMain : LinearOpMode() {
                 Encoders.driveTo(forward, tiles(2) + startingOffset)
 
                 // Spin to face backdrop
-                Encoders.spinTo(
-                    when (config.team) {
-                        Team.Red -> 90.0
-                        Team.Blue -> -90.0
-                    }
-                )
+                Encoders.spinTo(pickTeam(90.0, -90.0))
 
                 Encoders.driveTo(forward, tiles(1))
             }
@@ -107,12 +81,7 @@ abstract class AutoMain : LinearOpMode() {
 
         // Deposit pixel using april tag
         // Red: 1, 2, 3. Blue: 4, 5, 6
-        AprilMovement.driveTo(
-            teamElementPos + when (config.team) {
-                Team.Red -> 3
-                Team.Blue -> 0
-            }
-        )
+        AprilMovement.driveTo(teamElementPos + pickTeam(0, 3))
 
         // Back up to view all april tags
         Encoders.driveTo(forward, tiles(-1))
@@ -124,21 +93,9 @@ abstract class AutoMain : LinearOpMode() {
         }
 
         // Navigate to parking spot
-        Encoders.spinTo(
-            when (config.parkPos) {
-                ParkPos.LeftOfBackdrop -> -90.0
-                ParkPos.RightOfBackdrop -> 90.0
-            }
-        )
-
+        Encoders.spinTo(pickParkPos(-90.0, 90.0))
         Encoders.driveTo(forward, tiles(1))
-
-        Encoders.spinTo(
-            when (config.parkPos) {
-                ParkPos.LeftOfBackdrop -> 90.0
-                ParkPos.RightOfBackdrop -> -90.0
-            }
-        )
+        Encoders.spinTo(pickParkPos(90.0, -90.0))
 
         // Park in spot
         Encoders.driveTo(forward, tiles(1))
@@ -149,6 +106,30 @@ abstract class AutoMain : LinearOpMode() {
 
     /** Converts an amount of tiles to inches. */
     private fun tiles(amount: Int) = tiles(amount.toDouble())
+
+    /**
+     * A utility that returns the value correlating to the configured team.
+     *
+     * It is a lot easier to understand by reading the code than explaining it here.
+     *
+     * @see pickParkPos
+     */
+    private fun <T> pickTeam(red: T, blue: T): T = when (config.team) {
+        Team.Red -> red
+        Team.Blue -> blue
+    }
+
+    /**
+     * A utility that returns the value correlating to the configured parking position.
+     *
+     * It is a lot easier to understand by reading the code than explaining it here.
+     *
+     * @see pickTeam
+     */
+    private fun <T> pickParkPos(left: T, right: T): T = when (config.parkPos) {
+        ParkPos.LeftOfBackdrop -> left
+        ParkPos.RightOfBackdrop -> right
+    }
 
     data class Config(val team: Team, val startPos: StartPos, val parkPos: ParkPos)
 
