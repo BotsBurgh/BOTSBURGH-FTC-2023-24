@@ -50,7 +50,10 @@ object TeleOpMovement : Component {
 
         if (gamepad.a) {
             InTake.flyWheelMovement()
-            InTake.conveyMovement()
+            InTake.conveyorMovement()
+        } else {
+            InTake.flyWheelStop()
+            InTake.conveyorStop()
         }
 
         // movement of all wheels

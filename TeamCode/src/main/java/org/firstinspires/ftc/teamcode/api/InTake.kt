@@ -19,6 +19,8 @@ object InTake : API() {
         this.flyWheel2 = hardwareMap.get(CRServo::class.java, "flyWheel2")
         this.inTakeConvey = hardwareMap.get(DcMotor::class.java, "inTakeConvey")
 
+        flyWheel2.direction.inverted()
+
         resetEncoders()
     }
 
@@ -30,7 +32,7 @@ object InTake : API() {
     /**
      * Starts moving the conveyor belt.
      */
-    fun conveyMovement() {
+    fun conveyorMovement() {
         inTakeConvey.power = 1.0
     }
 
@@ -49,25 +51,19 @@ object InTake : API() {
         flyWheel2.power = 1.0
     }
 
+    /*
+    * Stops the fly wheels
+    */
+    fun flyWheelStop() {
+        flyWheel1.power = 0.0
+        flyWheel2.power = 0.0
+    }
+
     /**
      * Starts moving the flywheels in reverse.
      */
     fun flyWheelReverseMovement() {
         flyWheel1.power = -1.0
         flyWheel2.power = -1.0
-    }
-
-    // functions to be used during auto to move flyWheel and Conveyor Belt
-    fun flyWheelPosition(final: Int) {
-        // commented out as no current way to check for position
-        //while ( flyWheelEncoder.currentPosition < final) {
-        //flyWheelMovement()
-        // }
-    }
-
-    fun conveyPosition(final: Int) {
-        while (inTakeConvey.currentPosition < final) {
-            conveyMovement()
-        }
     }
 }
