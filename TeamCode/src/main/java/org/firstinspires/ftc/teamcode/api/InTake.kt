@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.api
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.CRServo
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 
 object InTake : API() {
     lateinit var flyWheel1: CRServo
@@ -19,7 +20,7 @@ object InTake : API() {
         this.flyWheel2 = hardwareMap.get(CRServo::class.java, "flyWheel2")
         this.inTakeConvey = hardwareMap.get(DcMotor::class.java, "inTakeConvey")
 
-        flyWheel2.direction.inverted()
+        this.flyWheel2.direction = DcMotorSimple.Direction.REVERSE
 
         resetEncoders()
     }
