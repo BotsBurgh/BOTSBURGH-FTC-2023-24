@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.API
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.vision.VisionPortal
 
 object Vision : API() {
@@ -29,7 +30,8 @@ object Vision : API() {
         // Configure the builder with settings
         val builder = VisionPortal.Builder()
             .setCamera(webcam)
-            .enableLiveView(true)
+            // Enable live view when debug is enabled
+            .enableLiveView(RobotConfig.debug)
 
         // Add all of the processors
         for (visionAPI in visionAPIs) {

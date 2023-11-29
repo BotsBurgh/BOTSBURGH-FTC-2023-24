@@ -22,11 +22,13 @@ object Telemetry : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        // Makes opMode.telemetry calls send to both driver station and FTC Dashboard
-        opMode.telemetry = MultipleTelemetry(
-            opMode.telemetry,
-            FtcDashboard.getInstance().telemetry,
-        )
+        if (RobotConfig.debug) {
+            // Makes opMode.telemetry calls send to both driver station and FTC Dashboard
+            opMode.telemetry = MultipleTelemetry(
+                opMode.telemetry,
+                FtcDashboard.getInstance().telemetry,
+            )
+        }
     }
 
     /** This additionally logs the current [RobotConfig]. */
