@@ -23,12 +23,19 @@ object RobotConfig {
     val model: Model = Model.RobotB
 
     /**
+     * When true, enables debugging features like camera streaming and more logs.
+     *
+     * This should be disabled for competitions.
+     */
+    const val debug: Boolean = true
+
+    /**
      * Creates a string representing the current robot configuration.
      *
-     * This should include all standalone properties like [model], but should not contain any FTC
-     * Dashboard configuration due to how much more complicated they are.
+     * This should include all standalone properties like [model] and [debug], but should not
+     * contain any FTC Dashboard configuration due to how much more complicated they are.
      */
-    override fun toString() = "RobotConfig(model=$model)"
+    override fun toString() = "RobotConfig(model=$model, debug=$debug)"
 
     /** Configuration related to moving the wheels using encoders. */
     @Config
