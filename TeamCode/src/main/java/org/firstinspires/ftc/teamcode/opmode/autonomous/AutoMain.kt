@@ -51,10 +51,11 @@ abstract class AutoMain : LinearOpMode() {
         Telemetry.sayInitialized()
 
         waitForStart()
-        sleep(RobotConfig.auto.AUTO_WAIT_TIME)
 
         // TODO: Scan team game element
         val teamElementPos = 2
+
+        sleep(RobotConfig.AutoMain.WAIT_TIME)
 
         telemetry.log().add("No team game element scanned, defaulting to 2!")
         telemetry.update()

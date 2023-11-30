@@ -118,9 +118,9 @@ object RobotConfig {
     }
 
     @Config
-    object auto {
+    object AutoMain {
         @JvmField
-        var AUTO_WAIT_TIME: Long = 5000
+        var WAIT_TIME: Long = 0
     }
 
     /**
