@@ -11,6 +11,10 @@
 
 // Custom definitions may go here
 
+plugins {
+    id 'org.jetbrains.dokka' version '1.9.10'
+}
+
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
