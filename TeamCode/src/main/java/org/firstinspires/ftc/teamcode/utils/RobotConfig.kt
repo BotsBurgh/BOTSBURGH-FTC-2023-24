@@ -27,7 +27,7 @@ object RobotConfig {
      *
      * This should be disabled for competitions.
      */
-    const val debug: Boolean = true
+    const val debug: Boolean = false
 
     /**
      * Creates a string representing the current robot configuration.

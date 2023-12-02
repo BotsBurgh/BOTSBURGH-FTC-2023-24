@@ -7,9 +7,8 @@ import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
 import org.firstinspires.ftc.teamcode.utils.Reset
 
-abstract class JankAuto : LinearOpMode() {
-    abstract val redSide: Boolean
-
+@Autonomous(name = "JankAuto")
+class JankAuto : LinearOpMode() {
     override fun runOpMode() {
         Reset.init(this)
 
@@ -23,22 +22,6 @@ abstract class JankAuto : LinearOpMode() {
 
         Telemetry.sayStarted()
 
-        if (this.redSide) {
-            Encoders.spinTo(90.0)
-        } else {
-            Encoders.spinTo(-90.0)
-        }
-
-        Encoders.driveTo(Encoders.Direction.Blue, 24.0)
+        Encoders.driveTo(Encoders.Direction.Blue, 20.0)
     }
-}
-
-@Autonomous(name = "JankAuto - Red")
-class JankAutoRed : JankAuto() {
-    override val redSide = true
-}
-
-@Autonomous(name = "JankAuto - Red")
-class JankAutoBlue : JankAuto() {
-    override val redSide = false
 }
