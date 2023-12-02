@@ -23,6 +23,6 @@ class EncoderTest : LinearOpMode() {
 
         waitForStart()
 
-        Encoders.driveTo(Encoders.Direction.Red, Test.DISTANCE)
+        Encoders.driveTo(Encoders.Direction.Blue, Test.DISTANCE)
     }
 }
