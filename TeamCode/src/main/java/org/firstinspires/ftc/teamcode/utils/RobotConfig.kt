@@ -130,6 +130,15 @@ object RobotConfig {
         var WAIT_TIME: Long = 0
     }
 
+    @Config
+    object TeleOpMovement {
+        @JvmField
+        var DRIVE_SPEED: Double = 0.8
+
+        @JvmField
+        var ROTATE_SPEED: Double = 0.5
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
