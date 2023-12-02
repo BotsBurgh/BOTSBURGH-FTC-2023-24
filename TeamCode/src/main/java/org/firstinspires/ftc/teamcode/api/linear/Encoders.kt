@@ -102,7 +102,8 @@ object Encoders : LinearAPI() {
      * Like [driveTo], this function will not return until the robot has finished moving. It will
      * also reset all wheel motors' configuration, including rotation and encoders.
      *
-     * Unlike [driveTo], [degrees] can be a negative or positive number.
+     * Unlike [driveTo], [degrees] can be a negative or positive number. Positive moves the robot
+     * **counter-clockwise**, negative moves the robot **clockwise**.
      */
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
