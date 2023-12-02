@@ -8,15 +8,11 @@ import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.DPadCommands
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
-import org.firstinspires.ftc.teamcode.utils.Reset
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
     // init will run once
     override fun init() {
-        // Resets property states of the robot
-        Reset.init(this)
-
         // Setup special telemetry
         Telemetry.init(this)
 

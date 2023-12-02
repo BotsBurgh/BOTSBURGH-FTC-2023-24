@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerImpl
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
+import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar
 import kotlin.reflect.KProperty
 
 /**
@@ -8,38 +12,33 @@ import kotlin.reflect.KProperty
  */
 private val resetFunctions = mutableSetOf<() -> Unit>()
 
-/**
- * An object that resets the property states of the robot, used between opmode runs.
- *
- * **This must be initialized first, before any other code is run!**
- *
- * @see Resettable
- */
-object Reset {
-    /**
-     * A reference to the last-initialized opmode, used purely to ensure that [Reset] is not called
-     * more than once per run.
-     */
-    private var opModeReference: OpMode? = null
-
-    /** Resets any registered [Resettable] properties. */
-    fun init(opMode: OpMode) {
-        // Check that, if Reset has been called before, it is not called on the same opmode run by
-        // ensuring the opmode references are different.
-        if (opModeReference == opMode) {
-            throw IllegalStateException("Tried to initialize the Reset API more than once in a single run.")
+object ResetNotifier : OpModeManagerNotifier.Notifications {
+    @OpModeRegistrar
+    @JvmStatic
+    fun register(manager: OpModeManager) {
+        if (manager is OpModeManagerImpl) {
+            manager.registerListener(this)
         }
-
-        // Set new opmode reference.
-        opModeReference = opMode
-
-        // Reset any registered properties.
-        resetAll()
     }
+
+    override fun onOpModePreInit(opMode: OpMode?) {
+        this.resetAll()
+    }
+
+    override fun onOpModePreStart(opMode: OpMode?) {}
+    override fun onOpModePostStop(opMode: OpMode?) {}
 
     private fun resetAll() {
         // Call each reset function
         resetFunctions.forEach { it() }
+    }
+
+    @Deprecated(
+        message = "ResetNotifier gets automatically initialized, you do not need to manually do it.",
+        replaceWith = ReplaceWith(""),
+        level = DeprecationLevel.ERROR,
+    )
+    fun init(opMode: OpMode) {
     }
 }
 
