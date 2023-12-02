@@ -48,7 +48,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 44.0
+        var TICKS_PER_INCH: Double = 27.0
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -133,7 +133,7 @@ object RobotConfig {
     @Config
     object TeleOpMovement {
         @JvmField
-        var DRIVE_SPEED: Double = 0.8
+        var DRIVE_SPEED: Double = 0.6
 
         @JvmField
         var ROTATE_SPEED: Double = 0.5
