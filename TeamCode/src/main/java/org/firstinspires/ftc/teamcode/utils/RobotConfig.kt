@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
-import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
 
 /**
  * This is an immutable object representing robot configuration.
  *
  * It is meant to orchestrate FTC Dashboard and other configuration together, as well as enable the
- * use of multiple different robots with the same code. (See [model].)
+ * use of multiple different robots with the same code.
  *
  * Certain sub-objects are annotated with `@Config`. This designates them as FTC Dashboard
  * configuration that can be modified at runtime. **The permanently change these values, you must
- * also modify the code!** The configuration can also change during initialization depending on the
- * [model] of the robot and other values.
+ * also modify the code!**
  */
 object RobotConfig {
     /**
@@ -20,7 +18,11 @@ object RobotConfig {
      *
      * @see Model
      */
-    val model: Model = Model.RobotB
+    @Deprecated(
+        message = "There is only one robot. The old one is deprecated.",
+        level = DeprecationLevel.WARNING,
+    )
+    val model: Model = Model.RobotA
 
     /**
      * When true, enables debugging features like camera streaming and more logs.
@@ -32,10 +34,10 @@ object RobotConfig {
     /**
      * Creates a string representing the current robot configuration.
      *
-     * This should include all standalone properties like [model] and [debug], but should not
+     * This should include all standalone properties like [debug], but should not
      * contain any FTC Dashboard configuration due to how much more complicated they are.
      */
-    override fun toString() = "RobotConfig(model=$model, debug=$debug)"
+    override fun toString() = "RobotConfig(debug=$debug)"
 
     /** Configuration related to moving the wheels using encoders. */
     @Config
@@ -135,6 +137,10 @@ object RobotConfig {
      *
      * @see model
      */
+    @Deprecated(
+        message = "There is only one robot. The old one is deprecated.",
+        level = DeprecationLevel.WARNING,
+    )
     enum class Model {
         /** This year's triangle robot. */
         RobotA,
