@@ -20,7 +20,7 @@ object RobotConfig {
      *
      * @see Model
      */
-    val model: Model = Model.RobotB
+    val model: Model = Model.RobotA
 
     /**
      * When true, enables debugging features like camera streaming and more logs.
@@ -48,7 +48,10 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 27.0
+        var TICKS_PER_INCH: Double = when (model) {
+            Model.RobotA -> 27.0
+            Model.RobotB -> 44.0
+        }
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
