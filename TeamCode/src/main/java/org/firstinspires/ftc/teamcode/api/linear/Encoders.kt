@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.TriWheels
-import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
-import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.min

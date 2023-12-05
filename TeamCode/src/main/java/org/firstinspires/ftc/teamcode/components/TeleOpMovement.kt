@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.components
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -48,6 +49,10 @@ object TeleOpMovement : Component {
         }
 
         // movement of all wheels
-        TriWheels.driveWithRotation(joyRadians, joyMagnitude, rotationPower)
+        TriWheels.driveWithRotation(
+            joyRadians,
+            joyMagnitude * RobotConfig.TeleOpMovement.DRIVE_SPEED,
+            rotationPower * RobotConfig.TeleOpMovement.ROTATE_SPEED
+        )
     }
 }
