@@ -76,6 +76,24 @@ object Vision : API() {
         }
     }
 
+    /**
+     * Enables a [VisionAPI] that was previously disabled with [disable].
+     *
+     * @throws IllegalArgumentException If [VisionAPI] is not initialized with vision portal.
+     * @see disable
+     */
+    fun enable(visionAPI: VisionAPI) = this.portal.setProcessorEnabled(visionAPI.processor, true)
+
+    /**
+     * Disables a [VisionAPI] so it does not process any frames and does not modify the camera stream.
+     *
+     * This can be used to save resources so no unneeded work is done in the background.
+     *
+     * @throws IllegalArgumentException If [VisionAPI] is not initialized with vision portal.
+     * @see enable
+     */
+    fun disable(visionAPI: VisionAPI) = this.portal.setProcessorEnabled(visionAPI.processor, false)
+
     // Vision must be initialized with at least one VisionAPI
     override fun init(opMode: OpMode) {
         throw RuntimeException("Please initialize Vision with at least one VisionAPI.")
