@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
-import org.firstinspires.ftc.teamcode.components.DPadCommands
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
 import org.firstinspires.ftc.teamcode.utils.Reset
 
@@ -31,10 +30,6 @@ class TeleOpMain : OpMode() {
 
     // loop will run repetitively overtime while the robot runs
     override fun loop() {
-        // Allows changing state through the DPad
-        // This should be run before TeleOpMovement
-        DPadCommands.loop(this)
-
         // Movement controls
         TeleOpMovement.loop(this)
 
