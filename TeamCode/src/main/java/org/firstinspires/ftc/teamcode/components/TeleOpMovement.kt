@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.PI
@@ -11,25 +10,13 @@ import kotlin.math.sqrt
 /**
  * Moves the robot wheels based on gamepad input.
  *
- * Requires the [TriWheels] API. It optionally uses the [TeleOpState] API.
+ * Requires the [TriWheels] API.
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
     private const val SLOW_MULTIPLIER = 0.4
 
     override fun loop(opMode: OpMode) {
-        // This prevents the normal movement from running when the robot is target-locking an april
-        // tag or executing some other DPad command.
-        when (TeleOpState.state) {
-            // When in the default state, do normal controls
-            TeleOpState.State.Default -> default_loop(opMode)
-        }
-    }
-
-    /**
-     * The movement functionality run by default when [TeleOpState] is default.
-     */
-    private fun default_loop(opMode: OpMode) {
         // alias gamepad1
         val gamepad = opMode.gamepad1
         val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
