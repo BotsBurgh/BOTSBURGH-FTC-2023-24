@@ -23,8 +23,8 @@ object Box : API() {
     * Moves the box to the ground
     */
     fun dropBox() {
-        boxL.position = 90.0
-        boxR.position = 90.0
+        boxL.position = 0.5
+        boxR.position = 0.5
     }
 
     /*
@@ -39,7 +39,7 @@ object Box : API() {
     * Moves the grip to keep pixels in place when  [pickUpBox] the box
     */
     fun gripIn() {
-        grip.position = 20.0
+        grip.position = 0.2
     }
 
     /*
