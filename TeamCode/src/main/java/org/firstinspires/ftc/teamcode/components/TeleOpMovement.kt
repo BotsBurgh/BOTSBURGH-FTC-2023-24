@@ -10,16 +10,13 @@ import kotlin.math.sqrt
 /**
  * Moves the robot wheels based on gamepad input.
  *
- * Requires the [TriWheels] API. It optionally uses the [TeleOpState] API.
+ * Requires the [TriWheels] API.
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
     private const val SLOW_MULTIPLIER = 0.4
 
-    /**
-     * The movement functionality run by default when [TeleOpState] is default.
-     */
-    private fun default_loop(opMode: OpMode) {
+    override fun loop(opMode: OpMode) {
         // alias gamepad1
         val gamepad = opMode.gamepad1
         val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
