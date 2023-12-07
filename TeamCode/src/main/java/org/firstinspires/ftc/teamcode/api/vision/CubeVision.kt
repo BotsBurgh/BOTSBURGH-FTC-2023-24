@@ -4,36 +4,51 @@ import android.graphics.Canvas
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration
 import org.firstinspires.ftc.teamcode.api.API
-import org.firstinspires.ftc.teamcode.api.vision.CubeVision.placement
+import org.firstinspires.ftc.teamcode.utils.Team
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.opencv.core.Mat
-import kotlin.concurrent.Volatile
 
 /**
- * A [VisionAPI] that scans for the game piece in its 3 possible positions.
+ * A [VisionAPI] / [VisionProcessor] that scans for the game piece in its 3 possible positions.
  *
  * Note that this is only meant to run in the beginning of the autonomous phase. Afterwards, it can
  * be disabled with [Vision.disable].
- *
- * @see placement
  */
-object CubeVision : API(), VisionAPI {
+object CubeVision : API(), VisionAPI, VisionProcessor {
     override val processor: VisionProcessor
-        get() = this.cubeProcessor
+        get() = this
 
     /**
-     * Returns where the cube is currently placed.
-     *
-     * @see CubePlacement
+     * Initializes the API with a given [opMode] and [cubeColor].
      */
-    val placement: CubePlacement
-        get() = this.cubeProcessor.placement
-
-    private lateinit var cubeProcessor: CubeProcessor
-
-    override fun init(opMode: OpMode) {
+    fun init(opMode: OpMode, cubeColor: Team) {
         super.init(opMode)
-        this.cubeProcessor = CubeProcessor()
+    }
+
+    override fun init(width: Int, height: Int, calibration: CameraCalibration?) {}
+
+    override fun processFrame(frame: Mat, captureTimeNanos: Long): Any? {
+        // This returned value is the userContext in [onDrawFrame]
+        return null
+    }
+
+    override fun onDrawFrame(
+        canvas: Canvas,
+        onscreenWidth: Int,
+        onscreenHeight: Int,
+        scaleBmpPxToCanvasPx: Float,
+        scaleCanvasDensity: Float,
+        userContext: Any?,
+    ) {
+    }
+
+    @Deprecated(
+        message = "Please initialize CubeVision with cubeColor.",
+        replaceWith = ReplaceWith("CubeVision.init(this, cubeColor)"),
+        level = DeprecationLevel.ERROR,
+    )
+    override fun init(opMode: OpMode) {
+        throw RuntimeException("Please initialize CubeVision with cubeColor.")
     }
 
     /**
@@ -43,34 +58,5 @@ object CubeVision : API(), VisionAPI {
         Left,
         Center,
         Right,
-    }
-
-    /**
-     * A custom processor for the vision portal that scans for the cube.
-     */
-    private class CubeProcessor : VisionProcessor {
-        // Make reads and writes synchronized, avoiding data races.
-        @Volatile
-        var placement = CubePlacement.Center
-
-        // Initialization code
-        override fun init(width: Int, height: Int, calibration: CameraCalibration?) {}
-
-        // Actual processing of OpenCV frame
-        override fun processFrame(frame: Mat, captureTimeNanos: Long): Any? {
-            // This returned value is the userContext in [onDrawFrame]
-            return null
-        }
-
-        // Allows drawing shapes on stream video
-        override fun onDrawFrame(
-            canvas: Canvas,
-            onscreenWidth: Int,
-            onscreenHeight: Int,
-            scaleBmpPxToCanvasPx: Float,
-            scaleCanvasDensity: Float,
-            userContext: Any?
-        ) {
-        }
     }
 }
