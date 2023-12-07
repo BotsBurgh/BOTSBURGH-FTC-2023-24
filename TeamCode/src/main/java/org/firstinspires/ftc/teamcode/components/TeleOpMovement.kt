@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import kotlin.math.PI
@@ -45,6 +46,22 @@ object TeleOpMovement : Component {
         // if the right bumper is pressed move slower
         if (gamepad.y) {
             joyMagnitude *= SLOW_MULTIPLIER
+        }
+
+        // Inputs for the gripper on the box
+        if (gamepad.left_bumper) {
+            Box.gripIn()
+        }
+        if (gamepad.right_bumper) {
+            Box.gripOut()
+        }
+
+        // Inputs for the movement of the box
+        if (gamepad.a) {
+            Box.dropBox()
+        }
+        if (gamepad.b) {
+            Box.pickUpBox()
         }
 
         // movement of all wheels
