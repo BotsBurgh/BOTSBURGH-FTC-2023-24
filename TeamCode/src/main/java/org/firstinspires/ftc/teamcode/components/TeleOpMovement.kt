@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.teamcode.api.Hook
 import org.firstinspires.ftc.teamcode.api.TeleOpState
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -46,6 +47,15 @@ object TeleOpMovement : Component {
         // if the right bumper is pressed move slower
         if (gamepad.right_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
+        }
+
+        // hook movement
+        if (gamepad.x) {
+            Hook.openPosition()
+
+        else:
+            Hook.closePosition()
+
         }
 
         // movement of all wheels

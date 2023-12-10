@@ -23,5 +23,4 @@ object Hook: API() {
         this.rightServo.position = 0.0
         this.leftServo.position = 0.0
     }
-
 }
