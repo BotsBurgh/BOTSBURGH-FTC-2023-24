@@ -43,7 +43,7 @@ object TeleOpMovement : Component {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
         var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
-        // if the right bumper is pressed move slower
+        // if the y  button is pressed move slower
         if (gamepad.y) {
             joyMagnitude *= SLOW_MULTIPLIER
         }
@@ -52,7 +52,7 @@ object TeleOpMovement : Component {
         if (gamepad.left_bumper) {
             Box.gripIn()
         }
-        if (gamepad.right_bumper) {
+        else if (gamepad.right_bumper) {
             Box.gripOut()
         }
 
@@ -60,7 +60,7 @@ object TeleOpMovement : Component {
         if (gamepad.a) {
             Box.dropBox()
         }
-        if (gamepad.b) {
+        else if (gamepad.b) {
             Box.pickUpBox()
         }
 
