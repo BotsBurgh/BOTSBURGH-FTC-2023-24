@@ -5,9 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo
 
 /**
  * An API for controlling the Box on the robot.
- * */
+ */
 object Box : API() {
-
     private lateinit var boxL: Servo
     private lateinit var boxR: Servo
     private lateinit var grip: Servo
@@ -21,32 +20,32 @@ object Box : API() {
     }
 
     /**
-    * Moves the box to the ground
-    */
+     * Moves the box to the ground
+     */
     fun dropBox() {
-        boxL.position = 0.5
-        boxR.position = 0.5
+        this.boxL.position = 0.5
+        this.boxR.position = 0.5
     }
 
     /**
-    * Moves box to upright position
-    */
+     * Moves box to upright position
+     */
     fun pickUpBox() {
-        boxL.position = 0.0
-        boxL.position = 0.0
+        this.boxL.position = 0.0
+        this.boxL.position = 0.0
     }
 
     /**
-    * Moves the grip to keep pixels in place when  [pickUpBox] the box
-    */
+     * Moves the grip to keep pixels in place when  [pickUpBox] the box
+     */
     fun gripIn() {
-        grip.position = 0.2
+        this.grip.position = 0.2
     }
 
     /**
-    * Resets the grip to starting position
-    */
+     * Resets the grip to starting position
+     */
     fun gripOut() {
-        grip.position = 0.0
+        this.grip.position = 0.0
     }
 }

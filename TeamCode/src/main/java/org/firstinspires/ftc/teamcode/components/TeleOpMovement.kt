@@ -51,16 +51,14 @@ object TeleOpMovement : Component {
         // Inputs for the gripper on the box
         if (gamepad.left_bumper) {
             Box.gripIn()
-        }
-        else if (gamepad.right_bumper) {
+        } else if (gamepad.right_bumper) {
             Box.gripOut()
         }
 
         // Inputs for the movement of the box
         if (gamepad.a) {
             Box.dropBox()
-        }
-        else if (gamepad.b) {
+        } else if (gamepad.b) {
             Box.pickUpBox()
         }
 
