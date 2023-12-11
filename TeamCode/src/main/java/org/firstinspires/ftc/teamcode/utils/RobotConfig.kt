@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
 import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
+import org.opencv.core.Rect
+import org.opencv.core.Scalar
 
 /**
  * This is an immutable object representing robot configuration.
@@ -127,6 +129,24 @@ object RobotConfig {
     }
 
     /** Configuration related to the main autonomous. */
+    @Config
+    object CubeVision {
+        @JvmField
+        var LEFT_REGION = Rect(100, 200, 100, 100)
+
+        @JvmField
+        var CENTER_REGION = Rect(250, 200, 100, 100)
+
+        @JvmField
+        var RIGHT_REGION = Rect(400, 200, 100, 100)
+
+        @JvmField
+        var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
+
+        @JvmField
+        var BLUE_WEIGHT = Scalar(-0.2, -0.2, 1.0)
+    }
+
     @Config
     object AutoMain {
         @JvmField
