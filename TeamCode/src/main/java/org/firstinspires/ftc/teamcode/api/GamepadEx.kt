@@ -60,7 +60,7 @@ object GamepadEx : API() {
         this.clear()
 
         // Check every possible input if it is pressed or not
-        for (input in Inputs.values()) {
+        for (input in Inputs.entries) {
             if (input.pressed()) {
                 // Add to pressed set, which returns true if it did not exist
                 if (this.pressed.add(input)) {

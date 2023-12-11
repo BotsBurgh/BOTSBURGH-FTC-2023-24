@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**

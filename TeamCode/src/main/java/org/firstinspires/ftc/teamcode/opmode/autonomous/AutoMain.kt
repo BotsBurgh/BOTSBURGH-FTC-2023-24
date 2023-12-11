@@ -13,7 +13,10 @@ abstract class AutoMain : LinearOpMode() {
     abstract val config: Config
 
     /** The axis the robot should move along. */
-    private val forward = Encoders.Direction.Red
+    private val forward = when (RobotConfig.model) {
+        RobotConfig.Model.RobotA -> Encoders.Direction.Blue
+        RobotConfig.Model.RobotB -> Encoders.Direction.Red
+    }
 
     /** How many inches the robot is from the starting tile */
     private val startingOffset = 2.0
