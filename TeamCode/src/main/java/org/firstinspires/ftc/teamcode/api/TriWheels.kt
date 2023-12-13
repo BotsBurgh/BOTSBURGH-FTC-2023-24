@@ -100,22 +100,4 @@ object TriWheels : API() {
             motor.direction = DcMotorSimple.Direction.FORWARD
         }
     }
-
-    @Deprecated(
-        message = "This function has been renamed.",
-        replaceWith = ReplaceWith("this.rotate(power)"),
-        level = DeprecationLevel.ERROR,
-    )
-    fun power(power: Double) {
-        this.rotate(power)
-    }
-
-    @Deprecated(
-        message = "This function has been renamed.",
-        replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
-        level = DeprecationLevel.ERROR,
-    )
-    fun moveDirection(radians: Double, magnitude: Double) {
-        this.drive(radians, magnitude)
-    }
 }
