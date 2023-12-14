@@ -127,12 +127,14 @@ object RobotConfig {
         var OPTIMUM_GAIN: Int = 255
     }
 
+    /** Configuration related to the main autonomous. */
     @Config
     object AutoMain {
         @JvmField
         var WAIT_TIME: Long = 0
     }
 
+    /** Configuration related to the TeleOpMovement component. */
     @Config
     object TeleOpMovement {
         @JvmField
