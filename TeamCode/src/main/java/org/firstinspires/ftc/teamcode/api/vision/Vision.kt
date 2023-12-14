@@ -7,6 +7,19 @@ import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.vision.VisionPortal
 
+/**
+ * The main vision API that loads [VisionAPI]s.
+ *
+ * This is similar to the [VisionPortal], but it takes [VisionAPI]s instead.
+ *
+ * ```
+ * // Initialize VisionAPIs first
+ * AprilVision.init(this)
+ *
+ * // Then initialize Vision
+ * Vision.init(this, AprilVision)
+ * ```
+ */
 object Vision : API() {
     lateinit var portal: VisionPortal
         private set
@@ -14,7 +27,8 @@ object Vision : API() {
     /**
      * Initializes the Vision Portal with a list of processors / APIs.
      *
-     * You must create at least one vision API in order to use the portal.
+     * You must create at least one vision API in order to use the portal. This function will not
+     * return until the camera finishes turning on.
      *
      * # Example
      *
