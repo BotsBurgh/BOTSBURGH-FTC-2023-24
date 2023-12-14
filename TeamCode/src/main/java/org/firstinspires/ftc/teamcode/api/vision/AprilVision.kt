@@ -31,9 +31,10 @@ object AprilVision : API(), VisionAPI {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.aprilTag = AprilTagProcessor.Builder()
-            // Configure april tag processor here
-            .build()
+        this.aprilTag =
+            AprilTagProcessor.Builder()
+                // Configure april tag processor here
+                .build()
     }
 
     /** Gets a list of all april tags currently detected. */

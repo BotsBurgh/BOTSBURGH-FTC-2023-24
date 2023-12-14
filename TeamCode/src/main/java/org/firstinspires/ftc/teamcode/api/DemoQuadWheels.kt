@@ -40,7 +40,12 @@ object DemoQuadWheels : API() {
 
     // A public function that sets the power of all four wheels.
     // This is callable by any components.
-    fun drive(fl: Double, fr: Double, bl: Double, br: Double) {
+    fun drive(
+        fl: Double,
+        fr: Double,
+        bl: Double,
+        br: Double,
+    ) {
         this.fl.power = fl
         this.fr.power = fr
         this.bl.power = bl

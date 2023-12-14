@@ -36,7 +36,11 @@ object TriWheels : API() {
     /**
      * Sets the power of each wheel respectively.
      */
-    fun power(redPower: Double, greenPower: Double, bluePower: Double) {
+    fun power(
+        redPower: Double,
+        greenPower: Double,
+        bluePower: Double,
+    ) {
         this.red.power = redPower
         this.green.power = greenPower
         this.blue.power = bluePower
@@ -52,14 +56,21 @@ object TriWheels : API() {
     /**
      * Makes the robot drive in a certain direction [radians] with a given strength [magnitude].
      */
-    fun drive(radians: Double, magnitude: Double) {
+    fun drive(
+        radians: Double,
+        magnitude: Double,
+    ) {
         this.driveWithRotation(radians, magnitude, 0.0)
     }
 
     /**
      * Does the same thing as [drive] but it rotates the robot with a given [rotation] too.
      */
-    fun driveWithRotation(radians: Double, magnitude: Double, rotation: Double) {
+    fun driveWithRotation(
+        radians: Double,
+        magnitude: Double,
+        rotation: Double,
+    ) {
         this.power(
             magnitude * sin(this.RED_ANGLE - radians) + rotation,
             magnitude * sin(this.GREEN_ANGLE - radians) + rotation,
@@ -128,7 +139,10 @@ object TriWheels : API() {
         replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
         level = DeprecationLevel.ERROR,
     )
-    fun moveDirection(radians: Double, magnitude: Double) {
+    fun moveDirection(
+        radians: Double,
+        magnitude: Double,
+    ) {
         this.drive(radians, magnitude)
     }
 }

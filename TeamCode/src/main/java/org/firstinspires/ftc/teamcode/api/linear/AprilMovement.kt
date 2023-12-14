@@ -23,7 +23,10 @@ object AprilMovement : LinearAPI() {
      * Drives in front of the given april tag [tagId], facing squarely in front of it
      * [desiredDistance] inches away.
      */
-    fun driveTo(tagId: Int, desiredDistance: Double = 12.0) = with(linearOpMode) {
+    fun driveTo(
+        tagId: Int,
+        desiredDistance: Double = 12.0,
+    ) = with(linearOpMode) {
         // Initialize errors with a really large number so while loop runs at least once
         // These are placeholders that get overridden in the loop
         var rangeError = Double.MAX_VALUE
@@ -33,9 +36,11 @@ object AprilMovement : LinearAPI() {
         // Drive while opmode is active and target has not been reached
         while (
             opModeIsActive() &&
-            (abs(rangeError) > RobotConfig.AprilMovement.RANGE_ERROR ||
+            (
+                abs(rangeError) > RobotConfig.AprilMovement.RANGE_ERROR ||
                     abs(headingError) > RobotConfig.AprilMovement.HEADING_ERROR ||
-                    abs(strafeError) > RobotConfig.AprilMovement.STRAFE_ERROR)
+                    abs(strafeError) > RobotConfig.AprilMovement.STRAFE_ERROR
+            )
         ) {
             // Try scanning for the april tag
             val tag = AprilVision.detect(tagId)
@@ -61,21 +66,24 @@ object AprilMovement : LinearAPI() {
             strafeError = tag.ftcPose.yaw
 
             // Calculate the wheel power from the error
-            val range = Range.clip(
-                rangeError * RobotConfig.AprilMovement.RANGE_GAIN,
-                -MAX_RANGE,
-                MAX_RANGE
-            )
-            val heading = Range.clip(
-                headingError * RobotConfig.AprilMovement.HEADING_GAIN,
-                -MAX_HEADING,
-                MAX_HEADING
-            )
-            val strafe = Range.clip(
-                strafeError * RobotConfig.AprilMovement.STRAFE_GAIN,
-                -MAX_STRAFE,
-                MAX_STRAFE
-            )
+            val range =
+                Range.clip(
+                    rangeError * RobotConfig.AprilMovement.RANGE_GAIN,
+                    -MAX_RANGE,
+                    MAX_RANGE,
+                )
+            val heading =
+                Range.clip(
+                    headingError * RobotConfig.AprilMovement.HEADING_GAIN,
+                    -MAX_HEADING,
+                    MAX_HEADING,
+                )
+            val strafe =
+                Range.clip(
+                    strafeError * RobotConfig.AprilMovement.STRAFE_GAIN,
+                    -MAX_STRAFE,
+                    MAX_STRAFE,
+                )
 
             // Treat range and strafe as an XY vector
             // Then convert to the polar coordinate system (angle, length)

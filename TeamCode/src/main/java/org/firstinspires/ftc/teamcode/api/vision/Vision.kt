@@ -22,16 +22,20 @@ object Vision : API() {
      * Vision.init(this, AprilVision, TFlowVision)
      * ```
      */
-    fun init(opMode: OpMode, vararg visionAPIs: VisionAPI) {
+    fun init(
+        opMode: OpMode,
+        vararg visionAPIs: VisionAPI,
+    ) {
         super.init(opMode)
 
         val webcam = opMode.hardwareMap.get(WebcamName::class.java, "Webcam 1")
 
         // Configure the builder with settings
-        val builder = VisionPortal.Builder()
-            .setCamera(webcam)
-            // Enable live view when debug is enabled
-            .enableLiveView(RobotConfig.debug)
+        val builder =
+            VisionPortal.Builder()
+                .setCamera(webcam)
+                // Enable live view when debug is enabled
+                .enableLiveView(RobotConfig.debug)
 
         // Add all of the processors
         for (visionAPI in visionAPIs) {
@@ -42,11 +46,12 @@ object Vision : API() {
         this.portal = builder.build()
 
         // Use a different sleep function depending on whether its a linear opmode or not.
-        val sleep = if (opMode is LinearOpMode) {
-            opMode::sleep
-        } else {
-            this::opModeSleep
-        }
+        val sleep =
+            if (opMode is LinearOpMode) {
+                opMode::sleep
+            } else {
+                this::opModeSleep
+            }
 
         // Wait until the camera has started.
         while (this.portal.cameraState != VisionPortal.CameraState.STREAMING) {
