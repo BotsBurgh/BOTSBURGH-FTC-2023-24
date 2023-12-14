@@ -18,6 +18,7 @@ object DemoQuadWheels : API() {
     // This is how you define FTC Dashboard configuration.
     // Uncomment the following line to enable it:
     // @Config
+    @Suppress("ktlint:standard:property-naming")
     private object DemoQuadWheelsConfig {
         @JvmField
         var MAGIC_NUMBER = 5

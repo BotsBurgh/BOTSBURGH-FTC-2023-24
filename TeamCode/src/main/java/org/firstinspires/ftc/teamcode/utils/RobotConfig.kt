@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:property-naming")
+
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
