@@ -27,9 +27,15 @@ object StatusLed : API() {
      * StatusLed.set(0x0000ff)
      * ```
      */
-    fun set(@ColorInt constant: Int) {
+    fun set(@ColorInt constant: Int) =
         this.blinkers.forEach { it.setConstant(this.overwriteAlpha(constant)) }
-    }
+
+    /**
+     * Turns the light off.
+     *
+     * This is equivalent to setting the color to black, or `0x000000`.
+     */
+    fun turnOff() = this.blinkers.forEach { it.stopBlinking() }
 
     /** Overwrites the alpha property of a [ColorInt] to always be `0xff`. */
     private fun overwriteAlpha(@ColorInt color: Int) = color or (0xff000000u).toInt()
