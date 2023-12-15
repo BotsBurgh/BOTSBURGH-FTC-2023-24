@@ -28,7 +28,23 @@ object StatusLed : API() {
      * ```
      */
     fun set(@ColorInt constant: Int) =
-        this.blinkers.forEach { it.setConstant(constant.overwriteAlpha()) }
+        this.blinkers.forEach { it.setConstant(constant) }
+
+    /**
+     * Sets the LED to a pattern.
+     *
+     * [pattern] should be a sequence of [Blinker.Step]s, preferably created using [listOf].
+     *
+     * ```
+     * // Cycle through red, green, then blue every second.
+     * StatusLed.set(listOf(
+     *     Step(0xff0000, 1, TimeUnit.SECONDS),
+     *     Step(0x00ff00, 1, TimeUnit.SECONDS),
+     *     Step(0x0000ff, 1, TimeUnit.SECONDS),
+     * ))
+     * ```
+     */
+    fun set(pattern: Collection<Blinker.Step>) = this.blinkers.forEach { it.pattern = pattern }
 
     /**
      * Turns the light off.
@@ -36,7 +52,4 @@ object StatusLed : API() {
      * This is equivalent to setting the color to black, or `0x000000`.
      */
     fun turnOff() = this.blinkers.forEach { it.stopBlinking() }
-
-    /** Overwrites the alpha property of a [ColorInt] to always be `0xff`. */
-    private fun Int.overwriteAlpha() = this or (0xff000000u).toInt()
 }
