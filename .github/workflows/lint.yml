@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Build documentation
+      - name: Lint project
         run: |
           chmod +x ./gradlew
           ./gradlew lintKotlin
