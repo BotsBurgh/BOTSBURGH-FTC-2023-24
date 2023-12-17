@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.components
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.teamcode.api.TriWheels
-import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -35,10 +34,6 @@ object TeleOpMovement : Component {
         // if the right bumper is pressed move slower
         if (gamepad1.right_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
-        }
-
-        if (gamepad2.right_stick_y != 0f) {
-            LinearSlide.positionSlide(gamepad2.right_stick_y.toDouble())
         }
 
         // movement of all wheels
