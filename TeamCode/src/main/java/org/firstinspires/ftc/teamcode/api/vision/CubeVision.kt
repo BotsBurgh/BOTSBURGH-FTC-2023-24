@@ -25,7 +25,10 @@ object CubeVision : API(), VisionAPI {
 
     private lateinit var cubeProcessor: CubeProcessor
 
-    fun init(opMode: OpMode, cubeColor: Team) {
+    fun init(
+        opMode: OpMode,
+        cubeColor: Team,
+    ) {
         super.init(opMode)
         this.cubeProcessor = CubeProcessor(cubeColor, opMode.telemetry)
     }
@@ -52,14 +55,22 @@ object CubeVision : API(), VisionAPI {
         private lateinit var regionRight: Mat
 
         private val colorWeight: Scalar
-            get() = when (this.cubeColor) {
-                Team.Red -> RobotConfig.CubeVision.RED_WEIGHT
-                Team.Blue -> RobotConfig.CubeVision.BLUE_WEIGHT
-            }
+            get() =
+                when (this.cubeColor) {
+                    Team.Red -> RobotConfig.CubeVision.RED_WEIGHT
+                    Team.Blue -> RobotConfig.CubeVision.BLUE_WEIGHT
+                }
 
-        override fun init(width: Int, height: Int, calibration: CameraCalibration?) {}
+        override fun init(
+            width: Int,
+            height: Int,
+            calibration: CameraCalibration?,
+        ) {}
 
-        override fun processFrame(frame: Mat, captureTimeNanos: Long): CubePlacement {
+        override fun processFrame(
+            frame: Mat,
+            captureTimeNanos: Long,
+        ): CubePlacement {
             frame.copyTo(this.rgb)
 
             // Create sub-regions only once.
@@ -82,29 +93,30 @@ object CubeVision : API(), VisionAPI {
                 addData("Score Right", scoreRight)
             }
 
-            val placement = when (max(max(scoreLeft, scoreCenter), scoreRight)) {
-                scoreLeft -> CubePlacement.Left
-                scoreCenter -> CubePlacement.Center
-                scoreRight -> CubePlacement.Right
-                else -> throw RuntimeException("Unreachable")
-            }
+            val placement =
+                when (max(max(scoreLeft, scoreCenter), scoreRight)) {
+                    scoreLeft -> CubePlacement.Left
+                    scoreCenter -> CubePlacement.Center
+                    scoreRight -> CubePlacement.Right
+                    else -> throw RuntimeException("Unreachable")
+                }
 
             this.placement = placement
 
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.LEFT_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0)
+                Scalar(255.0, 255.0, 255.0, 255.0),
             )
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.CENTER_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0)
+                Scalar(255.0, 255.0, 255.0, 255.0),
             )
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.RIGHT_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0)
+                Scalar(255.0, 255.0, 255.0, 255.0),
             )
 
             // This return value is passed to [onDrawFrame].
@@ -123,11 +135,9 @@ object CubeVision : API(), VisionAPI {
 
         fun Scalar.sumRGB(): Double = this.`val`.sum()
 
-        operator fun Rect.times(rhs: Int): Rect =
-            Rect(this.x * rhs, this.y * rhs, this.width * rhs, this.height * rhs)
+        operator fun Rect.times(rhs: Int): Rect = Rect(this.x * rhs, this.y * rhs, this.width * rhs, this.height * rhs)
 
-        fun Rect.toAndroidRect(): android.graphics.Rect =
-            android.graphics.Rect(this.x, this.y, this.x + this.width, this.y + this.height)
+        fun Rect.toAndroidRect(): android.graphics.Rect = android.graphics.Rect(this.x, this.y, this.x + this.width, this.y + this.height)
     }
 
     /**
