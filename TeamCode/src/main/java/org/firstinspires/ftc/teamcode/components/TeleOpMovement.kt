@@ -18,14 +18,13 @@ object TeleOpMovement : Component {
     private const val SLOW_MULTIPLIER = 0.4
 
     override fun loop(opMode: OpMode) {
-        // alias gamepad1 and gamepad2
-        val gamepad1 = opMode.gamepad1
-        val gamepad2 = opMode.gamepad2
-        val rotationPower = ROTATION_GAIN * -gamepad1.right_stick_x.toDouble()
+        // alias gamepad
+        val gamepad = opMode.gamepad1
+        val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
 
         // joystick input
-        val joyX = -gamepad1.left_stick_x.toDouble()
-        val joyY = gamepad1.left_stick_y.toDouble()
+        val joyX = -gamepad.left_stick_x.toDouble()
+        val joyY = gamepad.left_stick_y.toDouble()
 
         // angle and strength
         // PI / 3 because 0 radians is right, not forward
@@ -33,13 +32,13 @@ object TeleOpMovement : Component {
         var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
         // if the right bumper is pressed move slower
-        if (gamepad1.right_bumper) {
+        if (gamepad.right_bumper) {
             joyMagnitude *= SLOW_MULTIPLIER
         }
 
         // if right stick y is moved use the movement of the linear slide
-        if (gamepad2.right_stick_y != 0f) {
-            LinearSlide.positionSlide(gamepad2.right_stick_y.toDouble())
+        if (gamepad.right_stick_y != 0f) {
+            LinearSlide.positionSlide(gamepad.right_stick_y.toDouble())
         }
 
         // movement of all wheels
