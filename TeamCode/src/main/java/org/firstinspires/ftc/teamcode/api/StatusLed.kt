@@ -27,8 +27,9 @@ object StatusLed : API() {
      * StatusLed.set(0x0000ff)
      * ```
      */
-    fun set(@ColorInt constant: Int) =
-        this.blinkers.forEach { it.setConstant(constant) }
+    fun set(
+        @ColorInt constant: Int,
+    ) = this.blinkers.forEach { it.setConstant(constant) }
 
     /**
      * Sets the LED to a pattern.
@@ -58,9 +59,10 @@ object StatusLed : API() {
      *
      * It is recommended to call this at the end of an opmode.
      */
-    fun reset() = this.blinkers.forEach {
-        // SAFETY: Blinker is guaranteed to be LynxModule because [init] requests only LynxModules
-        // from the hardware map.
-        it.pattern = LynxModule.blinkerPolicy.getIdlePattern(it as LynxModule)
-    }
+    fun reset() =
+        this.blinkers.forEach {
+            // SAFETY: Blinker is guaranteed to be LynxModule because [init] requests only LynxModules
+            // from the hardware map.
+            it.pattern = LynxModule.blinkerPolicy.getIdlePattern(it as LynxModule)
+        }
 }
