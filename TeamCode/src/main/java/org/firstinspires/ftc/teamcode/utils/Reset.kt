@@ -80,12 +80,19 @@ class Resettable<T>(private val default: () -> T) {
     }
 
     // Simply return the inner value.
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+    operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+    ): T {
         return this.inner
     }
 
     // Simply set the inner value.
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+    operator fun setValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+        value: T,
+    ) {
         this.inner = value
     }
 
