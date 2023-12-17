@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor
  * An API for controlling the linearSlide.
  */
 object LinearSlide : API() {
-
     private lateinit var hook: DcMotor
     private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (4500 - 4250)
 
@@ -20,7 +19,6 @@ object LinearSlide : API() {
     }
 
     override fun init(opMode: OpMode) {
-
         super.init(opMode)
 
         this.hook = this.hardwareMap.get(DcMotor::class.java, "hook")
@@ -39,10 +37,10 @@ object LinearSlide : API() {
             } else {
                 hook.power = power
             }
-        // checks if the power is negative
+            // checks if the power is negative
         } else if (power < 0.0 && hook.currentPosition > linearSlideConfig.min) {
             hook.power = power
-        // sets power to stop if the power is zero
+            // sets power to stop if the power is zero
         } else {
             hook.power = 0.0
         }
