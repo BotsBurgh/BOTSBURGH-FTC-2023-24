@@ -52,4 +52,15 @@ object StatusLed : API() {
      * This is equivalent to setting the color to black, or `0x000000`.
      */
     fun turnOff() = this.blinkers.forEach { it.stopBlinking() }
+
+    /**
+     * Resets the current pattern to the default one.
+     *
+     * It is recommended to call this at the end of an opmode.
+     */
+    fun reset() = this.blinkers.forEach {
+        // SAFETY: Blinker is guaranteed to be LynxModule because [init] requests only LynxModules
+        // from the hardware map.
+        it.pattern = LynxModule.blinkerPolicy.getIdlePattern(it as LynxModule)
+    }
 }
