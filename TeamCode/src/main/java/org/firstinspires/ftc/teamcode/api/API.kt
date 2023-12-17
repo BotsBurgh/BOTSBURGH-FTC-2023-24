@@ -19,6 +19,11 @@ abstract class API {
         get() = uninitializedOpMode
             ?: throw NullPointerException("<API> has not been initialized with the OpMode before being used.")
 
+    @Deprecated(
+        message = "Accessing the hardwareMap indirectly is not supported.",
+        replaceWith = ReplaceWith("this.opMode.hardwareMap"),
+        level = DeprecationLevel.WARNING,
+    )
     protected val hardwareMap: HardwareMap
         get() = this.opMode.hardwareMap
 
