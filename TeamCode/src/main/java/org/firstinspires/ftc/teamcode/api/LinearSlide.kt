@@ -2,21 +2,14 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
 /**
  * An API for controlling the linearSlide.
  */
 object LinearSlide : API() {
     private lateinit var hook: DcMotor
-    private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (4500 - 4250)
-
-    private object linearSlideConfig {
-        @JvmField
-        var min = 0.0
-
-        @JvmField
-        var max = 4500
-    }
+    private const val REDUCTION_SLOPE: Double = (0 - 0.8) / (4500 - 4250)
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
@@ -29,16 +22,16 @@ object LinearSlide : API() {
      */
     fun positionSlide(power: Double) {
         // checks if the power is positive
-        if (power > 0.0 && hook.currentPosition < linearSlideConfig.max) {
+        if (power > 0.0 && hook.currentPosition < RobotConfig.LinearSlide.MAX) {
             // when close to the max of linear slide slow down using reduction slope
-            if (hook.currentPosition > linearSlideConfig.max - 250) {
+            if (hook.currentPosition > RobotConfig.LinearSlide.MAX - 250) {
                 hook.power =
-                    LINEAR_SLIDE_REDUCTION_SLOPE * (hook.currentPosition - linearSlideConfig.max)
+                    REDUCTION_SLOPE * (hook.currentPosition - RobotConfig.LinearSlide.MAX)
             } else {
                 hook.power = power
             }
             // checks if the power is negative
-        } else if (power < 0.0 && hook.currentPosition > linearSlideConfig.min) {
+        } else if (power < 0.0 && hook.currentPosition > RobotConfig.LinearSlide.MIN) {
             hook.power = power
             // sets power to stop if the power is zero
         } else {

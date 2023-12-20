@@ -147,6 +147,16 @@ object RobotConfig {
         var ROTATE_SPEED: Double = 0.5
     }
 
+    // ** Configuration related to the LinearSlide API. */
+    @Config
+    object LinearSlide {
+        @JvmField
+        var MIN = 0.0
+
+        @JvmField
+        var MAX = 4500
+    }
+
     /**
      * Represents what model of robot is running the code.
      *

@@ -36,8 +36,9 @@ object TeleOpMovement : Component {
             joyMagnitude *= SLOW_MULTIPLIER
         }
 
-        // if right stick y is moved use the movement of the linear slide
-        if (gamepad.right_stick_y != 0f) {
+        // if right stick y is moved greater than the value of 0.2
+        // use the movement of the linear slide
+        if (gamepad.right_stick_y > 0.2f || gamepad.right_stick_y < -0.2f) {
             LinearSlide.positionSlide(gamepad.right_stick_y.toDouble())
         }
 
