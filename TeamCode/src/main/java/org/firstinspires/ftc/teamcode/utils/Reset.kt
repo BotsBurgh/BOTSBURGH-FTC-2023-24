@@ -15,7 +15,10 @@ private val resetFunctions = mutableSetOf<() -> Unit>()
 object ResetNotifier : OpModeManagerNotifier.Notifications {
     @OnCreateEventLoop
     @JvmStatic
-    fun register(context: Context, ftcEventLoop: FtcEventLoop) {
+    fun register(
+        @Suppress("UNUSED_PARAMETER") context: Context,
+        ftcEventLoop: FtcEventLoop,
+    ) {
         ftcEventLoop.opModeManager.registerListener(this)
     }
 
@@ -24,6 +27,7 @@ object ResetNotifier : OpModeManagerNotifier.Notifications {
     }
 
     override fun onOpModePreStart(opMode: OpMode?) {}
+
     override fun onOpModePostStop(opMode: OpMode?) {}
 
     private fun resetAll() {
