@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode.api
 
+import android.content.Context
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
+import com.qualcomm.ftccommon.FtcEventLoop
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
 import com.qualcomm.robotcore.util.RobotLog
+import org.firstinspires.ftc.ftccommon.external.OnCreateEventLoop
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 
-object Log : API() {
+object Log : API(), OpModeManagerNotifier.Notifications {
     private val telemetry: Telemetry
         get() = this.opMode.telemetry
 
@@ -81,6 +85,22 @@ object Log : API() {
 
         // Log to Logcat / internal FTC log
         RobotLog.internalLog(level.toAndroid(), this.ROBOT_LOG_TAG, msgString)
+    }
+
+    @OnCreateEventLoop
+    @JvmStatic
+    fun registerFlush(
+        @Suppress("UNUSED_PARAMETER") context: Context,
+        ftcEventLoop: FtcEventLoop,
+    ) {
+        ftcEventLoop.opModeManager.registerListener(this)
+    }
+
+    override fun onOpModePreInit(opMode: OpMode?) {}
+    override fun onOpModePreStart(opMode: OpMode?) {}
+    override fun onOpModePostStop(opMode: OpMode?) {
+        RobotLog.dd(this.ROBOT_LOG_TAG, "Flushing log to BotsBurgh/latest.log")
+        this.flush()
     }
 
     enum class Level {
