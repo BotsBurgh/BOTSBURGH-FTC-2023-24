@@ -7,6 +7,19 @@ import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.vision.VisionPortal
 
+/**
+ * The main vision API that loads [VisionAPI]s.
+ *
+ * This is similar to the [VisionPortal], but it takes [VisionAPI]s instead.
+ *
+ * ```
+ * // Initialize VisionAPIs first
+ * AprilVision.init(this)
+ *
+ * // Then initialize Vision
+ * Vision.init(this, AprilVision)
+ * ```
+ */
 object Vision : API() {
     lateinit var portal: VisionPortal
         private set
@@ -14,7 +27,8 @@ object Vision : API() {
     /**
      * Initializes the Vision Portal with a list of processors / APIs.
      *
-     * You must create at least one vision API in order to use the portal.
+     * You must create at least one vision API in order to use the portal. This function will not
+     * return until the camera finishes turning on.
      *
      * # Example
      *
@@ -22,16 +36,20 @@ object Vision : API() {
      * Vision.init(this, AprilVision, TFlowVision)
      * ```
      */
-    fun init(opMode: OpMode, vararg visionAPIs: VisionAPI) {
+    fun init(
+        opMode: OpMode,
+        vararg visionAPIs: VisionAPI,
+    ) {
         super.init(opMode)
 
         val webcam = opMode.hardwareMap.get(WebcamName::class.java, "Webcam 1")
 
         // Configure the builder with settings
-        val builder = VisionPortal.Builder()
-            .setCamera(webcam)
-            // Enable live view when debug is enabled
-            .enableLiveView(RobotConfig.debug)
+        val builder =
+            VisionPortal.Builder()
+                .setCamera(webcam)
+                // Enable live view when debug is enabled
+                .enableLiveView(RobotConfig.debug)
 
         // Add all of the processors
         for (visionAPI in visionAPIs) {
@@ -42,11 +60,12 @@ object Vision : API() {
         this.portal = builder.build()
 
         // Use a different sleep function depending on whether its a linear opmode or not.
-        val sleep = if (opMode is LinearOpMode) {
-            opMode::sleep
-        } else {
-            this::opModeSleep
-        }
+        val sleep =
+            if (opMode is LinearOpMode) {
+                opMode::sleep
+            } else {
+                this::opModeSleep
+            }
 
         // Wait until the camera has started.
         while (this.portal.cameraState != VisionPortal.CameraState.STREAMING) {

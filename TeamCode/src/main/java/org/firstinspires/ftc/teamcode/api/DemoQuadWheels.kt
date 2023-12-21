@@ -18,6 +18,7 @@ object DemoQuadWheels : API() {
     // This is how you define FTC Dashboard configuration.
     // Uncomment the following line to enable it:
     // @Config
+    @Suppress("ktlint:standard:property-naming")
     private object DemoQuadWheelsConfig {
         @JvmField
         var MAGIC_NUMBER = 5
@@ -40,7 +41,12 @@ object DemoQuadWheels : API() {
 
     // A public function that sets the power of all four wheels.
     // This is callable by any components.
-    fun drive(fl: Double, fr: Double, bl: Double, br: Double) {
+    fun drive(
+        fl: Double,
+        fr: Double,
+        bl: Double,
+        br: Double,
+    ) {
         this.fl.power = fl
         this.fr.power = fr
         this.bl.power = bl

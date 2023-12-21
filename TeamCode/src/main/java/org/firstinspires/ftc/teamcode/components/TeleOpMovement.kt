@@ -40,7 +40,7 @@ object TeleOpMovement : Component {
         TriWheels.driveWithRotation(
             joyRadians,
             joyMagnitude * RobotConfig.TeleOpMovement.DRIVE_SPEED,
-            rotationPower * RobotConfig.TeleOpMovement.ROTATE_SPEED
+            rotationPower * RobotConfig.TeleOpMovement.ROTATE_SPEED,
         )
     }
 }

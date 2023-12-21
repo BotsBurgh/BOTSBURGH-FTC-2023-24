@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.TriWheels
+import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
+import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.min
@@ -20,11 +22,9 @@ import kotlin.math.min
  * @see spinTo
  */
 object Encoders : LinearAPI() {
-    private fun inchesToTick(inches: Double): Int =
-        (RobotConfig.Encoders.TICKS_PER_INCH * inches).toInt()
+    private fun inchesToTick(inches: Double): Int = (RobotConfig.Encoders.TICKS_PER_INCH * inches).toInt()
 
-    private fun degreesToTick(degrees: Double): Int =
-        (RobotConfig.Encoders.TICKS_PER_DEGREE * degrees).toInt()
+    private fun degreesToTick(degrees: Double): Int = (RobotConfig.Encoders.TICKS_PER_DEGREE * degrees).toInt()
 
     /**
      * Drives the robot in a given [direction] a certain amount of [inches].
@@ -35,7 +35,10 @@ object Encoders : LinearAPI() {
      *
      * Due to current restrictions, [inches] cannot be a negative number.
      */
-    fun driveTo(direction: Direction, inches: Double) {
+    fun driveTo(
+        direction: Direction,
+        inches: Double,
+    ) {
         TriWheels.stopAndResetMotors()
 
         val (left, right, _) = this.defineWheels(direction)
@@ -62,15 +65,17 @@ object Encoders : LinearAPI() {
                     min(
                         min(
                             abs(left.currentPosition - leftTarget) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed
-                        ), RobotConfig.Encoders.MAX_DRIVE_SPEED
+                            timeSpeed,
+                        ),
+                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
                     )
                 right.power =
                     min(
                         min(
                             abs(right.currentPosition - rightTarget) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed
-                        ), RobotConfig.Encoders.MAX_DRIVE_SPEED
+                            timeSpeed,
+                        ),
+                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
                     )
 
                 with(linearOpMode.telemetry) {
@@ -134,8 +139,8 @@ object Encoders : LinearAPI() {
                             abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed,
                         ),
-                        RobotConfig.Encoders.MAX_SPIN_SPEED
-                    )
+                        RobotConfig.Encoders.MAX_SPIN_SPEED,
+                    ),
                 )
 
                 with(linearOpMode.telemetry) {
@@ -143,15 +148,15 @@ object Encoders : LinearAPI() {
 
                     addData(
                         "Power",
-                        Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power)
+                        Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power),
                     )
                     addData(
                         "Current",
                         Triple(
                             TriWheels.red.currentPosition,
                             TriWheels.green.currentPosition,
-                            TriWheels.blue.currentPosition
-                        )
+                            TriWheels.blue.currentPosition,
+                        ),
                     )
                     addData("Target", ticks)
 

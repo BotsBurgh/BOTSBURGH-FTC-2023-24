@@ -13,10 +13,11 @@ abstract class AutoMain : LinearOpMode() {
     abstract val config: Config
 
     /** The axis the robot should move along. */
-    private val forward = when (RobotConfig.model) {
-        RobotConfig.Model.RobotA -> Encoders.Direction.Blue
-        RobotConfig.Model.RobotB -> Encoders.Direction.Red
-    }
+    private val forward =
+        when (RobotConfig.model) {
+            RobotConfig.Model.RobotA -> Encoders.Direction.Blue
+            RobotConfig.Model.RobotB -> Encoders.Direction.Red
+        }
 
     /** How many inches the robot is from the starting tile */
     private val startingOffset = 2.0
@@ -122,10 +123,14 @@ abstract class AutoMain : LinearOpMode() {
      *
      * @see pickParkPos
      */
-    private fun <T> pickTeam(red: T, blue: T): T = when (config.team) {
-        Team.Red -> red
-        Team.Blue -> blue
-    }
+    private fun <T> pickTeam(
+        red: T,
+        blue: T,
+    ): T =
+        when (config.team) {
+            Team.Red -> red
+            Team.Blue -> blue
+        }
 
     /**
      * A utility that returns the value correlating to the configured parking position.
@@ -134,10 +139,14 @@ abstract class AutoMain : LinearOpMode() {
      *
      * @see pickTeam
      */
-    private fun <T> pickParkPos(left: T, right: T): T = when (config.parkPos) {
-        ParkPos.LeftOfBackdrop -> left
-        ParkPos.RightOfBackdrop -> right
-    }
+    private fun <T> pickParkPos(
+        left: T,
+        right: T,
+    ): T =
+        when (config.parkPos) {
+            ParkPos.LeftOfBackdrop -> left
+            ParkPos.RightOfBackdrop -> right
+        }
 
     data class Config(val team: Team, val startPos: StartPos, val parkPos: ParkPos)
 
