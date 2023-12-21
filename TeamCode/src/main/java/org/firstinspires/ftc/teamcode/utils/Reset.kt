@@ -30,14 +30,6 @@ object ResetNotifier : OpModeManagerNotifier.Notifications {
         // Call each reset function
         resetFunctions.forEach { it() }
     }
-
-    @Deprecated(
-        message = "ResetNotifier gets automatically initialized, you do not need to manually do it.",
-        replaceWith = ReplaceWith(""),
-        level = DeprecationLevel.ERROR,
-    )
-    fun init(opMode: OpMode) {
-    }
 }
 
 /**
