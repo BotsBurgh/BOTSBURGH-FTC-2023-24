@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.api
+package org.firstinspires.ftc.teamcode.utils
 
 import android.content.Context
 import com.acmerobotics.dashboard.FtcDashboard
@@ -14,7 +14,9 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 
-object Log : API(), OpModeManagerNotifier.Notifications {
+object Log : OpModeManagerNotifier.Notifications {
+    private lateinit var opMode: OpMode
+
     private val telemetry: Telemetry
         get() = this.opMode.telemetry
 
@@ -33,19 +35,6 @@ object Log : API(), OpModeManagerNotifier.Notifications {
     init {
         this.botsburghFolder.mkdirs()
         this.logFile.createNewFile()
-    }
-
-    override fun init(opMode: OpMode) {
-        super.init(opMode)
-
-        with(this.logWriter) {
-            write("BotsBurgh 11792 FTC 2023-24")
-            newLine()
-
-            newLine()
-
-            flush()
-        }
     }
 
     fun flush() {
@@ -73,7 +62,7 @@ object Log : API(), OpModeManagerNotifier.Notifications {
         // Log to FTC Dashboard
         this.dashboard.sendTelemetryPacket(
             TelemetryPacket().apply {
-                this.addLine(formatted)
+                addLine(formatted)
             },
         )
 
@@ -89,18 +78,36 @@ object Log : API(), OpModeManagerNotifier.Notifications {
 
     @OnCreateEventLoop
     @JvmStatic
-    fun registerFlush(
+    fun registerListener(
         @Suppress("UNUSED_PARAMETER") context: Context,
         ftcEventLoop: FtcEventLoop,
     ) {
         ftcEventLoop.opModeManager.registerListener(this)
     }
 
-    override fun onOpModePreInit(opMode: OpMode?) {}
-    override fun onOpModePreStart(opMode: OpMode?) {}
-    override fun onOpModePostStop(opMode: OpMode?) {
-        RobotLog.dd(this.ROBOT_LOG_TAG, "Flushing log to BotsBurgh/latest.log")
-        this.flush()
+    // TODO: This may be called with internal opmodes. Find some way to filter them?
+    override fun onOpModePreInit(opMode: OpMode) {
+        this.opMode = opMode
+
+        with(this.logWriter) {
+            write("BotsBurgh 11792 FTC 2023-24")
+            newLine()
+
+            newLine()
+
+            flush()
+        }
+    }
+
+    override fun onOpModePreStart(opMode: OpMode) {}
+
+    override fun onOpModePostStop(opMode: OpMode) {
+        // TODO: Test when this gets run and whether this.debug should be called.
+        this.opMode = opMode
+
+        this.debug("Flushing log to BotsBurgh/latest.log")
+
+        flush()
     }
 
     enum class Level {
