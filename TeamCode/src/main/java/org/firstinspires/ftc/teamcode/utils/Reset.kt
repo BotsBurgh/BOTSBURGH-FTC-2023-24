@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.utils
 
+import android.content.Context
+import com.qualcomm.ftccommon.FtcEventLoop
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpModeManager
-import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerImpl
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
-import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar
+import org.firstinspires.ftc.ftccommon.external.OnCreateEventLoop
 import kotlin.reflect.KProperty
 
 /**
@@ -13,12 +13,10 @@ import kotlin.reflect.KProperty
 private val resetFunctions = mutableSetOf<() -> Unit>()
 
 object ResetNotifier : OpModeManagerNotifier.Notifications {
-    @OpModeRegistrar
+    @OnCreateEventLoop
     @JvmStatic
-    fun register(manager: OpModeManager) {
-        if (manager is OpModeManagerImpl) {
-            manager.registerListener(this)
-        }
+    fun register(context: Context, ftcEventLoop: FtcEventLoop) {
+        ftcEventLoop.opModeManager.registerListener(this)
     }
 
     override fun onOpModePreInit(opMode: OpMode?) {
