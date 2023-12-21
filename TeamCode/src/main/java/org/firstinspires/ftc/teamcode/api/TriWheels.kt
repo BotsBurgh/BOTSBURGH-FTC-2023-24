@@ -36,7 +36,11 @@ object TriWheels : API() {
     /**
      * Sets the power of each wheel respectively.
      */
-    fun power(redPower: Double, greenPower: Double, bluePower: Double) {
+    fun power(
+        redPower: Double,
+        greenPower: Double,
+        bluePower: Double,
+    ) {
         this.red.power = redPower
         this.green.power = greenPower
         this.blue.power = bluePower
@@ -52,14 +56,21 @@ object TriWheels : API() {
     /**
      * Makes the robot drive in a certain direction [radians] with a given strength [magnitude].
      */
-    fun drive(radians: Double, magnitude: Double) {
+    fun drive(
+        radians: Double,
+        magnitude: Double,
+    ) {
         this.driveWithRotation(radians, magnitude, 0.0)
     }
 
     /**
      * Does the same thing as [drive] but it rotates the robot with a given [rotation] too.
      */
-    fun driveWithRotation(radians: Double, magnitude: Double, rotation: Double) {
+    fun driveWithRotation(
+        radians: Double,
+        magnitude: Double,
+        rotation: Double,
+    ) {
         this.power(
             magnitude * sin(this.RED_ANGLE - radians) + rotation,
             magnitude * sin(this.GREEN_ANGLE - radians) + rotation,
@@ -91,44 +102,13 @@ object TriWheels : API() {
      * encoder values.
      */
     fun stopAndResetMotors() {
-        stop()
+        this.stop()
 
-        // Reset encoder values
-        this.red.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        this.blue.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        this.green.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-
-        // Use encoders to make all wheels consistent
-        this.red.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.green.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.blue.mode = DcMotor.RunMode.RUN_USING_ENCODER
-
-        // Make wheels brake when stopped
-        this.red.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.green.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.blue.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-
-        // Configure direction
-        this.red.direction = DcMotorSimple.Direction.FORWARD
-        this.green.direction = DcMotorSimple.Direction.FORWARD
-        this.blue.direction = DcMotorSimple.Direction.FORWARD
-    }
-
-    @Deprecated(
-        message = "This function has been renamed.",
-        replaceWith = ReplaceWith("this.rotate(power)"),
-        level = DeprecationLevel.ERROR,
-    )
-    fun power(power: Double) {
-        this.rotate(power)
-    }
-
-    @Deprecated(
-        message = "This function has been renamed.",
-        replaceWith = ReplaceWith("this.drive(radians, magnitude)"),
-        level = DeprecationLevel.ERROR,
-    )
-    fun moveDirection(radians: Double, magnitude: Double) {
-        this.drive(radians, magnitude)
+        for (motor in arrayOf(this.red, this.green, this.blue)) {
+            motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+            motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            motor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+            motor.direction = DcMotorSimple.Direction.FORWARD
+        }
     }
 }

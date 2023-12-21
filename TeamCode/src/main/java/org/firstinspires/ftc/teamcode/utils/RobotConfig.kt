@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:property-naming")
+
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
@@ -48,10 +50,11 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = when (model) {
-            Model.RobotA -> 27.0
-            Model.RobotB -> 44.0
-        }
+        var TICKS_PER_INCH: Double =
+            when (model) {
+                Model.RobotA -> 27.0
+                Model.RobotB -> 44.0
+            }
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -127,12 +130,14 @@ object RobotConfig {
         var OPTIMUM_GAIN: Int = 255
     }
 
+    /** Configuration related to the main autonomous. */
     @Config
     object AutoMain {
         @JvmField
         var WAIT_TIME: Long = 0
     }
 
+    /** Configuration related to the TeleOpMovement component. */
     @Config
     object TeleOpMovement {
         @JvmField

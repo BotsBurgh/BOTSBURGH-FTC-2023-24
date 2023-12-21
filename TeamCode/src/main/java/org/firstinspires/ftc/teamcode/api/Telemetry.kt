@@ -24,30 +24,34 @@ object Telemetry : API() {
 
         if (RobotConfig.debug) {
             // Makes opMode.telemetry calls send to both driver station and FTC Dashboard
-            opMode.telemetry = MultipleTelemetry(
-                opMode.telemetry,
-                FtcDashboard.getInstance().telemetry,
-            )
+            opMode.telemetry =
+                MultipleTelemetry(
+                    opMode.telemetry,
+                    FtcDashboard.getInstance().telemetry,
+                )
         }
     }
 
     /** This additionally logs the current [RobotConfig]. */
-    fun sayInitialized() = with(opMode.telemetry) {
-        addData("Status", "Initialized")
+    fun sayInitialized() =
+        with(opMode.telemetry) {
+            addData("Status", "Initialized")
 
-        // Log the current robot configuration
-        addData("Config", RobotConfig.toString())
+            // Log the current robot configuration
+            addData("Config", RobotConfig.toString())
 
-        update()
-    }
+            update()
+        }
 
-    fun sayRunning() = with(opMode.telemetry) {
-        addData("Status", "Running")
-        update()
-    }
+    fun sayRunning() =
+        with(opMode.telemetry) {
+            addData("Status", "Running")
+            update()
+        }
 
-    fun sayStarted() = with(opMode.telemetry) {
-        addData("Status", "Started")
-        update()
-    }
+    fun sayStarted() =
+        with(opMode.telemetry) {
+            addData("Status", "Started")
+            update()
+        }
 }
