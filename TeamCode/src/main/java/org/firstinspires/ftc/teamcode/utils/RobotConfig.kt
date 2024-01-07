@@ -52,7 +52,7 @@ object RobotConfig {
         @JvmField
         var TICKS_PER_INCH: Double =
             when (model) {
-                Model.RobotA -> 27.0
+                Model.RobotA -> 12.0
                 Model.RobotB -> 44.0
             }
 
