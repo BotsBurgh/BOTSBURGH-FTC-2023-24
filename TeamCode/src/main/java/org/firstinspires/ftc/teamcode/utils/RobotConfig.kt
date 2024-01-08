@@ -63,7 +63,11 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_DEGREE: Double = 6.64
+        var TICKS_PER_DEGREE: Double =
+            when (model) {
+                Model.RobotA -> 1.775
+                Model.RobotB -> 6.64
+            }
 
         /**
          * A multiplier that calculates the power of the wheel relative to the amount it needs to
