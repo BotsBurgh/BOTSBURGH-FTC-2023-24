@@ -111,7 +111,8 @@ object Encoders : LinearAPI() {
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
 
-        val ticks = this.degreesToTick(degrees)
+        // Reverse direction since unit circle goes in opposite direction from degrees
+        val ticks = -this.degreesToTick(degrees)
 
         TriWheels.red.mode = DcMotor.RunMode.RUN_TO_POSITION
         TriWheels.green.mode = DcMotor.RunMode.RUN_TO_POSITION
