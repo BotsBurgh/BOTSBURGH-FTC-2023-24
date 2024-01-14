@@ -135,16 +135,19 @@ object RobotConfig {
         var LEFT_REGION = Rect(100, 200, 100, 100)
 
         @JvmField
-        var CENTER_REGION = Rect(250, 200, 100, 100)
+        var CENTER_REGION = Rect(400, 200, 100, 100)
 
-        @JvmField
-        var RIGHT_REGION = Rect(400, 200, 100, 100)
+        // @JvmField
+        // var RIGHT_REGION = Rect(400, 200, 100, 100)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
 
         @JvmField
         var BLUE_WEIGHT = Scalar(-0.2, -0.2, 1.0)
+
+        @JvmField
+        var SCORE_THRESHOLD: Double = 150.0
     }
 
     @Config

@@ -52,7 +52,7 @@ object CubeVision : API(), VisionAPI {
 
         private lateinit var regionLeft: Mat
         private lateinit var regionCenter: Mat
-        private lateinit var regionRight: Mat
+        // private lateinit var regionRight: Mat
 
         private val colorWeight: Scalar
             get() =
@@ -77,7 +77,7 @@ object CubeVision : API(), VisionAPI {
             if (!this.initialized) {
                 this.regionLeft = this.rgb.submat(RobotConfig.CubeVision.LEFT_REGION)
                 this.regionCenter = this.rgb.submat(RobotConfig.CubeVision.CENTER_REGION)
-                this.regionRight = this.rgb.submat(RobotConfig.CubeVision.RIGHT_REGION)
+                // this.regionRight = this.rgb.submat(RobotConfig.CubeVision.RIGHT_REGION)
 
                 this.initialized = true
             }
@@ -85,23 +85,25 @@ object CubeVision : API(), VisionAPI {
             // Calculate score. The greater, the more likely it is to be the cube we want.
             val scoreLeft = Core.mean(this.regionLeft).mul(colorWeight).sumRGB()
             val scoreCenter = Core.mean(this.regionCenter).mul(colorWeight).sumRGB()
-            val scoreRight = Core.mean(this.regionRight).mul(colorWeight).sumRGB()
+            // val scoreRight = Core.mean(this.regionRight).mul(colorWeight).sumRGB()
 
             with(t) {
                 addData("Score Left", scoreLeft)
                 addData("Score Center", scoreCenter)
-                addData("Score Right", scoreRight)
+                // addData("Score Right", scoreRight)
             }
 
-            val placement =
-                when (max(max(scoreLeft, scoreCenter), scoreRight)) {
+            val maxScore = max(scoreLeft, scoreCenter)
+
+            this.placement = if (maxScore > RobotConfig.CubeVision.SCORE_THRESHOLD) {
+                 when(maxScore) {
                     scoreLeft -> CubePlacement.Left
                     scoreCenter -> CubePlacement.Center
-                    scoreRight -> CubePlacement.Right
                     else -> throw RuntimeException("Unreachable")
                 }
-
-            this.placement = placement
+            } else {
+                CubePlacement.Right
+            }
 
             Imgproc.rectangle(
                 frame,
@@ -113,11 +115,11 @@ object CubeVision : API(), VisionAPI {
                 RobotConfig.CubeVision.CENTER_REGION,
                 Scalar(255.0, 255.0, 255.0, 255.0),
             )
-            Imgproc.rectangle(
-                frame,
-                RobotConfig.CubeVision.RIGHT_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0),
-            )
+            // Imgproc.rectangle(
+            //     frame,
+            //     RobotConfig.CubeVision.RIGHT_REGION,
+            //     Scalar(255.0, 255.0, 255.0, 255.0),
+            // )
 
             // This return value is passed to [onDrawFrame].
             return placement
