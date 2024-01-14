@@ -44,6 +44,17 @@ object Vision : API() {
 
         val webcam = opMode.hardwareMap.get(WebcamName::class.java, "Webcam 1")
 
+        this.reInit(webcam, *visionAPIs)
+    }
+
+    fun reInit(
+        webcam: WebcamName,
+        vararg visionAPIs: VisionAPI,
+    ) {
+        if (this::portal.isInitialized) {
+            this.portal.close()
+        }
+
         // Configure the builder with settings
         val builder =
             VisionPortal.Builder()
@@ -62,7 +73,7 @@ object Vision : API() {
         // Use a different sleep function depending on whether its a linear opmode or not.
         val sleep =
             if (opMode is LinearOpMode) {
-                opMode::sleep
+                (this.opMode as LinearOpMode)::sleep
             } else {
                 this::opModeSleep
             }
@@ -74,6 +85,9 @@ object Vision : API() {
 
             sleep(50)
         }
+
+        opMode.telemetry.addData("Camera", this.portal.cameraState)
+        opMode.telemetry.update()
     }
 
     /**
