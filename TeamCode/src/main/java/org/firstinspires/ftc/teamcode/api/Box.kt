@@ -23,15 +23,15 @@ object Box : API() {
      * Moves the box to the ground
      */
     fun dropBox() {
-        this.boxL.position = -0.5
-        this.boxR.position = 0.5
+        this.boxL.position = 0.4
+        this.boxR.position = 0.35
     }
 
     /**
      * Moves box to upright position
      */
     fun pickUpBox() {
-        this.boxL.position = 0.0
+        this.boxL.position = 0.76
         this.boxR.position = 0.0
     }
 
