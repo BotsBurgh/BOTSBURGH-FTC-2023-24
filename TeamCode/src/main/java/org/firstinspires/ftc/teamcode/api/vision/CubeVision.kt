@@ -95,15 +95,16 @@ object CubeVision : API(), VisionAPI {
 
             val maxScore = max(scoreLeft, scoreCenter)
 
-            this.placement = if (maxScore > RobotConfig.CubeVision.SCORE_THRESHOLD) {
-                 when(maxScore) {
-                    scoreLeft -> CubePlacement.Left
-                    scoreCenter -> CubePlacement.Center
-                    else -> throw RuntimeException("Unreachable")
+            this.placement =
+                if (maxScore > RobotConfig.CubeVision.SCORE_THRESHOLD) {
+                    when (maxScore) {
+                        scoreLeft -> CubePlacement.Left
+                        scoreCenter -> CubePlacement.Center
+                        else -> throw RuntimeException("Unreachable")
+                    }
+                } else {
+                    CubePlacement.Right
                 }
-            } else {
-                CubePlacement.Right
-            }
 
             Imgproc.rectangle(
                 frame,
