@@ -149,6 +149,13 @@ object CubeVision : API(), VisionAPI {
     enum class CubePlacement {
         Left,
         Center,
-        Right,
+        Right, ;
+
+        fun toInt(): Int =
+            when (this) {
+                Left -> 1
+                Center -> 2
+                Right -> 3
+            }
     }
 }

@@ -1,12 +1,20 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
+import org.firstinspires.ftc.teamcode.api.linear.AprilMovement
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
+import org.firstinspires.ftc.teamcode.api.vision.AprilVision
+import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
+import org.firstinspires.ftc.teamcode.api.vision.CubeVision
+import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.Team
+import org.firstinspires.ftc.vision.getVisionPortalCamera
 
 abstract class AutoMain : LinearOpMode() {
     abstract val config: Config
@@ -30,27 +38,33 @@ abstract class AutoMain : LinearOpMode() {
         Encoders.init(this)
 
         // Vision APIs
-        // AprilVision.init(this)
-        // Vision.init(this, AprilVision)
+        CubeVision.init(this, this.config.team)
+        AprilVision.init(this)
 
-        // AprilMovement.init(this)
+        // Purposefully skip AprilVision here.
+        Vision.init(this, CubeVision)
 
-        // Modify camera exposure for april tags
-        // This may interfere with other vision processes like Tensorflow
-        // Vision.optimizeForAprilTags()
+        AprilMovement.init(this)
 
         // Stream camera to FTC Dashboard
-        // val camera = getVisionPortalCamera(Vision.portal)!!
-        // FtcDashboard.getInstance().startCameraStream(camera, 0.0)
+        val camera = getVisionPortalCamera(Vision.portal)!!
+        FtcDashboard.getInstance().startCameraStream(camera, 0.0)
 
         Telemetry.sayInitialized()
 
         waitForStart()
 
-        /*
-        // TODO: Scan team game element
-        val teamElementPos = 2
-         */
+        val teamElementPos = CubeVision.output.toInt()
+
+        // Re-init vision portal to use april vision
+        Vision.reInit(
+            this.hardwareMap.get(WebcamName::class.java, "Webcam 2"),
+            AprilVision,
+        )
+
+        // Modify camera exposure for april tags
+        // This may interfere with other vision processes like Tensorflow
+        Vision.optimizeForAprilTags()
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
@@ -79,8 +93,6 @@ abstract class AutoMain : LinearOpMode() {
             }
         }
 
-        /*
-
         // Deposit pixel using april tag
         // Red: 1, 2, 3. Blue: 4, 5, 6
         AprilMovement.driveTo(teamElementPos + pickTeam(0, 3))
@@ -95,8 +107,6 @@ abstract class AutoMain : LinearOpMode() {
             Team.Red -> AprilMovement.driveTo(5, tiles(1))
             Team.Blue -> AprilMovement.driveTo(2, tiles(1))
         }
-
-         */
 
         // Navigate to parking spot
         Encoders.spinTo(pickParkPos(-90.0, 90.0))
