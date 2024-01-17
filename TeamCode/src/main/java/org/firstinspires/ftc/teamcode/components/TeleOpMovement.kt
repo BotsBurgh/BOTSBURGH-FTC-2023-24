@@ -13,13 +13,10 @@ import kotlin.math.sqrt
  * Requires the [TriWheels] API.
  */
 object TeleOpMovement : Component {
-    private const val ROTATION_GAIN = 0.6
-    private const val SLOW_MULTIPLIER = 0.4
-
     override fun loop(opMode: OpMode) {
         // alias gamepad1
         val gamepad = opMode.gamepad1
-        val rotationPower = ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
+        val rotationPower = RobotConfig.TeleOpMovement.ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
 
         // joystick input
         val joyX = -gamepad.left_stick_x.toDouble()
@@ -32,7 +29,7 @@ object TeleOpMovement : Component {
 
         // if the right bumper is pressed move slower
         if (gamepad.right_bumper) {
-            joyMagnitude *= SLOW_MULTIPLIER
+            joyMagnitude *= RobotConfig.TeleOpMovement.SLOW_MULTIPLIER
         }
 
         // movement of all wheels

@@ -149,6 +149,12 @@ object RobotConfig {
 
         @JvmField
         var ROTATE_SPEED: Double = 0.5
+
+        @JvmField
+        var ROTATION_GAIN: Double = 0.6
+
+        @JvmField
+        var SLOW_MULTIPLIER: Double = 0.4
     }
 
     /**
