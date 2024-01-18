@@ -155,6 +155,12 @@ object RobotConfig {
 
         @JvmField
         var SLOW_MULTIPLIER: Double = 0.4
+
+        @JvmField
+        var SLIDE_UP_POWER: Double = 0.6
+
+        @JvmField
+        var SLIDE_DOWN_POWER: Double = -0.4
     }
 
     /**

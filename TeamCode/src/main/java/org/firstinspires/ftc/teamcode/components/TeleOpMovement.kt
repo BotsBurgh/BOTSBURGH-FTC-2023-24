@@ -34,9 +34,9 @@ object TeleOpMovement : Component {
         }
 
         if (gamepad.dpad_down) {
-            LinearSlide.power(-0.4)
+            LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
         } else if (gamepad.dpad_up) {
-            LinearSlide.power(0.6)
+            LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_UP_POWER)
         } else {
             LinearSlide.stop()
         }
