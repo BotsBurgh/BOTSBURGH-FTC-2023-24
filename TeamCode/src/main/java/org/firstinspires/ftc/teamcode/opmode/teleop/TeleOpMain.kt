@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.GamepadEx
+import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
@@ -16,6 +17,8 @@ class TeleOpMain : OpMode() {
 
         // Triangle wheel controls
         TriWheels.init(this)
+
+        LinearSlide.init(this)
 
         // Advanced gamepad inputs
         GamepadEx.init(this)
