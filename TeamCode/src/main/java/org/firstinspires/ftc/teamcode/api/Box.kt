@@ -39,13 +39,13 @@ object Box : API() {
      * Moves the grip to keep pixels in place when  [pickUpBox] the box
      */
     fun gripIn() {
-        this.grip.position = 0.2
+        this.grip.position = 0.23
     }
 
     /**
      * Resets the grip to starting position
      */
     fun gripOut() {
-        this.grip.position = 0.0
+        this.grip.position = 0.18
     }
 }
