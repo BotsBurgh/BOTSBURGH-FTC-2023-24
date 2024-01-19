@@ -46,6 +46,6 @@ object Box : API() {
      * Resets the grip to starting position
      */
     fun gripOut() {
-        this.grip.position = 0.18
+        this.grip.position = 0.11
     }
 }
