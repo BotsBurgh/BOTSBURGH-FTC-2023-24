@@ -12,6 +12,7 @@ import kotlin.math.sqrt
  * Moves the robot wheels based on gamepad input.
  *
  * Requires the [TriWheels] API.
+ * Requires the [Box] API.
  */
 object TeleOpMovement : Component {
     private const val ROTATION_GAIN = 0.6
