@@ -7,15 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo
  * An API for controlling the Box on the robot.
  */
 object Box : API() {
-    private lateinit var boxL: Servo
-    private lateinit var boxR: Servo
+    private lateinit var box: Servo
     private lateinit var grip: Servo
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.boxL = this.hardwareMap.get(Servo::class.java, "boxL")
-        this.boxR = this.hardwareMap.get(Servo::class.java, "boxR")
+        this.box = this.hardwareMap.get(Servo::class.java, "box")
         this.grip = this.hardwareMap.get(Servo::class.java, "grip")
     }
 
@@ -23,16 +21,14 @@ object Box : API() {
      * Moves the box to the ground
      */
     fun dropBox() {
-        this.boxL.position = 0.4
-        this.boxR.position = 0.35
+        this.box.position = 0.5
     }
 
     /**
      * Moves box to upright position
      */
     fun pickUpBox() {
-        this.boxL.position = 0.76
-        this.boxR.position = 0.0
+        this.box.position = 1.0
     }
 
     /**
