@@ -15,7 +15,7 @@ object LinearSlide : API() {
 
     private const val MAX_POS: Int = 3000
     private const val MIN_POS: Int = 100
-    private const val SLOWDOWN_POS: Int = 2500
+    private const val SLOWDOWN_POS: Int = 2400
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
@@ -42,11 +42,7 @@ object LinearSlide : API() {
                 // If going upward and current position is less than maximum.
                 power *
                     if (this.slide.currentPosition > this.SLOWDOWN_POS) {
-                        // Multiply power by a decimal between 0 and 1 based on how close the slide
-                        // is to the max. This slows down the slide the closer it is to the maximum
-                        // position, smoothing its motion. This only gets applied if the current
-                        // position is between MAX_POS and SLOWDOWN_POS.
-                        ((this.MAX_POS - this.slide.currentPosition) / (this.MAX_POS - this.SLOWDOWN_POS)).toDouble()
+                        this.slowdownSlope(power) * (this.slide.currentPosition - this.MAX_POS)
                     } else {
                         // Else use identity function, don't affect speed.
                         1.0
@@ -71,6 +67,8 @@ object LinearSlide : API() {
     fun stop() {
         this.slide.power = 0.0
     }
+
+    private fun slowdownSlope(power: Double): Double = (-power) / (this.MAX_POS - this.SLOWDOWN_POS)
 
     /**
      * Resets the value of the linear slide encoders.
