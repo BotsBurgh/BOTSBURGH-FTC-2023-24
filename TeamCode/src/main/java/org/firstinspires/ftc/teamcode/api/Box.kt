@@ -18,6 +18,8 @@ object Box : API() {
 
         // Set initial position of box to be open.
         this.box.position = 0.5
+        // Close grip at the beginning.
+        this.gripOut()
     }
 
     /**
