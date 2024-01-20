@@ -41,7 +41,7 @@ object TeleOpMovement : Component {
         if (gamepad.dpad_left) {
             slideLocked = true
 
-            with (LinearSlide.slide) {
+            with(LinearSlide.slide) {
                 targetPosition = currentPosition
                 mode = DcMotor.RunMode.RUN_TO_POSITION
             }
