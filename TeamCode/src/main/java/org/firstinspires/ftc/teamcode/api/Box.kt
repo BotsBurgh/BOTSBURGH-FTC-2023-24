@@ -24,7 +24,7 @@ object Box : API() {
         opModeSleep(opMode)(500)
 
         // Set initial position of box to be open.
-        this.box.position = 0.4
+        this.pickUpBox()
     }
 
     /**
@@ -45,13 +45,13 @@ object Box : API() {
      * Moves the grip to keep pixels in place when  [pickUpBox] the box
      */
     fun gripIn() {
-        this.grip.position = 0.4
+        this.grip.position = 0.5
     }
 
     /**
      * Resets the grip to starting position
      */
     fun gripOut() {
-        this.grip.position = 0.11
+        this.grip.position = 0.31
     }
 }
