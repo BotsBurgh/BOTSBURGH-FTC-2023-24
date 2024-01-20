@@ -4,23 +4,22 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.GamepadEx
+import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.components.TeleOpMovement
-import org.firstinspires.ftc.teamcode.utils.Reset
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
     // init will run once
     override fun init() {
-        // Resets property states of the robot
-        Reset.init(this)
-
         // Setup special telemetry
         Telemetry.init(this)
 
         // Triangle wheel controls
         TriWheels.init(this)
+
+        LinearSlide.init(this)
 
         // Advanced gamepad inputs
         GamepadEx.init(this)

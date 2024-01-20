@@ -54,8 +54,8 @@ object Encoders : LinearAPI() {
             val runtime = ElapsedTime()
 
             while (
-                abs(left.currentPosition - leftTarget) > RobotConfig.Encoders.ENCODER_ERROR &&
-                abs(right.currentPosition - rightTarget) > RobotConfig.Encoders.ENCODER_ERROR &&
+                abs(leftTarget - left.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
+                abs(rightTarget - right.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
                 // Accelerate the longer the robot has been running
@@ -64,7 +64,7 @@ object Encoders : LinearAPI() {
                 left.power =
                     min(
                         min(
-                            abs(left.currentPosition - leftTarget) * RobotConfig.Encoders.ENCODER_GAIN,
+                            (leftTarget - left.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed,
                         ),
                         RobotConfig.Encoders.MAX_DRIVE_SPEED,
@@ -72,7 +72,7 @@ object Encoders : LinearAPI() {
                 right.power =
                     min(
                         min(
-                            abs(right.currentPosition - rightTarget) * RobotConfig.Encoders.ENCODER_GAIN,
+                            (rightTarget - right.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
                             timeSpeed,
                         ),
                         RobotConfig.Encoders.MAX_DRIVE_SPEED,
@@ -111,7 +111,8 @@ object Encoders : LinearAPI() {
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
 
-        val ticks = this.degreesToTick(degrees)
+        // Reverse direction since unit circle goes in opposite direction from degrees
+        val ticks = -this.degreesToTick(degrees)
 
         TriWheels.red.mode = DcMotor.RunMode.RUN_TO_POSITION
         TriWheels.green.mode = DcMotor.RunMode.RUN_TO_POSITION

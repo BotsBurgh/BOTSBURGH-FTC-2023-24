@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
-import org.firstinspires.ftc.teamcode.utils.Reset
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.Team
 
@@ -26,8 +25,6 @@ abstract class AutoMain : LinearOpMode() {
     private val tileSize = 24.0
 
     override fun runOpMode() {
-        Reset.init(this)
-
         Telemetry.init(this)
         TriWheels.init(this)
         Encoders.init(this)

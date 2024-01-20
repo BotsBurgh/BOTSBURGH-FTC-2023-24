@@ -50,11 +50,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double =
-            when (model) {
-                Model.RobotA -> 27.0
-                Model.RobotB -> 44.0
-            }
+        var TICKS_PER_INCH: Double = 44.0
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -88,7 +84,7 @@ object RobotConfig {
          * The maximum power a wheel can spin at when the robot spinning with encoders.
          */
         @JvmField
-        var MAX_SPIN_SPEED: Double = 0.8
+        var MAX_SPIN_SPEED: Double = 0.4
 
         /**
          * A multiplier that calculates the power of the wheel relative to the amount of time that
@@ -145,6 +141,18 @@ object RobotConfig {
 
         @JvmField
         var ROTATE_SPEED: Double = 0.5
+
+        @JvmField
+        var ROTATION_GAIN: Double = 0.6
+
+        @JvmField
+        var SLOW_MULTIPLIER: Double = 0.4
+
+        @JvmField
+        var SLIDE_UP_POWER: Double = 0.6
+
+        @JvmField
+        var SLIDE_DOWN_POWER: Double = -0.4
     }
 
     /**

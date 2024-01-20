@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.utils
 
+import android.content.Context
+import com.qualcomm.ftccommon.FtcEventLoop
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier
+import org.firstinspires.ftc.ftccommon.external.OnCreateEventLoop
 import kotlin.reflect.KProperty
 
 /**
@@ -9,33 +13,39 @@ import kotlin.reflect.KProperty
 private val resetFunctions = mutableSetOf<() -> Unit>()
 
 /**
- * An object that resets the property states of the robot, used between opmode runs.
+ * A listener that resets all [Resettable] variables each time an opmode begins initializing.
  *
- * **This must be initialized first, before any other code is run!**
+ * You don't need to access this object manually. It is automatically called by the
+ * [OpModeManagerNotifier] when the "Init" button is pressed, but before any other user-defined code
+ * is ran. This means that APIs and opmodes can rely on their [Resettable] properties always being
+ * reset.
  *
- * @see Resettable
+ * # History
+ *
+ * This API used to be called `Reset`. It acted like an API but you needed to call its
+ * `Reset.init(this)` method first in opmode initialization or other APIs would break. It was
+ * revised in [#46](https://github.com/BotsBurgh/BOTSBURGH-FTC-2023-24/pull/46) to automatically
+ * run, so that nothing would break if someone forgot to write `Reset.init`.
  */
-object Reset {
-    /**
-     * A reference to the last-initialized opmode, used purely to ensure that [Reset] is not called
-     * more than once per run.
-     */
-    private var opModeReference: OpMode? = null
-
-    /** Resets any registered [Resettable] properties. */
-    fun init(opMode: OpMode) {
-        // Check that, if Reset has been called before, it is not called on the same opmode run by
-        // ensuring the opmode references are different.
-        if (opModeReference == opMode) {
-            throw IllegalStateException("Tried to initialize the Reset API more than once in a single run.")
-        }
-
-        // Set new opmode reference.
-        opModeReference = opMode
-
-        // Reset any registered properties.
-        resetAll()
+object ResetListener : OpModeManagerNotifier.Notifications {
+    // An entrypoint when the app gets created. With it, we register a listener that calls
+    // `resetAll()` before an opmode is initialized.
+    @OnCreateEventLoop
+    @JvmStatic
+    fun register(
+        @Suppress("UNUSED_PARAMETER") context: Context,
+        ftcEventLoop: FtcEventLoop,
+    ) {
+        ftcEventLoop.opModeManager.registerListener(this)
     }
+
+    override fun onOpModePreInit(opMode: OpMode) {
+        this.resetAll()
+    }
+
+    override fun onOpModePreStart(opMode: OpMode) {}
+
+    override fun onOpModePostStop(opMode: OpMode) {}
 
     private fun resetAll() {
         // Call each reset function
@@ -64,7 +74,7 @@ object Reset {
  * # Example
  *
  * ```
- * object MyAPI: API() {
+ * object MyAPI : API() {
  *     // The starting value of someState is 10
  *     private var someState: Int by Resettable { 10 }
  * }
