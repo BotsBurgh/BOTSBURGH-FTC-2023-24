@@ -22,7 +22,7 @@ class AutoForward : LinearOpMode() {
 
         Encoders.driveTo(
             when (RobotConfig.model) {
-                RobotConfig.Model.RobotA -> Encoders.Direction.Blue
+                RobotConfig.Model.RobotA -> Encoders.Direction.Green
                 RobotConfig.Model.RobotB -> Encoders.Direction.Red
             },
             20.0,
