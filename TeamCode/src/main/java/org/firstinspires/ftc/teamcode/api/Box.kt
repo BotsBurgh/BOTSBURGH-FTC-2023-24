@@ -15,20 +15,23 @@ object Box : API() {
 
         this.box = this.hardwareMap.get(Servo::class.java, "box")
         this.grip = this.hardwareMap.get(Servo::class.java, "grip")
+
+        // Set initial position of box to be open.
+        this.box.position = 0.5
     }
 
     /**
      * Moves the box to the ground
      */
     fun dropBox() {
-        this.box.position = 0.5
+        this.box.position = 1.0
     }
 
     /**
      * Moves box to upright position
      */
     fun pickUpBox() {
-        this.box.position = 1.0
+        this.box.position = 0.6
     }
 
     /**
