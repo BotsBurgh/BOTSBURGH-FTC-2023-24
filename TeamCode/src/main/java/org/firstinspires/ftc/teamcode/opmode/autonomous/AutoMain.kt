@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.Telemetry
@@ -164,41 +165,49 @@ abstract class AutoMain : LinearOpMode() {
 // {Red,Blue}{Front,Back}{Left,Right}
 
 @Autonomous(name = "AutoMain - RedFrontLeft")
+@Disabled
 class AutoMainRedFrontLeft : AutoMain() {
     override val config = Config(Team.Red, StartPos.FrontStage, ParkPos.LeftOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - BlueFrontLeft")
+@Disabled
 class AutoMainBlueFrontLeft : AutoMain() {
     override val config = Config(Team.Blue, StartPos.FrontStage, ParkPos.LeftOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - RedBackLeft")
+@Disabled
 class AutoMainRedBackLeft : AutoMain() {
     override val config = Config(Team.Red, StartPos.BackStage, ParkPos.LeftOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - BlueBackLeft")
+@Disabled
 class AutoMainBlueBackLeft : AutoMain() {
     override val config = Config(Team.Blue, StartPos.BackStage, ParkPos.LeftOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - RedFrontRight")
+@Disabled
 class AutoMainRedFrontRight : AutoMain() {
     override val config = Config(Team.Red, StartPos.FrontStage, ParkPos.RightOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - BlueFrontRight")
+@Disabled
 class AutoMainBlueFrontRight : AutoMain() {
     override val config = Config(Team.Blue, StartPos.FrontStage, ParkPos.RightOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - RedBackRight")
+@Disabled
 class AutoMainRedBackRight : AutoMain() {
     override val config = Config(Team.Red, StartPos.BackStage, ParkPos.RightOfBackdrop)
 }
 
 @Autonomous(name = "AutoMain - BlueBackRight")
+@Disabled
 class AutoMainBlueBackRight : AutoMain() {
     override val config = Config(Team.Blue, StartPos.BackStage, ParkPos.RightOfBackdrop)
 }
