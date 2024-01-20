@@ -16,10 +16,10 @@ object Box : API() {
         this.box = this.hardwareMap.get(Servo::class.java, "box")
         this.grip = this.hardwareMap.get(Servo::class.java, "grip")
 
-        // Set initial position of box to be open.
-        this.box.position = 0.4
         // Close grip at the beginning.
         this.gripOut()
+        // Set initial position of box to be open.
+        this.box.position = 0.4
     }
 
     /**
