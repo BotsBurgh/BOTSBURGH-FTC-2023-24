@@ -14,7 +14,7 @@ object LinearSlide : API() {
         private set
 
     private const val MAX_POS: Int = 3000
-    private const val MIN_POS: Int = 100
+    private const val MIN_POS: Int = 0
     private const val SLOWDOWN_POS: Int = 2400
 
     override fun init(opMode: OpMode) {
