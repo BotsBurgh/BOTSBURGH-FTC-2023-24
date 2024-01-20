@@ -25,7 +25,7 @@ class AutoForward : LinearOpMode() {
                 RobotConfig.Model.RobotA -> Encoders.Direction.Green
                 RobotConfig.Model.RobotB -> Encoders.Direction.Red
             },
-            20.0,
+            44.0,
         )
     }
 }
