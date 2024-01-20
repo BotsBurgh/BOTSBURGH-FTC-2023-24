@@ -34,11 +34,13 @@ object TeleOpMovement : Component {
 
         // angle and strength
         // PI / 3 because 0 radians is right, not forward
-        val joyRadians = atan2(joyY, joyX) - (PI / 3.0) + if (pushBotAxis) {
-            2.0 * PI / 3.0
-        } else {
-            0.0
-        }
+        val joyRadians =
+            atan2(joyY, joyX) - (PI / 3.0) +
+                if (pushBotAxis) {
+                    2.0 * PI / 3.0
+                } else {
+                    0.0
+                }
 
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 

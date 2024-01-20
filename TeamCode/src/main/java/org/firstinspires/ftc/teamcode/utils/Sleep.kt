@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.utils
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 
-fun opModeSleep(opMode: OpMode): (Long) -> Unit = if (opMode is LinearOpMode) {
-    opMode::sleep
-} else {
-    ::nonLinearSleep
-}
+fun opModeSleep(opMode: OpMode): (Long) -> Unit =
+    if (opMode is LinearOpMode) {
+        opMode::sleep
+    } else {
+        ::nonLinearSleep
+    }
 
 /**
  * A version of [LinearOpMode.sleep] that works for [OpMode]s.
