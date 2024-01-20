@@ -9,6 +9,12 @@ import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
 @Autonomous(name = "Auto Forward")
 class AutoForward : LinearOpMode() {
+    private val forward =
+        when (RobotConfig.model) {
+            RobotConfig.Model.RobotA -> Encoders.Direction.Green
+            RobotConfig.Model.RobotB -> Encoders.Direction.Red
+        }
+
     override fun runOpMode() {
         Telemetry.init(this)
         TriWheels.init(this)
@@ -21,11 +27,15 @@ class AutoForward : LinearOpMode() {
         Telemetry.sayStarted()
 
         Encoders.driveTo(
-            when (RobotConfig.model) {
-                RobotConfig.Model.RobotA -> Encoders.Direction.Green
-                RobotConfig.Model.RobotB -> Encoders.Direction.Red
-            },
-            44.0,
+            forward,
+            42.0,
+        )
+
+        sleep(1000)
+
+        Encoders.driveTo(
+            forward,
+            -4.0,
         )
     }
 }
