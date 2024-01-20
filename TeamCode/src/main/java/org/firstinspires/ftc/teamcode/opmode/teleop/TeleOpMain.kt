@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.Telemetry
@@ -22,6 +23,9 @@ class TeleOpMain : OpMode() {
 
         // Advanced gamepad inputs
         GamepadEx.init(this)
+
+        // Box controls
+        Box.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()

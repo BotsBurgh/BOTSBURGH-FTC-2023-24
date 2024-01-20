@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.components
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.LinearSlide
+import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.Resettable
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -13,7 +14,7 @@ import kotlin.math.sqrt
 /**
  * Moves the robot wheels based on gamepad input.
  *
- * Requires the [TriWheels] API.
+ * Requires the [TriWheels], [Box], and [LinearSlide] APIs.
  */
 object TeleOpMovement : Component {
     private var slideLocked: Boolean by Resettable { false }
@@ -30,12 +31,7 @@ object TeleOpMovement : Component {
         // angle and strength
         // PI / 3 because 0 radians is right, not forward
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
-        var joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
-
-        // if the right bumper is pressed move slower
-        if (gamepad.right_bumper) {
-            joyMagnitude *= RobotConfig.TeleOpMovement.SLOW_MULTIPLIER
-        }
+        val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
         // Lock or unlock the slide "brake"
         if (gamepad.dpad_left) {
@@ -52,6 +48,7 @@ object TeleOpMovement : Component {
             LinearSlide.stop()
         }
 
+        // Move linear slide
         if (slideLocked) {
             LinearSlide.slide.power = 0.4
         } else {
@@ -63,6 +60,20 @@ object TeleOpMovement : Component {
             } else {
                 LinearSlide.stop()
             }
+        }
+
+        // Inputs for the gripper on the box
+        if (gamepad.left_bumper) {
+            Box.gripIn()
+        } else if (gamepad.right_bumper) {
+            Box.gripOut()
+        }
+
+        // Inputs for the movement of the box
+        if (gamepad.a) {
+            Box.dropBox()
+        } else if (gamepad.b) {
+            Box.pickUpBox()
         }
 
         // movement of all wheels
