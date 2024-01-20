@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.utils.opModeSleep
 
 /**
  * An API for controlling the Box on the robot.
@@ -18,6 +19,10 @@ object Box : API() {
 
         // Close grip at the beginning.
         this.gripOut()
+
+        // Sleep for 0.5 seconds
+        opModeSleep(opMode)(500)
+
         // Set initial position of box to be open.
         this.box.position = 0.4
     }
