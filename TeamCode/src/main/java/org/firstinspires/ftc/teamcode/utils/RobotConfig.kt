@@ -155,6 +155,16 @@ object RobotConfig {
         var SLIDE_DOWN_POWER: Double = -0.4
     }
 
+    /** Configuration related to the Claw API. */
+    @Config
+    object Claw {
+        @JvmField
+        var IN_POSITION: Double = 0.5
+
+        @JvmField
+        var OUT_POSITION: Double = 0.31
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
