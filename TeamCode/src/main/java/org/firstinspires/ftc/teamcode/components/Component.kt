@@ -10,6 +10,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
  *
  * If a component depends on another API, it should say so in the object documentation.
  */
+@Deprecated(
+    message = "Components are deprecated. Please write opmode logic in the opmode itself.",
+    level = DeprecationLevel.WARNING,
+)
 interface Component {
     /**
      * Initializes the component.
