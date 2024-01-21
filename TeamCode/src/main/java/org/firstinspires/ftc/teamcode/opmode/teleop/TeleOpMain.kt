@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.Box
+import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.Telemetry
@@ -107,7 +108,10 @@ class TeleOpMain : OpMode() {
             Box.pickUpBox()
         }
 
-
+        // Input to launch drone.
+        if (gamepad.x && gamepad.y) {
+            Drone.releasePin()
+        }
 
         // movement of all wheels
         TriWheels.driveWithRotation(
