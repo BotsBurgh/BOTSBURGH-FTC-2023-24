@@ -107,11 +107,7 @@ class TeleOpMain : OpMode() {
             Box.pickUpBox()
         }
 
-        if (gamepad.y) {
-            this.pushBotAxis = true
-        } else if (gamepad.x) {
-            this.pushBotAxis = false
-        }
+
 
         // movement of all wheels
         TriWheels.driveWithRotation(
