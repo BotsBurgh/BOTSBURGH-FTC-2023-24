@@ -172,6 +172,8 @@ object Encoders : API() {
         }
     }
 
+    override fun dependencies() = setOf(TriWheels)
+
     /**
      * A function used by [driveTo] to figure out which two wheels are in the front, and which is
      * behind.
