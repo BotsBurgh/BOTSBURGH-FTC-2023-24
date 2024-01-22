@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.api.linear
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
@@ -21,7 +22,9 @@ import kotlin.math.min
  * @see driveTo
  * @see spinTo
  */
-object Encoders : LinearAPI() {
+object Encoders : API() {
+    override val isLinear = true
+
     private fun inchesToTick(inches: Double): Int = (RobotConfig.Encoders.TICKS_PER_INCH * inches).toInt()
 
     private fun degreesToTick(degrees: Double): Int = (RobotConfig.Encoders.TICKS_PER_DEGREE * degrees).toInt()
