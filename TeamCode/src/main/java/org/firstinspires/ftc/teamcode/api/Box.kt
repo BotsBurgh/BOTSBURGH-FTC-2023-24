@@ -18,8 +18,8 @@ object Box : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.box = this.hardwareMap.get(Servo::class.java, "box")
-        this.grip = this.hardwareMap.get(Servo::class.java, "grip")
+        this.box = this.opMode.hardwareMap.get(Servo::class.java, "box")
+        this.grip = this.opMode.hardwareMap.get(Servo::class.java, "grip")
 
         // Close grip at the beginning.
         this.gripOut()
