@@ -27,4 +27,4 @@ jobs:
       - name: Build project
         run: |
           chmod +x ./gradlew
-          ./gradlew build --scan -s
+          ./gradlew build
