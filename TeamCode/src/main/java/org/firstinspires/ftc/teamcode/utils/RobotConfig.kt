@@ -163,11 +163,7 @@ object RobotConfig {
 
         /** A multiplier that scales the robot's rotation speed. */
         @JvmField
-        var ROTATE_SPEED: Double = 0.5
-
-        /** A multiplier that scales the robot's rotation speed. */
-        @JvmField
-        var ROTATION_GAIN: Double = 0.6
+        var ROTATE_SPEED: Double = 0.3
 
         /** The speed at which the linear slide moves upwards. */
         @JvmField
