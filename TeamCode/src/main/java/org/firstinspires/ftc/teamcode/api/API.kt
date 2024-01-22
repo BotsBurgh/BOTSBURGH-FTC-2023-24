@@ -7,22 +7,34 @@ import org.firstinspires.ftc.teamcode.utils.APIDependencies
 import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**
- * An API is shared code used by components.
+ * An API is shared code used by opmodes.
  *
  * An API needs to be initialized with the [init] function before it can be used. In general, APIs
- * should not have side-effects unless told to by a component.
+ * should not have side-effects unless one of their functions is called. [init] should only be
+ * called once per opmode.
  *
- * If an API depends on another API, it should say so in the object documentation.
+ * If an API requires methods only provided by a [LinearOpMode], it must override [isLinear] and set
+ * it to `true`. It can then access the [linearOpMode] property, which is like [opMode] but casted
+ * to the [LinearOpMode] type.
+ *
+ * An API can specify that it depends on another API by overriding the [dependencies] function and
+ * returning a [Set] of all the APIs it requires. These dependencies will be checked at runtime.
+ * It is additionally recommended to document in the comments what APIs your API depends on.
  */
 abstract class API {
     private var uninitializedOpMode: OpMode? by Resettable { null }
 
+    /**
+     * Used to access the opmode provided in [init].
+     */
     protected val opMode: OpMode
         get() =
             this.uninitializedOpMode
                 ?: throw NullPointerException("API has not been initialized with the OpMode before being used.")
 
     /**
+     * Equivalent to [opMode] but automatically casted to be a [LinearOpMode].
+     *
      * @throws TypeCastException If [isLinear] is not set to true.
      */
     protected val linearOpMode: LinearOpMode
@@ -38,6 +50,9 @@ abstract class API {
 
     /**
      * Specifies whether this API requires a [LinearOpMode] to function.
+     *
+     * When true, [init] will throw an exception if it is not passed a [LinearOpMode]. Additionally,
+     * the API will be able to access the [linearOpMode] property without an error being thrown.
      */
     open val isLinear: Boolean = false
 
@@ -71,10 +86,34 @@ abstract class API {
             )
         }
 
+        // Save the opmode so it can be used by the API.
         this.uninitializedOpMode = opMode
 
+        // Register this API is initialized, so dependencies can be checked.
         APIDependencies.registerAPI(this)
     }
 
+    /**
+     * A function that returns a [Set] of all other APIs it depends on to function.
+     *
+     * By default it returns an [emptySet], assuming that the API does not have any dependencies.
+     *
+     * # Example
+     *
+     * ```
+     * object Wheels : API() {
+     *     fun drive(fl: Double, fr: Double, bl: Double, br: Double)
+     * }
+     *
+     * object SuperSlickMovement : API() {
+     *     fun spin(power: Double) {
+     *         Wheels.drive(power, power, power, power)
+     *     }
+     *
+     *     // SuperSliceMovement needs Wheels in order to work.
+     *     override fun dependencies() = setOf(Wheels)
+     * }
+     * ```
+     */
     open fun dependencies(): Set<API> = emptySet()
 }

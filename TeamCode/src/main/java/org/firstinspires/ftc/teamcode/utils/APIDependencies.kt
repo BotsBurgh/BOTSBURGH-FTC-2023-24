@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.api.API
  * An object that orchestrates API dependency checking.
  */
 object APIDependencies : OpModeManagerNotifier.Notifications {
+    /** A list of all APIs initialized for the current opmode, populated when "Init" is pressed. */
     private val initializedAPIs = mutableSetOf<API>()
 
     @OnCreateEventLoop
