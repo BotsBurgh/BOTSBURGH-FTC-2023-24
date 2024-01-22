@@ -30,31 +30,15 @@ abstract class AutoMain : LinearOpMode() {
         TriWheels.init(this)
         Encoders.init(this)
 
-        // Vision APIs
-        // AprilVision.init(this)
-        // Vision.init(this, AprilVision)
-
-        // AprilMovement.init(this)
-
-        // Modify camera exposure for april tags
-        // This may interfere with other vision processes like Tensorflow
-        // Vision.optimizeForAprilTags()
-
-        // Stream camera to FTC Dashboard
-        // val camera = getVisionPortalCamera(Vision.portal)!!
-        // FtcDashboard.getInstance().startCameraStream(camera, 0.0)
-
         Telemetry.sayInitialized()
 
         waitForStart()
 
-        // TODO: Scan team game element
-        val teamElementPos = 2
+        Telemetry.sayStarted()
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
-        telemetry.log().add("No team game element scanned, defaulting to 2!")
-        telemetry.update()
+        // TODO: Rest of the autonomous.
     }
 
     /** Converts an amount of tiles to inches. */
