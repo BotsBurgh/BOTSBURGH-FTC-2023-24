@@ -85,7 +85,7 @@ class TeleOpMain : OpMode() {
         } else {
             // Manually move slide up and down
             if (gamepad.dpad_down) {
-                LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
+                LinearSlide.power(-RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
             } else if (gamepad.dpad_up) {
                 LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_UP_POWER)
             } else {

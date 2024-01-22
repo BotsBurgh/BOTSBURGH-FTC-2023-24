@@ -171,7 +171,7 @@ object RobotConfig {
 
         /** The speed at which the linear slide moves downwards. */
         @JvmField
-        var SLIDE_DOWN_POWER: Double = -0.4
+        var SLIDE_DOWN_POWER: Double = 0.4
     }
 
     /**
