@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.teamcode.utils.APIDependencies
 import org.firstinspires.ftc.teamcode.utils.Resettable
 
 /**
@@ -47,5 +48,9 @@ abstract class API {
         }
 
         this.uninitializedOpMode = opMode
+
+        APIDependencies.registerAPI(this)
     }
+
+    open fun dependencies(): Set<API> = emptySet()
 }
