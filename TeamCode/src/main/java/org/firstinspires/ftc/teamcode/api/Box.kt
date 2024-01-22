@@ -7,6 +7,10 @@ import org.firstinspires.ftc.teamcode.utils.opModeSleep
 /**
  * An API for controlling the Box on the robot.
  */
+@Deprecated(
+    message = "The Box hardware component has been removed.",
+    level = DeprecationLevel.WARNING,
+)
 object Box : API() {
     private lateinit var box: Servo
     private lateinit var grip: Servo
