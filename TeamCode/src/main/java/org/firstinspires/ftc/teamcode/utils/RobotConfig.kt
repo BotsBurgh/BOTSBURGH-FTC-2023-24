@@ -169,9 +169,6 @@ object RobotConfig {
         @JvmField
         var ROTATION_GAIN: Double = 0.6
 
-        @JvmField
-        var SLOW_MULTIPLIER: Double = 0.4
-
         /** The speed at which the linear slide moves upwards. */
         @JvmField
         var SLIDE_UP_POWER: Double = 0.6
