@@ -160,6 +160,8 @@ object RobotConfig {
     object Drone {
         @JvmField
         var OPEN_PIN: Double = 0.5
+        @JvmField
+        var CLOSE_PIN: Double = 0.0
     }
 
     /**

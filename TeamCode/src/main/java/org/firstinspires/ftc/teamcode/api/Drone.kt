@@ -21,5 +21,9 @@ object Drone: API() {
         this.pin.position = RobotConfig.Drone.OPEN_PIN
     }
 
+    fun resetPin() {
+        this.pin.position = RobotConfig.Drone.CLOSE_PIN
+    }
+
 
 }
