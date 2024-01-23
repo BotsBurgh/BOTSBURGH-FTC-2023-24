@@ -18,4 +18,6 @@ Once your changes get approved, one of the contributors will merge it. Thanks fo
 
 - [FTC Docs](https://ftc-docs.firstinspires.org/)
 - [Game and Season Materials](https://www.firstinspires.org/resource-library/ftc/game-and-season-info)
+- [FtcRobotController Javadoc](https://javadoc.io/doc/org.firstinspires.ftc)
 - [Game Manual 0](https://gm0.org/)
+- [BotsBurgh 2023-24 Javadoc](https://botsburgh.github.io/BOTSBURGH-FTC-2023-24/)
