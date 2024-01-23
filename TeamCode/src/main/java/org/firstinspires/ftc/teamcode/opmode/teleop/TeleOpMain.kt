@@ -19,9 +19,6 @@ class TeleOpMain : OpMode() {
     // Whether the linear slide should remain locked in place or not.
     private var slideLocked = false
 
-    // Whether the robot should drive along the main axis or the pushbot axis.
-    private var pushBotAxis = false
-
     // init will run once
     override fun init() {
         // Setup special telemetry
@@ -55,13 +52,7 @@ class TeleOpMain : OpMode() {
 
         // angle and strength
         // PI / 3 because 0 radians is right, not forward
-        val joyRadians =
-            atan2(joyY, joyX) - (PI / 3.0) +
-                if (this.pushBotAxis) {
-                    2.0 * PI / 3.0
-                } else {
-                    0.0
-                }
+        val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
 
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
