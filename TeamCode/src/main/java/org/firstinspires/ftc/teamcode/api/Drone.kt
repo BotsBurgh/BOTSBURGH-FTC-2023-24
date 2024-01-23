@@ -13,7 +13,7 @@ object Drone: API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.pin = this.hardwareMap.get(Servo::class.java, "pin")
+        this.pin = this.opMode.hardwareMap.get(Servo::class.java, "pin")
     }
 
     /** Moves the pin to the open position*/
