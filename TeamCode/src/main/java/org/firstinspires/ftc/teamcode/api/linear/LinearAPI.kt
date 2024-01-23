@@ -4,10 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
 @Deprecated(
     message = "LinearAPI is deprecated. Please use the API class and override isLinear to true.",
-    replaceWith = ReplaceWith(
-        expression = "API",
-        imports = arrayOf("org.firstinspires.ftc.teamcode.api.API"),
-    ),
+    replaceWith =
+        ReplaceWith(
+            expression = "API",
+            imports = arrayOf("org.firstinspires.ftc.teamcode.api.API"),
+        ),
     level = DeprecationLevel.ERROR,
 )
 abstract class LinearAPI {
