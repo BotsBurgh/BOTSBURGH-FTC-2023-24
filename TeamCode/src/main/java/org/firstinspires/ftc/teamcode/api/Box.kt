@@ -7,6 +7,10 @@ import org.firstinspires.ftc.teamcode.utils.opModeSleep
 /**
  * An API for controlling the Box on the robot.
  */
+@Deprecated(
+    message = "The Box hardware component has been removed.",
+    level = DeprecationLevel.WARNING,
+)
 object Box : API() {
     private lateinit var box: Servo
     private lateinit var grip: Servo
@@ -14,8 +18,8 @@ object Box : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.box = this.hardwareMap.get(Servo::class.java, "box")
-        this.grip = this.hardwareMap.get(Servo::class.java, "grip")
+        this.box = this.opMode.hardwareMap.get(Servo::class.java, "box")
+        this.grip = this.opMode.hardwareMap.get(Servo::class.java, "grip")
 
         // Close grip at the beginning.
         this.gripOut()

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
@@ -31,85 +30,17 @@ abstract class AutoMain : LinearOpMode() {
         Telemetry.init(this)
         TriWheels.init(this)
         Encoders.init(this)
-        Box.init(this)
         Drone.init(this)
-
-        // Vision APIs
-        // AprilVision.init(this)
-        // Vision.init(this, AprilVision)
-
-        // AprilMovement.init(this)
-
-        // Modify camera exposure for april tags
-        // This may interfere with other vision processes like Tensorflow
-        // Vision.optimizeForAprilTags()
-
-        // Stream camera to FTC Dashboard
-        // val camera = getVisionPortalCamera(Vision.portal)!!
-        // FtcDashboard.getInstance().startCameraStream(camera, 0.0)
 
         Telemetry.sayInitialized()
 
         waitForStart()
 
-        /*
-        // TODO: Scan team game element
-        val teamElementPos = 2
-         */
+        Telemetry.sayStarted()
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
-        telemetry.log().add("No team game element scanned, defaulting to 2!")
-        telemetry.update()
-
-        when (config.startPos) {
-            StartPos.BackStage -> {
-                Encoders.driveTo(forward, startingOffset)
-                Encoders.spinTo(pickTeam(90.0, -90.0))
-                Encoders.driveTo(forward, tiles(1))
-                Encoders.spinTo(pickTeam(-90.0, 90.0))
-                Encoders.driveTo(forward, tiles(1))
-                Encoders.spinTo(pickTeam(90.0, -90.0))
-                Encoders.driveTo(forward, tiles(2))
-            }
-
-            StartPos.FrontStage -> {
-                // Drive forward two tiles
-                Encoders.driveTo(forward, tiles(2) + startingOffset)
-
-                // Spin to face backdrop
-                Encoders.spinTo(pickTeam(90.0, -90.0))
-
-                Encoders.driveTo(forward, tiles(1))
-            }
-        }
-
-        /*
-
-        // Deposit pixel using april tag
-        // Red: 1, 2, 3. Blue: 4, 5, 6
-        AprilMovement.driveTo(teamElementPos + pickTeam(0, 3))
-
-        // TODO: Deposit pixel
-
-        // Back up to view all april tags
-        Encoders.driveTo(forward, tiles(-1))
-
-        // Center 1 tile away from middle april tag
-        when (config.team) {
-            Team.Red -> AprilMovement.driveTo(5, tiles(1))
-            Team.Blue -> AprilMovement.driveTo(2, tiles(1))
-        }
-
-         */
-
-        // Navigate to parking spot
-        Encoders.spinTo(pickParkPos(-90.0, 90.0))
-        Encoders.driveTo(forward, tiles(1))
-        Encoders.spinTo(pickParkPos(90.0, -90.0))
-
-        // Park in spot
-        Encoders.driveTo(forward, tiles(1))
+        // TODO: Rest of the autonomous.
     }
 
     /** Converts an amount of tiles to inches. */

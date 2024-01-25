@@ -33,10 +33,10 @@ object DemoQuadWheels : API() {
         // You must call super.init(opMode), or the API will not initialize correctly.
         super.init(opMode)
 
-        this.fl = this.hardwareMap.get(DcMotor::class.java, "fl")
-        this.fr = this.hardwareMap.get(DcMotor::class.java, "fr")
-        this.bl = this.hardwareMap.get(DcMotor::class.java, "bl")
-        this.br = this.hardwareMap.get(DcMotor::class.java, "br")
+        this.fl = this.opMode.hardwareMap.get(DcMotor::class.java, "fl")
+        this.fr = this.opMode.hardwareMap.get(DcMotor::class.java, "fr")
+        this.bl = this.opMode.hardwareMap.get(DcMotor::class.java, "bl")
+        this.br = this.opMode.hardwareMap.get(DcMotor::class.java, "br")
     }
 
     // A public function that sets the power of all four wheels.

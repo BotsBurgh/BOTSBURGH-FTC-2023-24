@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
