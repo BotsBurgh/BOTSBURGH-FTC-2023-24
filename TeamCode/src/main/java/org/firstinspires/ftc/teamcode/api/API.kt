@@ -26,19 +26,32 @@ abstract class API {
 
     /**
      * Used to access the opmode provided in [init].
+     *
+     * @throws NullPointerException If the API has not been initialized before use.
      */
     protected val opMode: OpMode
         get() =
             this.uninitializedOpMode
-                ?: throw NullPointerException("API has not been initialized with the OpMode before being used.")
+                ?: throw NullPointerException("API ${this::class.simpleName} has not been initialized with the OpMode before being used.")
 
     /**
      * Equivalent to [opMode] but automatically casted to be a [LinearOpMode].
      *
-     * @throws TypeCastException If [isLinear] is not set to true.
+     * @throws RuntimeException If [isLinear] is not set to true.
      */
     protected val linearOpMode: LinearOpMode
-        get() = this.opMode as LinearOpMode
+        get() {
+            if (!this.isLinear) {
+                throw RuntimeException(
+                    """
+                    API ${this::class.simpleName} tried to access linearOpMode without setting isLinear.
+                    Please override isLinear to true. (Currently set to ${this.isLinear}.)
+                    """.trimIndent(),
+                )
+            }
+
+            return this.opMode as LinearOpMode
+        }
 
     @Deprecated(
         message = "Accessing the hardwareMap indirectly is not supported.",
@@ -72,14 +85,18 @@ abstract class API {
     open fun init(opMode: OpMode) {
         // You can only initialize an API once. If it is initialized more than once, throw an error.
         if (this.uninitializedOpMode != null) {
-            throw IllegalStateException("Tried to initialize an API more than once.")
+            val apiName = this::class.simpleName
+
+            throw IllegalStateException("Tried to initialize API $apiName more than once.")
         }
 
         // If this API requires LinearOpMode, but only a regular OpMode was passed.
         if (this.isLinear && opMode !is LinearOpMode) {
+            val apiName = this::class.simpleName
+
             throw IllegalArgumentException(
                 """
-                Tried to initialized a linear API without a LinearOpMode.
+                Tried to initialized linear API $apiName without a LinearOpMode.
                 Please make sure that your opmode extends LinearOpMode.
                 Also please check that the API has not accidentally set isLinear to true.
                 """.trimIndent(),
