@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
 /**
- * An API to control the drone launcher
+ * An API to control the drone launcher.
  */
 object Drone : API() {
     private lateinit var pin: Servo
@@ -14,15 +14,17 @@ object Drone : API() {
         super.init(opMode)
 
         this.pin = this.opMode.hardwareMap.get(Servo::class.java, "pin")
+
+        this.resetPin()
     }
 
-    /** Moves the pin to the open position*/
+    /** Moves the pin to the open position, releasing the drone. */
     fun releasePin() {
         this.pin.position = RobotConfig.Drone.OPEN_PIN
     }
 
-    /** Called during init. Resets the pin position.*/
-    fun resetPin() {
+    /** Resets the pin to its default, closed, position. */
+    private fun resetPin() {
         this.pin.position = RobotConfig.Drone.CLOSE_PIN
     }
 }

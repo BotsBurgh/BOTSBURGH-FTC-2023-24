@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Box
+import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
@@ -31,6 +32,7 @@ abstract class AutoMain : LinearOpMode() {
         TriWheels.init(this)
         Encoders.init(this)
         Box.init(this)
+        Drone.init(this)
 
         // Vision APIs
         // AprilVision.init(this)

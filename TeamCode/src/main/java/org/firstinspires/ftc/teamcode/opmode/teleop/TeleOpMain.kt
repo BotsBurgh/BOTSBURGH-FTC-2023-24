@@ -35,6 +35,9 @@ class TeleOpMain : OpMode() {
         // Box controls
         Box.init(this)
 
+        // Drone controls
+        Drone.init(this)
+
         // Log that we are initialized
         Telemetry.sayInitialized()
     }
