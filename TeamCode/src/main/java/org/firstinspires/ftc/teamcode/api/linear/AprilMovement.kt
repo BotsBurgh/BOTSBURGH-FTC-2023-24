@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.util.Range
+import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -13,7 +14,9 @@ import kotlin.math.sqrt
  *
  * Requires the [TriWheels] and [AprilVision] APIs.
  */
-object AprilMovement : LinearAPI() {
+object AprilMovement : API() {
+    override val isLinear = true
+
     // The max speed for individual components of the movement
     private const val MAX_RANGE = 0.3
     private const val MAX_HEADING = 0.5
@@ -101,4 +104,6 @@ object AprilMovement : LinearAPI() {
         // Stop the wheels from moving, the target has been reached!
         TriWheels.stop()
     }
+
+    override fun dependencies() = setOf(TriWheels, AprilVision)
 }

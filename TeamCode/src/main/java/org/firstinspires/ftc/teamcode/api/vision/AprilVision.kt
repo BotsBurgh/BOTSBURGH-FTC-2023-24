@@ -43,6 +43,8 @@ object AprilVision : API(), VisionAPI {
     /** Returns the detection data of a specific tag id, or null if not found. */
     fun detect(id: Int): AprilTagDetection? = this.detections().firstOrNull { it.id == id }
 
+    override fun dependencies() = setOf(Vision)
+
     /**
      * Configures the camera's exposure and gain to be optimized for april tags.
      *

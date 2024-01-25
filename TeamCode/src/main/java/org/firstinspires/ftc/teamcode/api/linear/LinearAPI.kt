@@ -1,33 +1,21 @@
 package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.api.API
-import org.firstinspires.ftc.teamcode.utils.Resettable
 
-/**
- * A linear API is shared code used by linear components.
- *
- * It is specifically designed to only work in autonomous scenarios. It allows linear components to
- * call specific methods unique to [LinearOpMode].
- *
- * If a linear API depends on another API, it should say so in the documentation.
- *
- * @see API
- */
+@Deprecated(
+    message = "LinearAPI is deprecated. Please use the API class and override isLinear to true.",
+    replaceWith =
+        ReplaceWith(
+            expression = "API",
+            imports = arrayOf("org.firstinspires.ftc.teamcode.api.API"),
+        ),
+    level = DeprecationLevel.ERROR,
+)
 abstract class LinearAPI {
-    private var uninitializedOpMode: LinearOpMode? by Resettable { null }
-
     protected val linearOpMode: LinearOpMode
-        get() =
-            uninitializedOpMode
-                ?: throw NullPointerException("<LinearAPI> has not been initialized with the OpMode before being used.")
+        get() = throw NotImplementedError()
 
     open fun init(linearOpMode: LinearOpMode) {
-        // You can only initialize an API once. If it is initialized more than once, throw an error.
-        if (uninitializedOpMode != null) {
-            throw IllegalStateException("Tried to initialize a <LinearAPI> more than once.")
-        }
-
-        this.uninitializedOpMode = linearOpMode
+        throw NotImplementedError("LinearAPI is deprecated.")
     }
 }
