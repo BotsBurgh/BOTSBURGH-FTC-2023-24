@@ -97,6 +97,8 @@ object RobotConfig {
     /** Configuration related to moving using april tags. */
     @Config
     object AprilMovement {
+        // Multipliers against error values to proportionally control the speed of the robot.
+
         @JvmField
         var RANGE_GAIN: Double = 0.01
 
@@ -105,6 +107,8 @@ object RobotConfig {
 
         @JvmField
         var STRAFE_GAIN: Double = 0.005
+
+        // A threshold that the error must be below in order for the movement to finish.
 
         @JvmField
         var RANGE_ERROR: Double = 2.0
@@ -119,16 +123,33 @@ object RobotConfig {
     /** Configuration related to scanning april tags. */
     @Config
     object AprilVision {
+        /**
+         * Sets how many milliseconds of exposure should be used when scanning april tags.
+         *
+         * In general, a lower exposure is better for bright areas and higher exposure is better for
+         * darker areas. A higher exposure also increases motion blur, which is why in the
+         * configuration it is set to a low number.
+         *
+         * This will only be applied if `Vision.optimizeForAprilTags` is called.
+         */
         @JvmField
         var OPTIMUM_EXPOSURE: Long = 1
 
+        /**
+         * Sets the gain that should be used when scanning april tags.
+         *
+         * Gain is an offset used to artificially increase or decrease the brightness of an image.
+         *
+         * This will only be applied if `Vision.optimizeForAprilTags` is called.
+         */
         @JvmField
         var OPTIMUM_GAIN: Int = 255
     }
 
-    /** Configuration related to the main autonomous. */
+    /** Configuration related to the `AutoMain` opmode. */
     @Config
     object AutoMain {
+        /** A time in milliseconds that the robot waits before it starts moving in autonomous. */
         @JvmField
         var WAIT_TIME: Long = 0
     }
@@ -136,23 +157,31 @@ object RobotConfig {
     /** Configuration related to the TeleOpMovement component. */
     @Config
     object TeleOpMovement {
+        /** A multiplier that scales that robot's driving / strafing speed. */
         @JvmField
         var DRIVE_SPEED: Double = 0.6
 
+        /** A multiplier that scales the robot's rotation speed. */
         @JvmField
-        var ROTATE_SPEED: Double = 0.5
+        var ROTATE_SPEED: Double = 0.3
 
-        @JvmField
-        var ROTATION_GAIN: Double = 0.6
-
-        @JvmField
-        var SLOW_MULTIPLIER: Double = 0.4
-
+        /** The speed at which the linear slide moves upwards. */
         @JvmField
         var SLIDE_UP_POWER: Double = 0.6
 
+        /** The speed at which the linear slide moves downwards. */
         @JvmField
-        var SLIDE_DOWN_POWER: Double = -0.4
+        var SLIDE_DOWN_POWER: Double = 0.4
+    }
+
+    /** Configurations related to the Drone API. */
+    @Config
+    object Drone {
+        @JvmField
+        var OPEN_PIN: Double = 0.5
+
+        @JvmField
+        var CLOSE_PIN: Double = 0.0
     }
 
     /**

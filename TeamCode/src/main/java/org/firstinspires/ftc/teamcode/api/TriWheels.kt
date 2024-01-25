@@ -26,9 +26,9 @@ object TriWheels : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.red = hardwareMap.get(DcMotor::class.java, "redWheel")
-        this.green = hardwareMap.get(DcMotor::class.java, "greenWheel")
-        this.blue = hardwareMap.get(DcMotor::class.java, "blueWheel")
+        this.red = this.opMode.hardwareMap.get(DcMotor::class.java, "redWheel")
+        this.green = this.opMode.hardwareMap.get(DcMotor::class.java, "greenWheel")
+        this.blue = this.opMode.hardwareMap.get(DcMotor::class.java, "blueWheel")
 
         this.stopAndResetMotors()
     }

@@ -43,7 +43,7 @@ abstract class API {
     @Deprecated(
         message = "Accessing the hardwareMap indirectly is not supported.",
         replaceWith = ReplaceWith("this.opMode.hardwareMap"),
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     protected val hardwareMap: HardwareMap
         get() = this.opMode.hardwareMap
