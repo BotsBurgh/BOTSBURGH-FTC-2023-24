@@ -155,6 +155,16 @@ object RobotConfig {
         var SLIDE_DOWN_POWER: Double = -0.4
     }
 
+    /** Configurations related to the Drone API. */
+    @Config
+    object Drone {
+        @JvmField
+        var OPEN_PIN: Double = 0.5
+
+        @JvmField
+        var CLOSE_PIN: Double = 0.0
+    }
+
     /**
      * Represents what model of robot is running the code.
      *
