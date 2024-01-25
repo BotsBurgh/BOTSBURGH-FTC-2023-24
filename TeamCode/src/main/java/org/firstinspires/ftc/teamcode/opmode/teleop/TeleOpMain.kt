@@ -49,8 +49,6 @@ class TeleOpMain : OpMode() {
         // alias gamepad1
         val gamepad = this.gamepad1
 
-        val rotationPower = RobotConfig.TeleOpMovement.ROTATION_GAIN * -gamepad.right_stick_x.toDouble()
-
         // joystick input
         val joyX = -gamepad.left_stick_x.toDouble()
         val joyY = gamepad.left_stick_y.toDouble()
@@ -60,6 +58,8 @@ class TeleOpMain : OpMode() {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
 
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
+
+        val rotationPower = -gamepad.right_stick_x.toDouble()
 
         // Lock or unlock the slide "brake"
         if (gamepad.dpad_left) {
@@ -82,7 +82,7 @@ class TeleOpMain : OpMode() {
         } else {
             // Manually move slide up and down
             if (gamepad.dpad_down) {
-                LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
+                LinearSlide.power(-RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
             } else if (gamepad.dpad_up) {
                 LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_UP_POWER)
             } else {
