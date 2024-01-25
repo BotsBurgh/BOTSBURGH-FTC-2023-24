@@ -82,9 +82,9 @@ class TeleOpMain : OpMode() {
         } else {
             // Manually move slide up and down
             if (gamepad.dpad_down) {
-                LinearSlide.power(-RobotConfig.TeleOpMovement.SLIDE_DOWN_POWER)
+                LinearSlide.power(-RobotConfig.TeleOpMain.SLIDE_DOWN_POWER)
             } else if (gamepad.dpad_up) {
-                LinearSlide.power(RobotConfig.TeleOpMovement.SLIDE_UP_POWER)
+                LinearSlide.power(RobotConfig.TeleOpMain.SLIDE_UP_POWER)
             } else {
                 LinearSlide.stop()
             }
@@ -112,8 +112,8 @@ class TeleOpMain : OpMode() {
         // movement of all wheels
         TriWheels.driveWithRotation(
             joyRadians,
-            joyMagnitude * RobotConfig.TeleOpMovement.DRIVE_SPEED,
-            rotationPower * RobotConfig.TeleOpMovement.ROTATE_SPEED,
+            joyMagnitude * RobotConfig.TeleOpMain.DRIVE_SPEED,
+            rotationPower * RobotConfig.TeleOpMain.ROTATE_SPEED,
         )
 
         // Log that we are running

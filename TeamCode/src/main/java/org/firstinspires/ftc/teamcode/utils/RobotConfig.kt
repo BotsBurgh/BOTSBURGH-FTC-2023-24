@@ -154,9 +154,9 @@ object RobotConfig {
         var WAIT_TIME: Long = 0
     }
 
-    /** Configuration related to the TeleOpMovement component. */
+    /** Configuration related to the TeleOpMain opmode. */
     @Config
-    object TeleOpMovement {
+    object TeleOpMain {
         /** A multiplier that scales that robot's driving / strafing speed. */
         @JvmField
         var DRIVE_SPEED: Double = 0.6
@@ -174,7 +174,7 @@ object RobotConfig {
         var SLIDE_DOWN_POWER: Double = 0.4
     }
 
-    /** Configurations related to the Drone API. */
+    /** Configuration related to the Drone API. */
     @Config
     object Drone {
         @JvmField
