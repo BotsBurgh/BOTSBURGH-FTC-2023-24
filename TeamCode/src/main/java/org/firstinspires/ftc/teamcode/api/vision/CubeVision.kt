@@ -148,7 +148,13 @@ object CubeVision : API(), VisionAPI {
 
         private operator fun Rect.times(rhs: Int): Rect = Rect(this.x * rhs, this.y * rhs, this.width * rhs, this.height * rhs)
 
-        private fun Rect.toAndroidRect(): android.graphics.Rect = android.graphics.Rect(this.x, this.y, this.x + this.width, this.y + this.height)
+        private fun Rect.toAndroidRect(): android.graphics.Rect =
+            android.graphics.Rect(
+                this.x,
+                this.y,
+                this.x + this.width,
+                this.y + this.height,
+            )
     }
 
     /**
