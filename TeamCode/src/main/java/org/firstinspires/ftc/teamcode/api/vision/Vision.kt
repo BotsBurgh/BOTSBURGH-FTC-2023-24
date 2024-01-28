@@ -69,9 +69,16 @@ object Vision : API() {
 
             sleep(50)
         }
+
+        opMode.telemetry.addData("Camera", this.portal.cameraState)
+        opMode.telemetry.update()
     }
 
-    // Vision must be initialized with at least one VisionAPI
+    @Deprecated(
+        message = "Please initialize Vision with at least one VisionAPI.",
+        replaceWith = ReplaceWith("Vision.init(this, visionAPI, ...)"),
+        level = DeprecationLevel.ERROR,
+    )
     override fun init(opMode: OpMode) {
         throw RuntimeException("Please initialize Vision with at least one VisionAPI.")
     }
