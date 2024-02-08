@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.PI
 import kotlin.math.sin
@@ -11,11 +12,11 @@ import kotlin.math.sin
  */
 object TriWheels : API() {
     // All 3 wheels on the robot
-    lateinit var red: DcMotor
+    lateinit var red: DcMotorEx
         private set
-    lateinit var green: DcMotor
+    lateinit var green: DcMotorEx
         private set
-    lateinit var blue: DcMotor
+    lateinit var blue: DcMotorEx
         private set
 
     // The angles of each wheel
@@ -26,9 +27,9 @@ object TriWheels : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.red = this.opMode.hardwareMap.get(DcMotor::class.java, "redWheel")
-        this.green = this.opMode.hardwareMap.get(DcMotor::class.java, "greenWheel")
-        this.blue = this.opMode.hardwareMap.get(DcMotor::class.java, "blueWheel")
+        this.red = this.opMode.hardwareMap.get(DcMotorEx::class.java, "redWheel")
+        this.green = this.opMode.hardwareMap.get(DcMotorEx::class.java, "greenWheel")
+        this.blue = this.opMode.hardwareMap.get(DcMotorEx::class.java, "blueWheel")
 
         this.stopAndResetMotors()
     }
