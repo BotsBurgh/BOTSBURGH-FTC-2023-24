@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
-//import org.firstinspires.ftc.teamcode.components.DemoForward
+// import org.firstinspires.ftc.teamcode.components.DemoForward
 
 @TeleOp(name = "Demo TeleOp")
 @Disabled
@@ -33,7 +33,7 @@ class DemoTeleOp : OpMode() {
     // Run repeatedly while the robot is running.
     override fun loop() {
         // Runs the component.
-        //DemoForward.loop(this)
+        // DemoForward.loop(this)
 
         // Log that we are running
         Telemetry.sayRunning()

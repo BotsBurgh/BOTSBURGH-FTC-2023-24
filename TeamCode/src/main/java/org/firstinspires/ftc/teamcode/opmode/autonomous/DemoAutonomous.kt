@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
 import org.firstinspires.ftc.teamcode.api.Telemetry
-//import org.firstinspires.ftc.teamcode.components.linear.DemoSpinLinear
+// import org.firstinspires.ftc.teamcode.components.linear.DemoSpinLinear
 
 @Autonomous(name = "Demo Autonomous")
 @Disabled
@@ -27,6 +27,6 @@ class DemoAutonomous : LinearOpMode() {
         Telemetry.sayStarted()
 
         // Linear components are run in order
-        //DemoSpinLinear.run(this)
+        // DemoSpinLinear.run(this)
     }
 }
