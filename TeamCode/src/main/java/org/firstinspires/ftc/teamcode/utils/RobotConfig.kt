@@ -205,6 +205,22 @@ object RobotConfig {
         var BLUE_WEIGHT = Scalar(-0.2, -0.2, 1.0)
     }
 
+    /** Configuration related to Claw API. **/
+    @Config
+    object Claw {
+        @JvmField
+        var OPEN_POSITION = 1.0
+
+        @JvmField
+        var CLOSE_POSITION = 0.0
+
+        @JvmField
+        var UP_POSITION = 1.0
+
+        @JvmField
+        var DOWN_POSITION = 0.0
+    }
+
     /**
      * Represents what model of robot is running the code.
      *

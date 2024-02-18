@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.Box
+import org.firstinspires.ftc.teamcode.api.Claw
 import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.LinearSlide
@@ -90,18 +91,18 @@ class TeleOpMain : OpMode() {
             }
         }
 
-        // Inputs for the gripper on the box
+        // Inputs for the gripper on the claw
         if (gamepad.left_bumper) {
-            Box.gripIn()
+            Claw.closeLR()
         } else if (gamepad.right_bumper) {
-            Box.gripOut()
+            Claw.openLR()
         }
 
         // Inputs for the movement of the box
         if (gamepad.a) {
-            Box.dropBox()
+            Claw.dropClaw()
         } else if (gamepad.b) {
-            Box.pickUpBox()
+            Claw.raiseClaw()
         }
 
         // Input to launch drone.
