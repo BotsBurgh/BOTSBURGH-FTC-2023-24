@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.api.DemoQuadWheels
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
+//import org.firstinspires.ftc.teamcode.components.DemoForward
 
 @TeleOp(name = "Demo TeleOp")
 @Disabled
@@ -31,17 +32,8 @@ class DemoTeleOp : OpMode() {
 
     // Run repeatedly while the robot is running.
     override fun loop() {
-        val x = this.gamepad1.left_stick_x.toDouble()
-        val y = this.gamepad1.left_stick_y.toDouble()
-        val rotation = this.gamepad1.right_stick_x.toDouble()
-
-        // Strafe + rotate robot using left and right joysticks.
-        DemoQuadWheels.drive(
-            x - y + rotation,
-            -x - y - rotation,
-            -x - y + rotation,
-            x - y - rotation,
-        )
+        // Runs the component.
+        //DemoForward.loop(this)
 
         // Log that we are running
         Telemetry.sayRunning()
