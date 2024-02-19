@@ -1,30 +1,32 @@
 package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.utils.RobotConfig
+import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 
 /**
  * An API to control the drone launcher.
  */
 object Drone : API() {
-    private lateinit var pin: Servo
+    private lateinit var droneLeft: DcMotor
+    private lateinit var droneRight: DcMotor
 
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.pin = this.opMode.hardwareMap.get(Servo::class.java, "pin")
+        this.droneLeft = this.opMode.hardwareMap.get(DcMotor::class.java, "droneLeft")
+        this.droneRight = this.opMode.hardwareMap.get(DcMotor::class.java, "droneRight")
 
-        this.resetPin()
+        this.droneRight.direction = DcMotorSimple.Direction.REVERSE
     }
 
-    /** Moves the pin to the open position, releasing the drone. */
-    fun releasePin() {
-        this.pin.position = RobotConfig.Drone.OPEN_PIN
+    fun spin() {
+        this.droneLeft.power = 1.0
+        this.droneRight.power = 1.0
     }
 
-    /** Resets the pin to its default, closed, position. */
-    private fun resetPin() {
-        this.pin.position = RobotConfig.Drone.CLOSE_PIN
+    fun stop() {
+        this.droneLeft.power = 0.0
+        this.droneRight.power = 0.0
     }
 }

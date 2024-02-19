@@ -36,7 +36,7 @@ class TeleOpMain : OpMode() {
         Claw.init(this)
 
         // Drone controls
-        // Drone.init(this)
+        Drone.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
@@ -107,7 +107,9 @@ class TeleOpMain : OpMode() {
 
         // Input to launch drone.
         if (gamepad.x && gamepad.y) {
-            Drone.releasePin()
+            Drone.spin()
+        } else {
+            Drone.stop()
         }
 
         // movement of all wheels
