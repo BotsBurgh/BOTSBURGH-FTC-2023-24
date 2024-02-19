@@ -36,13 +36,16 @@ class TeleOpMain : OpMode() {
         GamepadEx.init(this)
 
         // Box controls
-        Box.init(this)
+        //Box.init(this)
 
         // Drone controls
-        Drone.init(this)
+        //Drone.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
+
+        // Claw controls
+        Claw.init(this)
     }
 
     // loop will run repetitively overtime while the robot runs

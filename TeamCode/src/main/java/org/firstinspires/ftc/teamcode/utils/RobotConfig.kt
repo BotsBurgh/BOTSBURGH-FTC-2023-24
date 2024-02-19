@@ -209,16 +209,22 @@ object RobotConfig {
     @Config
     object Claw {
         @JvmField
-        var OPEN_POSITION = 1.0
+        var OPEN_POSITION_LEFT = 0.638
 
         @JvmField
-        var CLOSE_POSITION = 0.0
+        var CLOSE_POSITION_LEFT = 0.3
 
         @JvmField
-        var UP_POSITION = 1.0
+        var OPEN_POSITION_RIGHT = 0.8
 
         @JvmField
-        var DOWN_POSITION = 0.0
+        var CLOSE_POSITION_RIGHT = 0.45
+
+        @JvmField
+        var UP_POSITION = 0.82
+
+        @JvmField
+        var DOWN_POSITION = 0.3
     }
 
     /**

@@ -13,12 +13,16 @@ object Claw : API() {
     private lateinit var gripR: Servo
     private lateinit var oscillator: Servo
 
+
+
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.gripL = this.opMode.hardwareMap.get(Servo::class.java, "gripL")
-        this.gripR = this.opMode.hardwareMap.get(Servo::class.java, "gripR")
+        this.gripL = this.opMode.hardwareMap.get(Servo::class.java, "clawL")
+        this.gripR = this.opMode.hardwareMap.get(Servo::class.java, "clawR")
         this.oscillator = this.opMode.hardwareMap.get(Servo::class.java, "oscillator")
+
+        gripR.direction = Servo.Direction.REVERSE
 
         // Open grip at beginning
         this.openLR()
@@ -39,11 +43,11 @@ object Claw : API() {
     }
 
     fun openL() {
-        this.gripL.position = RobotConfig.Claw.OPEN_POSITION
+        this.gripL.position = RobotConfig.Claw.OPEN_POSITION_LEFT
     }
 
     fun openR() {
-        this.gripR.position = RobotConfig.Claw.OPEN_POSITION
+        this.gripR.position = RobotConfig.Claw.OPEN_POSITION_RIGHT
     }
 
     fun openLR() {
@@ -52,11 +56,11 @@ object Claw : API() {
     }
 
     fun closeL() {
-        this.gripL.position = RobotConfig.Claw.CLOSE_POSITION
+        this.gripL.position = RobotConfig.Claw.CLOSE_POSITION_LEFT
     }
 
     fun closeR() {
-        this.gripR.position = RobotConfig.Claw.CLOSE_POSITION
+        this.gripR.position = RobotConfig.Claw.CLOSE_POSITION_RIGHT
     }
 
     fun closeLR() {
