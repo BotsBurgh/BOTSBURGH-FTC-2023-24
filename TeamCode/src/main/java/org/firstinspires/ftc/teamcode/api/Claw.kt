@@ -13,8 +13,6 @@ object Claw : API() {
     private lateinit var gripR: Servo
     private lateinit var oscillator: Servo
 
-
-
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
