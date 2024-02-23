@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.api.Hanger
+import org.firstinspires.ftc.teamcode.api.Hook
 import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
@@ -17,7 +17,7 @@ class TeleOpMain : OpMode() {
         Telemetry.init(this)
         TriWheels.init(this)
         PixelPlacer.init(this)
-        Hanger.init(this)
+        Hook.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
@@ -41,11 +41,11 @@ class TeleOpMain : OpMode() {
 
         // Inputs for the movement of the box
         if (gamepad.a) {
-            Hanger.hang(0.5)
+            Hook.moveHook(0.5)
         } else if (gamepad.b) {
-            Hanger.hang(-0.5)
+            Hook.moveHook(-0.5)
         } else {
-            Hanger.stop()
+            Hook.stop()
         }
 
         if (gamepad.x && gamepad.y) {
