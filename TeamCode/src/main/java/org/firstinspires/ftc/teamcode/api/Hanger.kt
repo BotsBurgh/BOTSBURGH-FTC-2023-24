@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotor
 object Hanger : API() {
     private lateinit var hanger: DcMotor
 
-    override fun init(opMode: OpMode)  {
+    override fun init(opMode: OpMode) {
         super.init(opMode)
 
         this.hanger = this.opMode.hardwareMap.get(DcMotor::class.java, "hanger")
     }
 
-    fun hang(power: Double)  {
+    fun hang(power: Double) {
         hanger.power = power
     }
 
