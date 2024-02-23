@@ -9,14 +9,13 @@ import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
 @Autonomous(name = "Most Jank Auto")
 class MoreJankAuto : LinearOpMode() {
-
     private val forward =
         when (RobotConfig.model) {
             RobotConfig.Model.RobotA -> Encoders.Direction.Green
             RobotConfig.Model.RobotB -> Encoders.Direction.Red
         }
-    override fun runOpMode() {
 
+    override fun runOpMode() {
         Telemetry.init(this)
         TriWheels.init(this)
         Encoders.init(this)
@@ -31,7 +30,5 @@ class MoreJankAuto : LinearOpMode() {
             forward,
             42.0,
         )
-
-
     }
 }

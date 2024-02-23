@@ -226,11 +226,11 @@ object RobotConfig {
         @JvmField
         var DOWN_POSITION = 0.45
     }
+
     @Config
     object PixelPlacer {
         @JvmField
         var PLACE_POSITION = 0.85
-
     }
 
     /**

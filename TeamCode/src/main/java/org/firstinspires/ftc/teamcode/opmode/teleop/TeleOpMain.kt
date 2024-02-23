@@ -25,20 +25,20 @@ class TeleOpMain : OpMode() {
         // Triangle wheel controls
         TriWheels.init(this)
 
-        //Linear Slide controls
-        //LinearSlide.init(this)
+        // Linear Slide controls
+        // LinearSlide.init(this)
 
         // Advanced gamepad inputs
         GamepadEx.init(this)
 
         // Drone controls
-        //Drone.init(this)
+        // Drone.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
 
         // Claw controls
-        //Claw.init(this)
+        // Claw.init(this)
 
         // Pixel Placer init
         PixelPlacer.init(this)
@@ -64,9 +64,6 @@ class TeleOpMain : OpMode() {
 
         val rotationPower = -gamepad.right_stick_x.toDouble()
 
-
-
-
         // Inputs for the movement of the box
         if (gamepad.a) {
             Hanger.hang(1.0)
@@ -76,8 +73,6 @@ class TeleOpMain : OpMode() {
         } else {
             Hanger.stop()
         }
-
-
 
         // movement of all wheels
         TriWheels.driveWithRotation(
