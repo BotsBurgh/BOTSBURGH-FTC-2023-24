@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.Hanger
 import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
@@ -14,40 +13,16 @@ import kotlin.math.sqrt
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
-    // Whether the linear slide should remain locked in place or not.
-    private var slideLocked = false
-
-    // init will run once
     override fun init() {
-        // Setup special telemetry
         Telemetry.init(this)
-
-        // Triangle wheel controls
         TriWheels.init(this)
-
-        // Linear Slide controls
-        // LinearSlide.init(this)
-
-        // Advanced gamepad inputs
-        GamepadEx.init(this)
-
-        // Drone controls
-        // Drone.init(this)
+        PixelPlacer.init(this)
+        Hanger.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
-
-        // Claw controls
-        // Claw.init(this)
-
-        // Pixel Placer init
-        PixelPlacer.init(this)
-
-        // Hanger init
-        Hanger.init(this)
     }
 
-    // loop will run repetitively overtime while the robot runs
     override fun loop() {
         // alias gamepad1
         val gamepad = this.gamepad1
@@ -66,12 +41,15 @@ class TeleOpMain : OpMode() {
 
         // Inputs for the movement of the box
         if (gamepad.a) {
-            Hanger.hang(1.0)
-        }
-        if (gamepad.b) {
-            Hanger.hang(-1.0)
+            Hanger.hang(0.5)
+        } else if (gamepad.b) {
+            Hanger.hang(-0.5)
         } else {
             Hanger.stop()
+        }
+
+        if (gamepad.x && gamepad.y) {
+            // TODO: Release drone
         }
 
         // movement of all wheels
