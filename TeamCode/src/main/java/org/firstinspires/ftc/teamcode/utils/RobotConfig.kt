@@ -209,10 +209,10 @@ object RobotConfig {
     @Config
     object Claw {
         @JvmField
-        var OPEN_POSITION_LEFT = 0.638
+        var OPEN_POSITION_LEFT = 1.0
 
         @JvmField
-        var CLOSE_POSITION_LEFT = 0.3
+        var CLOSE_POSITION_LEFT = 0.5
 
         @JvmField
         var OPEN_POSITION_RIGHT = 0.8
@@ -224,7 +224,13 @@ object RobotConfig {
         var UP_POSITION = 0.82
 
         @JvmField
-        var DOWN_POSITION = 0.3
+        var DOWN_POSITION = 0.45
+    }
+    @Config
+    object PixelPlacer {
+        @JvmField
+        var PLACE_POSITION = 0.85
+
     }
 
     /**
