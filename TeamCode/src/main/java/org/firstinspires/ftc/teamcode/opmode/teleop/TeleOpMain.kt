@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.Claw
 import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.GamepadEx
+import org.firstinspires.ftc.teamcode.api.Hanger
 import org.firstinspires.ftc.teamcode.api.LinearSlide
+import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -27,22 +29,26 @@ class TeleOpMain : OpMode() {
         // Triangle wheel controls
         TriWheels.init(this)
 
-        LinearSlide.init(this)
+        //Linear Slide controls
+        //LinearSlide.init(this)
 
         // Advanced gamepad inputs
         GamepadEx.init(this)
 
-        // Claw controls
-        Claw.init(this)
-
         // Drone controls
-        Drone.init(this)
+        //Drone.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
 
         // Claw controls
-        Claw.init(this)
+        //Claw.init(this)
+
+        // Pixel Placer init
+        PixelPlacer.init(this)
+
+        // Hanger init
+        Hanger.init(this)
     }
 
     // loop will run repetitively overtime while the robot runs
@@ -62,55 +68,20 @@ class TeleOpMain : OpMode() {
 
         val rotationPower = -gamepad.right_stick_x.toDouble()
 
-        // Lock or unlock the slide "brake"
-        if (gamepad.dpad_left) {
-            this.slideLocked = true
 
-            with(LinearSlide.slide) {
-                targetPosition = currentPosition
-                mode = DcMotor.RunMode.RUN_TO_POSITION
-            }
-        } else if (gamepad.dpad_right) {
-            this.slideLocked = false
 
-            LinearSlide.slide.mode = DcMotor.RunMode.RUN_USING_ENCODER
-            LinearSlide.stop()
-        }
-
-        // Move linear slide
-        if (this.slideLocked) {
-            LinearSlide.slide.power = 0.4
-        } else {
-            // Manually move slide up and down
-            if (gamepad.dpad_down) {
-                LinearSlide.power(-RobotConfig.TeleOpMain.SLIDE_DOWN_POWER)
-            } else if (gamepad.dpad_up) {
-                LinearSlide.power(RobotConfig.TeleOpMain.SLIDE_UP_POWER)
-            } else {
-                LinearSlide.stop()
-            }
-        }
-
-        // Inputs for the gripper on the claw
-        if (gamepad.left_bumper) {
-            Claw.closeLR()
-        } else if (gamepad.right_bumper) {
-            Claw.openLR()
-        }
 
         // Inputs for the movement of the box
         if (gamepad.a) {
-            Claw.dropClaw()
-        } else if (gamepad.b) {
-            Claw.raiseClaw()
+            Hanger.hang(1.0)
+        }
+        if (gamepad.b) {
+            Hanger.hang(-1.0)
+        } else {
+            Hanger.stop()
         }
 
-        // Input to launch drone.
-        if (gamepad.x && gamepad.y) {
-            Drone.spin()
-        } else {
-            Drone.stop()
-        }
+
 
         // movement of all wheels
         TriWheels.driveWithRotation(
