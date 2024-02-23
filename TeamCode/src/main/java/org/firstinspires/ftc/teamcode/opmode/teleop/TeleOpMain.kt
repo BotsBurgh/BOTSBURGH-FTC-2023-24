@@ -13,6 +13,8 @@ import kotlin.math.sqrt
 
 @TeleOp(name = "TeleOpMain")
 class TeleOpMain : OpMode() {
+    private var hanging = false
+
     override fun init() {
         Telemetry.init(this)
         TriWheels.init(this)
@@ -39,13 +41,26 @@ class TeleOpMain : OpMode() {
 
         val rotationPower = -gamepad.right_stick_x.toDouble()
 
-        // Inputs for the movement of the box
-        if (gamepad.a) {
-            Hook.moveHook(0.5)
-        } else if (gamepad.b) {
-            Hook.moveHook(-0.5)
+        if (gamepad.dpad_left) {
+            this.hanging = true
+        } else if (gamepad.dpad_right) {
+            this.hanging = false
+        }
+
+        if (hanging) {
+            // Robot's weight counteracts hook's constant force
+            Hook.hook.power = -1.0
+            telemetry.addData("Hook", "Hanging")
         } else {
-            Hook.stop()
+            if (gamepad.a) {
+                Hook.moveHook(1.0)
+            } else if (gamepad.b) {
+                Hook.moveHook(-1.0)
+            } else {
+                Hook.stop()
+            }
+
+            telemetry.addData("Hook", "Not hanging")
         }
 
         if (gamepad.x && gamepad.y) {
