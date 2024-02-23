@@ -11,9 +11,15 @@ object PixelPlacer : API() {
         super.init(opMode)
 
         this.pixelPlacer = this.opMode.hardwareMap.get(Servo::class.java, "pixelPlacer")
+
+        this.reset()
     }
 
     fun place() {
         pixelPlacer.position = RobotConfig.PixelPlacer.PLACE_POSITION
+    }
+
+    fun reset() {
+        pixelPlacer.position = RobotConfig.PixelPlacer.DEFAULT_POSITION
     }
 }

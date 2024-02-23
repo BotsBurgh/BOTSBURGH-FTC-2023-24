@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.Hook
-import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -18,8 +18,9 @@ class TeleOpMain : OpMode() {
     override fun init() {
         Telemetry.init(this)
         TriWheels.init(this)
-        PixelPlacer.init(this)
         Hook.init(this)
+        Drone.init(this)
+        // PixelPlacer.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
@@ -64,7 +65,9 @@ class TeleOpMain : OpMode() {
         }
 
         if (gamepad.x && gamepad.y) {
-            // TODO: Release drone
+            Drone.release()
+        } else if (gamepad.y) {
+            Drone.reset()
         }
 
         // movement of all wheels

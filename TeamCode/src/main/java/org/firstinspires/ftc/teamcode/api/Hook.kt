@@ -12,7 +12,7 @@ object Hook : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.hook = this.opMode.hardwareMap.get(DcMotor::class.java, "hanger")
+        this.hook = this.opMode.hardwareMap.get(DcMotor::class.java, "hook")
 
         hook.direction = DcMotorSimple.Direction.REVERSE
         hook.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER

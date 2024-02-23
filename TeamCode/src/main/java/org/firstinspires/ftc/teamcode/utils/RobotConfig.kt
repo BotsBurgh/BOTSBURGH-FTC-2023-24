@@ -167,24 +167,16 @@ object RobotConfig {
         /** A multiplier that scales the robot's rotation speed. */
         @JvmField
         var ROTATE_SPEED: Double = 0.3
-
-        /** The speed at which the linear slide moves upwards. */
-        @JvmField
-        var SLIDE_UP_POWER: Double = 0.6
-
-        /** The speed at which the linear slide moves downwards. */
-        @JvmField
-        var SLIDE_DOWN_POWER: Double = 0.4
     }
 
     /** Configuration related to the Drone API. */
     @Config
     object Drone {
         @JvmField
-        var OPEN_PIN: Double = 0.5
+        var OPEN_PIN: Double = 0.05
 
         @JvmField
-        var CLOSE_PIN: Double = 0.0
+        var CLOSE_PIN: Double = 0.4
     }
 
     /** Configuration related to the CubeVision API. */
@@ -208,6 +200,7 @@ object RobotConfig {
 
     /** Configuration related to Claw API. **/
     @Config
+    @Deprecated(message = "Claw is deprecated")
     object Claw {
         @JvmField
         var OPEN_POSITION_LEFT = 1.0
@@ -230,6 +223,9 @@ object RobotConfig {
 
     @Config
     object PixelPlacer {
+        @JvmField
+        var DEFAULT_POSITION = 0.45
+
         @JvmField
         var PLACE_POSITION = 0.85
     }
