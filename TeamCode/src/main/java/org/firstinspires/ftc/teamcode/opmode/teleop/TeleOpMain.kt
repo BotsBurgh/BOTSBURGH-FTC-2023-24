@@ -2,12 +2,8 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.api.Claw
-import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.GamepadEx
 import org.firstinspires.ftc.teamcode.api.Hanger
-import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.utils.opModeSleep
 /**
  * An API for controlling the claw.
  */
+@Deprecated(message = "Claw is deprecated, this is no claw on the robot.")
 object Claw : API() {
     private lateinit var gripL: Servo
     private lateinit var gripR: Servo

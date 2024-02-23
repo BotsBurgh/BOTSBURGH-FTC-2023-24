@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 /**
  * An API for controlling the linear slide(s).
  */
+@Deprecated(message = "Linear slide is deprecated, there is no slide on the robot.")
 object LinearSlide : API() {
     // Technically not the slides themselves, but instead a motor connected to both.
     // For abstraction's sake, it's fine to treat it as the slide itself.
