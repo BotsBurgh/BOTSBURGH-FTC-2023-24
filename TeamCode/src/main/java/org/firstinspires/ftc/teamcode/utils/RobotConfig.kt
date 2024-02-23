@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
@@ -225,6 +226,18 @@ object RobotConfig {
 
         @JvmField
         var DOWN_POSITION = 0.3
+    }
+
+    @Config
+    object MotorController {
+        @JvmField
+        var pid = PIDCoefficients(0.01, 0.0, 0.2)
+
+        @JvmField
+        var powerLimit = 0.5
+
+        @JvmField
+        var iLimit = 1.0
     }
 
     /**

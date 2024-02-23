@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
+import org.firstinspires.ftc.teamcode.utils.MotorControllerGroup
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.min
@@ -146,6 +147,81 @@ object Encoders : API() {
                         RobotConfig.Encoders.MAX_SPIN_SPEED,
                     ),
                 )
+
+                with(linearOpMode.telemetry) {
+                    addData("Status", "Encoder Rotating")
+
+                    addData(
+                        "Power",
+                        Triple(TriWheels.red.power, TriWheels.green.power, TriWheels.blue.power),
+                    )
+                    addData(
+                        "Current",
+                        Triple(
+                            TriWheels.red.currentPosition,
+                            TriWheels.green.currentPosition,
+                            TriWheels.blue.currentPosition,
+                        ),
+                    )
+                    addData("Target", ticks)
+
+                    update()
+                }
+            }
+        } finally {
+            TriWheels.stopAndResetMotors()
+        }
+    }
+
+    fun driveTo2(
+        direction: Direction,
+        inches: Double,
+    ) {
+        TriWheels.stopAndResetMotors()
+
+        val (left, right, _) = this.defineWheels(direction)
+        val ticks = this.inchesToTick(inches)
+
+        val controllers = MotorControllerGroup(ticks, left, right)
+
+        try {
+            right.direction = DcMotorSimple.Direction.REVERSE
+
+            while (!controllers.isDone() && linearOpMode.opModeIsActive()) {
+                controllers.update()
+
+                with(linearOpMode.telemetry) {
+                    addData("Status", "Encoder Driving")
+
+                    addData("Left Power", left.power)
+                    addData("Right Power", right.power)
+
+                    addData("Target", ticks)
+
+                    addData("Left Current", left.currentPosition)
+                    addData("Right Current", right.currentPosition)
+
+                    update()
+                }
+            }
+        } finally {
+            // This reset encoders but also changes the right motor direction back to forward
+            TriWheels.stopAndResetMotors()
+        }
+    }
+
+    fun spinTo2(degrees: Double) {
+        TriWheels.stopAndResetMotors()
+
+        val ticks = -this.degreesToTick(degrees)
+
+        val controllers = MotorControllerGroup(ticks, TriWheels.red, TriWheels.green, TriWheels.blue)
+
+        try {
+            while (
+                !controllers.isDone() && linearOpMode.opModeIsActive()
+            ) {
+                controllers.update()
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Rotating")
