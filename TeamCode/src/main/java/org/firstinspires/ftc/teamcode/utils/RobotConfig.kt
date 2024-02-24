@@ -183,13 +183,13 @@ object RobotConfig {
     @Config
     object CubeVision {
         @JvmField
-        var LEFT_REGION = Rect(100, 200, 100, 100)
+        var LEFT_REGION = Rect(50, 300, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(400, 200, 100, 100)
+        var CENTER_REGION = Rect(290, 285, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(400, 200, 100, 100)
+        var RIGHT_REGION = Rect(510, 295, 75, 75)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
