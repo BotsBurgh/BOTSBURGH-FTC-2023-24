@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.api.Hook
 import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
@@ -9,20 +10,17 @@ import org.firstinspires.ftc.teamcode.api.linear.AprilMovement
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
+import org.firstinspires.ftc.teamcode.api.vision.CubeVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.Team
+import kotlin.math.PI
 
 abstract class AutoMain : LinearOpMode() {
     abstract val team: Team
 
     /** The axis the robot should move along. */
-    private val forward =
-        when (RobotConfig.model) {
-            RobotConfig.Model.MiniRobot -> Encoders.Direction.Red
-            RobotConfig.Model.RobotA -> Encoders.Direction.Blue
-            RobotConfig.Model.RobotB -> Encoders.Direction.Red
-        }
+    private val forward = Encoders.Direction.Red
 
     /** The length and width of a tile in inches. */
     private val tileSize = 24.0
@@ -32,36 +30,73 @@ abstract class AutoMain : LinearOpMode() {
         TriWheels.init(this)
         Encoders.init(this)
 
+        Hook.init(this)
         PixelPlacer.init(this)
 
         AprilVision.init(this)
-        Vision.init(this, AprilVision)
         AprilMovement.init(this)
 
-        Vision.optimizeForAprilTags()
+        CubeVision.init(this, team)
+        Vision.init(this, CubeVision)
 
         Telemetry.sayInitialized()
 
-        waitForStart()
+        while (opModeInInit()) {
+            telemetry.addData("Cube", CubeVision.output)
+            telemetry.update()
+            sleep(100)
+        }
 
         Telemetry.sayStarted()
 
+        Vision.close()
+        Vision.unsafeReinit(AprilVision)
+
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
+        // Drive to spike tile and turn
         Encoders.driveTo2(forward, tiles(1) + 6.0)
         Encoders.spinTo2(pickTeam(90.0, -90.0))
+
+        // Move hook to upright position
+        Hook.moveHook(0.5)
+        sleep(400)
+        Hook.stop()
+
+        // Drive forward a bit so april tags are visible
         Encoders.driveTo2(forward, tiles(0.5))
 
-        AprilMovement.driveTo(pickTeam(5, 2), 3.0)
+        // Drive to april tag
+        Vision.optimizeForAprilTags()
+        AprilMovement.driveTo(pickTeam(5, 2), 4.0)
+        Vision.close()
 
+        // Slam against backboard, getting as close as possible
+        TriWheels.drive(PI / 2.0, 0.4)
+        sleep(500)
+        TriWheels.stop()
+
+        sleep(500)
+
+        // Place pixel
         PixelPlacer.place()
-
         sleep(1000)
-
         PixelPlacer.reset()
 
+        sleep(500)
+
+        // Back up a bit
+        Encoders.driveTo2(forward, tiles(-0.3))
+
+        // Spin and park
         Encoders.spinTo2(pickTeam(90.0, -90.0))
         Encoders.driveTo2(forward, tiles(1.2))
+        Encoders.driveTo2(Encoders.Direction.Blue, tiles(0.65))
+
+        // Put hook back in resting position
+        Hook.moveHook(-0.5)
+        sleep(500)
+        Hook.stop()
     }
 
     /** Converts an amount of tiles to inches. */
