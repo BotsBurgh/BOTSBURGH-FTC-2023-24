@@ -37,7 +37,7 @@ abstract class AutoMain : LinearOpMode() {
         AprilMovement.init(this)
 
         CubeVision.init(this, team)
-        Vision.init(this, CubeVision)
+        Vision.init(this, CubeVision, AprilVision)
 
         Telemetry.sayInitialized()
 
@@ -49,10 +49,9 @@ abstract class AutoMain : LinearOpMode() {
 
         Telemetry.sayStarted()
 
-        Vision.close()
-        Vision.unsafeReinit(AprilVision)
-
         sleep(RobotConfig.AutoMain.WAIT_TIME)
+
+        CubeVision.disable()
 
         // Drive to spike tile and turn
         Encoders.driveTo2(forward, tiles(1) + 6.0)
@@ -64,7 +63,7 @@ abstract class AutoMain : LinearOpMode() {
         Hook.stop()
 
         // Drive forward a bit so april tags are visible
-        Encoders.driveTo2(forward, tiles(0.5))
+        Encoders.driveTo2(forward, tiles(1))
 
         // Drive to april tag
         Vision.optimizeForAprilTags()
@@ -76,26 +75,22 @@ abstract class AutoMain : LinearOpMode() {
         sleep(500)
         TriWheels.stop()
 
-        sleep(500)
-
         // Place pixel
         PixelPlacer.place()
         sleep(1000)
         PixelPlacer.reset()
-
-        sleep(500)
 
         // Back up a bit
         Encoders.driveTo2(forward, tiles(-0.3))
 
         // Spin and park
         Encoders.spinTo2(pickTeam(90.0, -90.0))
-        Encoders.driveTo2(forward, tiles(1.2))
-        Encoders.driveTo2(Encoders.Direction.Blue, tiles(0.65))
+        Encoders.driveTo2(forward, tiles(1))
+        Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
 
         // Put hook back in resting position
         Hook.moveHook(-0.5)
-        sleep(500)
+        sleep(400)
         Hook.stop()
     }
 
