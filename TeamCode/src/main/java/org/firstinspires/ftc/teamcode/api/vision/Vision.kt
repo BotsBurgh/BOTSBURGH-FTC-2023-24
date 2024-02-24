@@ -43,6 +43,13 @@ object Vision : API() {
         vararg visionAPIs: VisionAPI,
     ) {
         super.init(opMode)
+        this.unsafeReinit(*visionAPIs)
+    }
+
+    fun unsafeReinit(vararg visionAPIs: VisionAPI) {
+        if (this::portal.isInitialized) {
+            this.portal.close()
+        }
 
         val webcam = opMode.hardwareMap.get(WebcamName::class.java, "Webcam 1")
 
@@ -87,5 +94,10 @@ object Vision : API() {
     )
     override fun init(opMode: OpMode) {
         throw RuntimeException("Please initialize Vision with at least one VisionAPI.")
+    }
+
+    fun close() {
+        this.portal.close()
+        FtcDashboard.getInstance().stopCameraStream()
     }
 }
