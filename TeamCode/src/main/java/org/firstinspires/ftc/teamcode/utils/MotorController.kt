@@ -51,5 +51,5 @@ class MotorController(
         previousError = currentError
     }
 
-    fun isDone() = abs(previousError) < 5
+    fun isDone() = abs(previousError) < 3 && abs(motor.power) < 0.03
 }

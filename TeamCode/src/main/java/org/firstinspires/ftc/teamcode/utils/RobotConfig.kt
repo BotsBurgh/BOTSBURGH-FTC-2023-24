@@ -53,7 +53,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 44.0
+        var TICKS_PER_INCH: Double = 18.0
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -106,10 +106,10 @@ object RobotConfig {
         var RANGE_GAIN: Double = 0.01
 
         @JvmField
-        var HEADING_GAIN: Double = 0.01
+        var HEADING_GAIN: Double = 0.003
 
         @JvmField
-        var STRAFE_GAIN: Double = 0.005
+        var STRAFE_GAIN: Double = 0.002
 
         // A threshold that the error must be below in order for the movement to finish.
 
@@ -167,37 +167,29 @@ object RobotConfig {
         /** A multiplier that scales the robot's rotation speed. */
         @JvmField
         var ROTATE_SPEED: Double = 0.3
-
-        /** The speed at which the linear slide moves upwards. */
-        @JvmField
-        var SLIDE_UP_POWER: Double = 0.6
-
-        /** The speed at which the linear slide moves downwards. */
-        @JvmField
-        var SLIDE_DOWN_POWER: Double = 0.4
     }
 
     /** Configuration related to the Drone API. */
     @Config
     object Drone {
         @JvmField
-        var OPEN_PIN: Double = 0.5
+        var OPEN_PIN: Double = 0.05
 
         @JvmField
-        var CLOSE_PIN: Double = 0.0
+        var CLOSE_PIN: Double = 0.4
     }
 
     /** Configuration related to the CubeVision API. */
     @Config
     object CubeVision {
         @JvmField
-        var LEFT_REGION = Rect(100, 200, 100, 100)
+        var LEFT_REGION = Rect(50, 300, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(400, 200, 100, 100)
+        var CENTER_REGION = Rect(290, 285, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(400, 200, 100, 100)
+        var RIGHT_REGION = Rect(510, 295, 75, 75)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
@@ -208,12 +200,13 @@ object RobotConfig {
 
     /** Configuration related to Claw API. **/
     @Config
+    @Deprecated(message = "Claw is deprecated")
     object Claw {
         @JvmField
-        var OPEN_POSITION_LEFT = 0.638
+        var OPEN_POSITION_LEFT = 1.0
 
         @JvmField
-        var CLOSE_POSITION_LEFT = 0.3
+        var CLOSE_POSITION_LEFT = 0.5
 
         @JvmField
         var OPEN_POSITION_RIGHT = 0.8
@@ -225,16 +218,25 @@ object RobotConfig {
         var UP_POSITION = 0.82
 
         @JvmField
-        var DOWN_POSITION = 0.3
+        var DOWN_POSITION = 0.45
+    }
+
+    @Config
+    object PixelPlacer {
+        @JvmField
+        var DEFAULT_POSITION = 0.45
+
+        @JvmField
+        var PLACE_POSITION = 0.85
     }
 
     @Config
     object MotorController {
         @JvmField
-        var pid = PIDCoefficients(0.01, 0.0, 0.2)
+        var pid = PIDCoefficients(0.01, 0.0, 0.0)
 
         @JvmField
-        var powerLimit = 0.5
+        var powerLimit = 0.2
 
         @JvmField
         var iLimit = 1.0

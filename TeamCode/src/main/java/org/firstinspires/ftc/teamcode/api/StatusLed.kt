@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Blinker
 /**
  * An API for manipulating the light on the control and expansion hubs.
  */
+@Deprecated(message = "StatusLed is not supported.")
 object StatusLed : API() {
     private lateinit var blinkers: List<Blinker>
 
