@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.vision
 
 import com.acmerobotics.dashboard.FtcDashboard
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.API
@@ -74,9 +75,10 @@ object Vision : API() {
 
         // Use a different sleep function depending on whether its a linear opmode or not.
         val sleep = opModeSleep(opMode)
+        val stopRequested = this.stopRequested(opMode)
 
         // Wait until the camera has started.
-        while (this.portal.cameraState != VisionPortal.CameraState.STREAMING) {
+        while (this.portal.cameraState != VisionPortal.CameraState.STREAMING && !stopRequested()) {
             opMode.telemetry.addData("Camera", this.portal.cameraState)
             opMode.telemetry.update()
 
@@ -100,4 +102,12 @@ object Vision : API() {
         this.portal.close()
         FtcDashboard.getInstance().stopCameraStream()
     }
+
+    private fun stopRequested(opMode: OpMode): () -> Boolean =
+        if (opMode is LinearOpMode) {
+            opMode::isStopRequested
+        } else {
+            // Default to stop not requested
+            { false }
+        }
 }
