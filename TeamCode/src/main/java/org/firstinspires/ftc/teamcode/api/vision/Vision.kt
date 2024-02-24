@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.api.vision
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.opModeSleep
 import org.firstinspires.ftc.vision.VisionPortal
+import org.firstinspires.ftc.vision.getVisionPortalCamera
 
 /**
  * The main vision API that loads [VisionAPI]s.
@@ -58,6 +60,10 @@ object Vision : API() {
 
         // Build the portal
         this.portal = builder.build()
+
+        if (RobotConfig.debug) {
+            FtcDashboard.getInstance().startCameraStream(getVisionPortalCamera(this.portal), 0.0)
+        }
 
         // Use a different sleep function depending on whether its a linear opmode or not.
         val sleep = opModeSleep(opMode)
