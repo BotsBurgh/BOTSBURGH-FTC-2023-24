@@ -24,7 +24,7 @@ object RobotConfig {
      *
      * @see Model
      */
-    val model: Model = Model.RobotA
+    val model: Model = Model.MiniRobot
 
     /**
      * When true, enables debugging features like camera streaming and more logs.
@@ -247,6 +247,9 @@ object RobotConfig {
      * @see model
      */
     enum class Model {
+        /** This year's small triangle robot. */
+        MiniRobot,
+
         /** This year's triangle robot. */
         RobotA,
 

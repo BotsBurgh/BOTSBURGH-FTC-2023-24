@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.RobotConfig
 class AutoForward : LinearOpMode() {
     private val forward =
         when (RobotConfig.model) {
+            RobotConfig.Model.MiniRobot -> Encoders.Direction.Red
             RobotConfig.Model.RobotA -> Encoders.Direction.Green
             RobotConfig.Model.RobotB -> Encoders.Direction.Red
         }
