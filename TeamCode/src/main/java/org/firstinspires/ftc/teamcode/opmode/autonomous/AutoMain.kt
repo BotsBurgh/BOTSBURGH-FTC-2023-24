@@ -44,14 +44,16 @@ abstract class AutoMain : LinearOpMode() {
         while (opModeInInit()) {
             telemetry.addData("Cube", CubeVision.output)
             telemetry.update()
+
             sleep(100)
         }
 
         Telemetry.sayStarted()
 
-        sleep(RobotConfig.AutoMain.WAIT_TIME)
-
+        val cubePosition = CubeVision.output
         CubeVision.disable()
+
+        sleep(RobotConfig.AutoMain.WAIT_TIME)
 
         // Drive to spike tile and turn
         Encoders.driveTo2(forward, tiles(1) + 6.0)
@@ -63,11 +65,11 @@ abstract class AutoMain : LinearOpMode() {
         Hook.stop()
 
         // Drive forward a bit so april tags are visible
-        Encoders.driveTo2(forward, tiles(1))
+        Encoders.driveTo2(forward, tiles(0.7))
 
         // Drive to april tag
         Vision.optimizeForAprilTags()
-        AprilMovement.driveTo(pickTeam(5, 2), 4.0)
+        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 4.0)
         Vision.close()
 
         // Slam against backboard, getting as close as possible
@@ -85,8 +87,12 @@ abstract class AutoMain : LinearOpMode() {
 
         // Spin and park
         Encoders.spinTo2(pickTeam(90.0, -90.0))
-        Encoders.driveTo2(forward, tiles(1))
-        Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
+        Encoders.driveTo2(forward, tiles(1) + when (cubePosition) {
+            CubeVision.CubePlacement.Left -> 6.0
+            CubeVision.CubePlacement.Center -> 0.0
+            CubeVision.CubePlacement.Right -> -6.0
+        })
+        // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
 
         // Put hook back in resting position
         Hook.moveHook(-0.5)
