@@ -102,7 +102,7 @@ object RobotConfig {
         // Multipliers against error values to proportionally control the speed of the robot.
 
         @JvmField
-        var RANGE_GAIN: Double = 0.01
+        var RANGE_GAIN: Double = 0.003
 
         @JvmField
         var HEADING_GAIN: Double = 0.003
