@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.spinTo
+import org.firstinspires.ftc.teamcode.utils.MotorController
 import org.firstinspires.ftc.teamcode.utils.MotorControllerGroup
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
@@ -179,27 +180,31 @@ object Encoders : API() {
     ) {
         TriWheels.stopAndResetMotors()
 
-        val (left, right, _) = this.defineWheels(direction)
+        val (left, right, back) = this.defineWheels(direction)
         val ticks = this.inchesToTick(inches)
 
         val controllers = MotorControllerGroup(ticks, left, right)
+        val backController = MotorController(0, back)
 
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
 
-            while (!controllers.isDone() && linearOpMode.opModeIsActive()) {
+            while (!(controllers.isDone() && backController.isDone()) && linearOpMode.opModeIsActive()) {
                 controllers.update()
+                backController.update()
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
 
                     addData("Left Power", left.power)
                     addData("Right Power", right.power)
+                    addData("Back Power", back.power)
 
                     addData("Target", ticks)
 
-                    addData("Left Current", left.currentPosition)
-                    addData("Right Current", right.currentPosition)
+                    addData("Left Pos", left.currentPosition)
+                    addData("Right Pos", right.currentPosition)
+                    addData("Back Pos", back.currentPosition)
 
                     update()
                 }

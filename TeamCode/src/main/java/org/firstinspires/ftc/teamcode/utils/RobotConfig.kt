@@ -53,7 +53,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 44.0
+        var TICKS_PER_INCH: Double = 18.0
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -233,10 +233,10 @@ object RobotConfig {
     @Config
     object MotorController {
         @JvmField
-        var pid = PIDCoefficients(0.01, 0.0, 0.2)
+        var pid = PIDCoefficients(0.01, 0.0, 0.0)
 
         @JvmField
-        var powerLimit = 0.5
+        var powerLimit = 0.2
 
         @JvmField
         var iLimit = 1.0
