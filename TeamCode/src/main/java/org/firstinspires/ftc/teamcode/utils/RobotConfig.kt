@@ -106,10 +106,10 @@ object RobotConfig {
         var RANGE_GAIN: Double = 0.01
 
         @JvmField
-        var HEADING_GAIN: Double = 0.01
+        var HEADING_GAIN: Double = 0.003
 
         @JvmField
-        var STRAFE_GAIN: Double = 0.005
+        var STRAFE_GAIN: Double = 0.002
 
         // A threshold that the error must be below in order for the movement to finish.
 

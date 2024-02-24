@@ -42,7 +42,10 @@ object AprilMovement : API() {
             (
                 abs(rangeError) > RobotConfig.AprilMovement.RANGE_ERROR ||
                     abs(headingError) > RobotConfig.AprilMovement.HEADING_ERROR ||
-                    abs(strafeError) > RobotConfig.AprilMovement.STRAFE_ERROR
+                    abs(strafeError) > RobotConfig.AprilMovement.STRAFE_ERROR ||
+                    abs(TriWheels.red.power) > 0.03 ||
+                    abs(TriWheels.green.power) > 0.03 ||
+                    abs(TriWheels.blue.power) > 0.03
             )
         ) {
             // Try scanning for the april tag
