@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api.linear
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
@@ -183,8 +184,17 @@ object Encoders : API() {
         val (left, right, back) = this.defineWheels(direction)
         val ticks = this.inchesToTick(inches)
 
-        val controllers = MotorControllerGroup(ticks, left, right)
-        val backController = MotorController(0, back)
+        val controllers = MotorControllerGroup(ticks, PIDCoefficients(0.0004, 0.0000000125, 0.0), left, right)
+        val backController =
+            MotorController(
+                0,
+                PIDCoefficients(
+                    0.0004,
+                    0.0,
+                    0.0,
+                ),
+                back,
+            )
 
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
@@ -220,7 +230,7 @@ object Encoders : API() {
 
         val ticks = -this.degreesToTick(degrees)
 
-        val controllers = MotorControllerGroup(ticks, TriWheels.red, TriWheels.green, TriWheels.blue)
+        val controllers = MotorControllerGroup(ticks, PIDCoefficients(0.0006, 0.0, 0.0), TriWheels.red, TriWheels.green, TriWheels.blue)
 
         try {
             while (

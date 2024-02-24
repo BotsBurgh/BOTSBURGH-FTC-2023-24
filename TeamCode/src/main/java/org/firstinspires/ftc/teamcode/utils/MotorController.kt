@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import com.qualcomm.robotcore.util.ElapsedTime
 import kotlin.math.abs
 import kotlin.math.max
@@ -8,9 +9,10 @@ import kotlin.math.min
 
 class MotorControllerGroup(
     target: Int,
+    pid: PIDCoefficients,
     vararg motors: DcMotor,
 ) {
-    private val controllers = motors.map { MotorController(target, it) }
+    private val controllers = motors.map { MotorController(target, pid, it) }
 
     fun update() {
         for (controller in controllers) {
@@ -23,6 +25,7 @@ class MotorControllerGroup(
 
 class MotorController(
     private val target: Int,
+    private val pid: PIDCoefficients,
     private val motor: DcMotor,
 ) {
     private val runtime = ElapsedTime()
@@ -36,14 +39,14 @@ class MotorController(
         val currentTime = runtime.milliseconds()
         val currentError = target - motor.currentPosition
 
-        val p = RobotConfig.MotorController.pid.p * currentError
+        val p = pid.p * currentError
 
-        i += RobotConfig.MotorController.pid.i * currentError * (currentTime - previousTime)
+        i += pid.i * currentError * (currentTime - previousTime)
 
         // Clamp between [-MAX_I, MAX_I]
         i = max(min(i, RobotConfig.MotorController.iLimit), -RobotConfig.MotorController.iLimit)
 
-        val d = RobotConfig.MotorController.pid.d * (currentError - previousError) / (currentTime - previousTime)
+        val d = pid.d * (currentError - previousError) / (currentTime - previousTime)
 
         motor.power = max(min(p + i + d, RobotConfig.MotorController.powerLimit), -RobotConfig.MotorController.powerLimit)
 
@@ -51,5 +54,6 @@ class MotorController(
         previousError = currentError
     }
 
-    fun isDone() = abs(previousError) < 3 && abs(motor.power) < 0.03
+    // fun isDone() = abs(previousError) < 3 && abs(motor.power) < 0.03
+    fun isDone() = abs(previousError) < 10
 }

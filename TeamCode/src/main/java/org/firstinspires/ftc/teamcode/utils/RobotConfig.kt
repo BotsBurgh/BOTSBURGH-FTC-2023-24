@@ -3,7 +3,6 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
-import com.qualcomm.robotcore.hardware.PIDCoefficients
 import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
@@ -53,7 +52,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 18.0
+        var TICKS_PER_INCH: Double = 15.5
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -62,7 +61,7 @@ object RobotConfig {
          * increase accuracy.
          */
         @JvmField
-        var TICKS_PER_DEGREE: Double = 6.64
+        var TICKS_PER_DEGREE: Double = 1.82
 
         /**
          * A multiplier that calculates the power of the wheel relative to the amount it needs to
@@ -232,14 +231,14 @@ object RobotConfig {
 
     @Config
     object MotorController {
-        @JvmField
-        var pid = PIDCoefficients(0.01, 0.0, 0.0)
+        // @JvmField
+        // var pid = PIDCoefficients(0.0004, 0.0000000125, 0.0)
 
         @JvmField
         var powerLimit = 0.2
 
         @JvmField
-        var iLimit = 1.0
+        var iLimit = 0.1
     }
 
     /**
