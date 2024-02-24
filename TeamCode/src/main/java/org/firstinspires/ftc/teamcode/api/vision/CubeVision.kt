@@ -44,6 +44,10 @@ object CubeVision : API(), VisionAPI {
         this.cubeProcessor = CubeProcessor(cubeColor, opMode.telemetry)
     }
 
+    fun disable() {
+        this.cubeProcessor.disabled = true
+    }
+
     @Deprecated(
         message = "Please initialize CubeVision with cubeColor.",
         replaceWith = ReplaceWith("CubeVision.init(this, cubeColor)"),
@@ -58,6 +62,9 @@ object CubeVision : API(), VisionAPI {
         VisionProcessor {
         @Volatile
         var placement = CubePlacement.Center
+
+        @Volatile
+        var disabled = false
 
         private var initialized = false
 
@@ -84,6 +91,11 @@ object CubeVision : API(), VisionAPI {
             frame: Mat,
             captureTimeNanos: Long,
         ): CubePlacement {
+            if (this.disabled) {
+                // Default to center after disabled
+                return CubePlacement.Center
+            }
+
             frame.copyTo(this.rgb)
 
             // Create sub-regions only once.
@@ -100,11 +112,14 @@ object CubeVision : API(), VisionAPI {
             val scoreCenter = Core.mean(this.regionCenter).mul(colorWeight).sumRGB()
             val scoreRight = Core.mean(this.regionRight).mul(colorWeight).sumRGB()
 
+            // Possible data-race, commenting out
+            /*
             with(t) {
                 addData("Score Left", scoreLeft)
                 addData("Score Center", scoreCenter)
                 addData("Score Right", scoreRight)
             }
+             */
 
             this.placement =
                 when (max(max(scoreLeft, scoreCenter), scoreRight)) {
