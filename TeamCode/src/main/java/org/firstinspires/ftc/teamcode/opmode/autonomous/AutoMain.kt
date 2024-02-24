@@ -87,11 +87,15 @@ abstract class AutoMain : LinearOpMode() {
 
         // Spin and park
         Encoders.spinTo2(pickTeam(90.0, -90.0))
-        Encoders.driveTo2(forward, tiles(1) + when (cubePosition) {
-            CubeVision.CubePlacement.Left -> 6.0
-            CubeVision.CubePlacement.Center -> 0.0
-            CubeVision.CubePlacement.Right -> -6.0
-        })
+        Encoders.driveTo2(
+            forward,
+            tiles(1) +
+                when (cubePosition) {
+                    CubeVision.CubePlacement.Left -> 6.0
+                    CubeVision.CubePlacement.Center -> 0.0
+                    CubeVision.CubePlacement.Right -> -6.0
+                },
+        )
         // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
 
         // Put hook back in resting position
