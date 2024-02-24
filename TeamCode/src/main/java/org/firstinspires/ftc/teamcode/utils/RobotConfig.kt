@@ -235,7 +235,7 @@ object RobotConfig {
         // var pid = PIDCoefficients(0.0004, 0.0000000125, 0.0)
 
         @JvmField
-        var powerLimit = 0.2
+        var powerLimit = 1.0
 
         @JvmField
         var iLimit = 0.1
