@@ -135,7 +135,7 @@ object RobotConfig {
          * This will only be applied if `Vision.optimizeForAprilTags` is called.
          */
         @JvmField
-        var OPTIMUM_EXPOSURE: Long = 1
+        var OPTIMUM_EXPOSURE: Long = 6
 
         /**
          * Sets the gain that should be used when scanning april tags.
