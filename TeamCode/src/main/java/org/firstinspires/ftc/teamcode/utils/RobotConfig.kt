@@ -135,7 +135,7 @@ object RobotConfig {
          * This will only be applied if `Vision.optimizeForAprilTags` is called.
          */
         @JvmField
-        var OPTIMUM_EXPOSURE: Long = 6
+        var OPTIMUM_EXPOSURE: Long = 3
 
         /**
          * Sets the gain that should be used when scanning april tags.
@@ -182,19 +182,19 @@ object RobotConfig {
     @Config
     object CubeVision {
         @JvmField
-        var LEFT_REGION = Rect(50, 300, 75, 75)
+        var LEFT_REGION = Rect(50, 285, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(290, 285, 75, 75)
+        var CENTER_REGION = Rect(295, 265, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(510, 295, 75, 75)
+        var RIGHT_REGION = Rect(510, 275, 75, 75)
 
         @JvmField
-        var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
+        var RED_WEIGHT = Scalar(1.0, -0.5, -0.5)
 
         @JvmField
-        var BLUE_WEIGHT = Scalar(-0.2, -0.2, 1.0)
+        var BLUE_WEIGHT = Scalar(-0.5, -0.5, 1.0)
     }
 
     /** Configuration related to Claw API. **/

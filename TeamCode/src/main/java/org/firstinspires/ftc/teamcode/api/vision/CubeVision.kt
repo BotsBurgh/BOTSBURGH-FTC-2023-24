@@ -113,12 +113,13 @@ object CubeVision : API(), VisionAPI {
             val scoreRight = Core.mean(this.regionRight).mul(colorWeight).sumRGB()
 
             /*
-            Possible data-race, commenting out
+            // Possible data-race, commenting out
 
             with(t) {
                 addData("Score Left", scoreLeft)
                 addData("Score Center", scoreCenter)
                 addData("Score Right", scoreRight)
+                update()
             }
              */
 

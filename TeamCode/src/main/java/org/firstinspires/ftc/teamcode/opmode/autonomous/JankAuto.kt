@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Box
 import org.firstinspires.ftc.teamcode.api.LinearSlide
@@ -87,11 +88,13 @@ abstract class JankAuto : LinearOpMode() {
 }
 
 @Autonomous(name = "JankAuto - Red", group = "Jank")
+@Disabled
 class JankAutoRed : JankAuto() {
     override val team = Team.Red
 }
 
 @Autonomous(name = "JankAuto - Blue", group = "Jank")
+@Disabled
 class JankAutoBlue : JankAuto() {
     override val team = Team.Red
 }

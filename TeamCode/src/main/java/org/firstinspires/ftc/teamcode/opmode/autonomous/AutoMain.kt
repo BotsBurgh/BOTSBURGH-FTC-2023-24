@@ -55,27 +55,46 @@ abstract class AutoMain : LinearOpMode() {
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
-        // Drive to spike tile and turn
-        Encoders.driveTo2(forward, tiles(1) + 6.0)
-        Encoders.spinTo2(pickTeam(90.0, -90.0))
+        when (cubePosition) {
+            CubeVision.CubePlacement.Left -> {
+                // Spin first, then drive to backdrop, the spin to face april tag
+                Encoders.spinTo2(pickTeam(45.0, -45.0))
+                Encoders.driveTo2(forward, 36.0)
+                Encoders.spinTo2(pickTeam(30.0, -30.0))
+            }
+            CubeVision.CubePlacement.Center -> {
+                // Drive to spike tile and turn
+                Encoders.driveTo2(forward, tiles(1) + 6.0)
+                Encoders.spinTo2(pickTeam(90.0, -90.0))
+
+                // Drive forward a bit so april tags are visible
+                Encoders.driveTo2(forward, tiles(0.7))
+            }
+            CubeVision.CubePlacement.Right -> {
+                // Spin first, then drive to backdrop
+                Encoders.spinTo2(pickTeam(65.0, -65.0))
+
+                Encoders.driveTo2(forward, 24.0)
+            }
+        }
 
         // Move hook to upright position
         Hook.moveHook(0.5)
         sleep(400)
         Hook.stop()
 
-        // Drive forward a bit so april tags are visible
-        Encoders.driveTo2(forward, tiles(0.7))
-
         // Drive to april tag
         Vision.optimizeForAprilTags()
-        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 4.0)
+        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 5.0)
         Vision.close()
 
         // Slam against backboard, getting as close as possible
         TriWheels.drive(PI / 2.0, 0.4)
-        sleep(500)
+        sleep(1000)
         TriWheels.stop()
+
+        // Let robot come to a stop
+        sleep(500)
 
         // Place pixel
         PixelPlacer.place()
@@ -86,17 +105,20 @@ abstract class AutoMain : LinearOpMode() {
         Encoders.driveTo2(forward, tiles(-0.3))
 
         // Spin and park
-        Encoders.spinTo2(pickTeam(90.0, -90.0))
+        if (cubePosition == CubeVision.CubePlacement.Right) {
+            Encoders.spinTo2(pickTeam(75.0, -75.0))
+        } else {
+            Encoders.spinTo2(pickTeam(90.0, -90.0))
+        }
+
         Encoders.driveTo2(
             forward,
-            tiles(1) +
-                when (cubePosition) {
-                    CubeVision.CubePlacement.Left -> 6.0
-                    CubeVision.CubePlacement.Center -> 0.0
-                    CubeVision.CubePlacement.Right -> -6.0
-                },
+            when (cubePosition) {
+                CubeVision.CubePlacement.Left -> tiles(-0.5)
+                CubeVision.CubePlacement.Center -> tiles(1)
+                CubeVision.CubePlacement.Right -> tiles(0.75)
+            },
         )
-        // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
 
         // Put hook back in resting position
         Hook.moveHook(-0.5)
