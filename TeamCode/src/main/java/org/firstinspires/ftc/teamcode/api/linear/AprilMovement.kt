@@ -99,9 +99,6 @@ object AprilMovement : API() {
 
             // Set the power of the wheels
             TriWheels.driveWithRotation(radians, magnitude, heading)
-
-            // Sleep for 0.1s before repeating again
-            sleep(100)
         }
 
         // Stop the wheels from moving, the target has been reached!
