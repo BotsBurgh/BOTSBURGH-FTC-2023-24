@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.Hook
+import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
@@ -20,7 +21,7 @@ class TeleOpMain : OpMode() {
         TriWheels.init(this)
         Hook.init(this)
         Drone.init(this)
-        // PixelPlacer.init(this)
+        PixelPlacer.init(this)
 
         // Log that we are initialized
         Telemetry.sayInitialized()
@@ -62,6 +63,12 @@ class TeleOpMain : OpMode() {
             }
 
             telemetry.addData("Hook", "Not hanging")
+        }
+
+        if (gamepad.dpad_up) {
+            PixelPlacer.place()
+        } else if (gamepad.dpad_down) {
+            PixelPlacer.reset()
         }
 
         if (gamepad.x && gamepad.y) {
