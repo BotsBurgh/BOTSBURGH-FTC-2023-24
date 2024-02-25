@@ -27,16 +27,9 @@ class AutoForward : LinearOpMode() {
 
         Telemetry.sayStarted()
 
-        Encoders.driveTo(
+        Encoders.driveTo2(
             forward,
             42.0,
-        )
-
-        sleep(1000)
-
-        Encoders.driveTo(
-            forward,
-            -4.0,
         )
     }
 }
