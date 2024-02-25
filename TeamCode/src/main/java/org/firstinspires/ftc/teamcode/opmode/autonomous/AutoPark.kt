@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
-@Autonomous(name = "Auto Forward")
-class AutoForward : LinearOpMode() {
+@Autonomous(name = "AutoPark")
+class AutoPark : LinearOpMode() {
     private val forward =
         when (RobotConfig.model) {
             RobotConfig.Model.MiniRobot -> Encoders.Direction.Red

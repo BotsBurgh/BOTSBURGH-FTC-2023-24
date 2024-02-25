@@ -64,7 +64,8 @@ abstract class AutoMain : LinearOpMode() {
             }
             CubeVision.CubePlacement.Center -> {
                 // Drive to spike tile and turn
-                Encoders.driveTo2(forward, tiles(1) + 6.0)
+                Encoders.driveTo2(forward, tiles(1.65))
+                Encoders.driveTo2(forward, tiles(-0.3))
                 Encoders.spinTo2(pickTeam(90.0, -90.0))
 
                 // Drive forward a bit so april tags are visible
@@ -147,12 +148,12 @@ abstract class AutoMain : LinearOpMode() {
         }
 }
 
-@Autonomous(name = "AutoMain - Red")
+@Autonomous(name = "AutoMain - Red", group = "AutoMain")
 class AutoMainRed : AutoMain() {
     override val team = Team.Red
 }
 
-@Autonomous(name = "AutoMain - Blue")
+@Autonomous(name = "AutoMain - Blue", group = "AutoMain")
 class AutoMainBlue : AutoMain() {
     override val team = Team.Blue
 }
