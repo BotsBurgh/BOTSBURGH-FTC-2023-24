@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
 import org.firstinspires.ftc.teamcode.utils.Team
 
+@Deprecated(message = "JankAuto is not modified for the mini robot.")
 abstract class JankAuto : LinearOpMode() {
     abstract val team: Team
 
