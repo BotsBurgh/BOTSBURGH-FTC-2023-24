@@ -33,6 +33,7 @@ abstract class AutoSpike : LinearOpMode() {
     }
 
     private fun tiles(amount: Double) = amount * tileSize
+
     private fun tiles(amount: Int) = tiles(amount.toDouble())
 
     private fun <T> pickTeam(
