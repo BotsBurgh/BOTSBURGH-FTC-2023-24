@@ -51,7 +51,7 @@ object CubeVision : API(), VisionAPI {
     @Deprecated(
         message = "Please initialize CubeVision with cubeColor.",
         replaceWith = ReplaceWith("CubeVision.init(this, cubeColor)"),
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
     )
     override fun init(opMode: OpMode) {
     }

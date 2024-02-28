@@ -197,29 +197,6 @@ object RobotConfig {
         var BLUE_WEIGHT = Scalar(-0.5, -0.5, 1.0)
     }
 
-    /** Configuration related to Claw API. **/
-    @Config
-    @Deprecated(message = "Claw is deprecated")
-    object Claw {
-        @JvmField
-        var OPEN_POSITION_LEFT = 1.0
-
-        @JvmField
-        var CLOSE_POSITION_LEFT = 0.5
-
-        @JvmField
-        var OPEN_POSITION_RIGHT = 0.8
-
-        @JvmField
-        var CLOSE_POSITION_RIGHT = 0.45
-
-        @JvmField
-        var UP_POSITION = 0.82
-
-        @JvmField
-        var DOWN_POSITION = 0.45
-    }
-
     @Config
     object PixelPlacer {
         @JvmField
