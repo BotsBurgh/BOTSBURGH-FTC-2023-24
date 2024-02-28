@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import kotlin.math.PI
 import kotlin.math.sin
@@ -12,11 +11,11 @@ import kotlin.math.sin
  */
 object TriWheels : API() {
     // All 3 wheels on the robot
-    lateinit var red: DcMotorEx
+    lateinit var red: DcMotor
         private set
-    lateinit var green: DcMotorEx
+    lateinit var green: DcMotor
         private set
-    lateinit var blue: DcMotorEx
+    lateinit var blue: DcMotor
         private set
 
     // The angles of each wheel
@@ -27,9 +26,9 @@ object TriWheels : API() {
     override fun init(opMode: OpMode) {
         super.init(opMode)
 
-        this.red = this.opMode.hardwareMap.get(DcMotorEx::class.java, "redWheel")
-        this.green = this.opMode.hardwareMap.get(DcMotorEx::class.java, "greenWheel")
-        this.blue = this.opMode.hardwareMap.get(DcMotorEx::class.java, "blueWheel")
+        this.red = this.opMode.hardwareMap.get(DcMotor::class.java, "redWheel")
+        this.green = this.opMode.hardwareMap.get(DcMotor::class.java, "greenWheel")
+        this.blue = this.opMode.hardwareMap.get(DcMotor::class.java, "blueWheel")
 
         this.stopAndResetMotors()
     }
@@ -60,24 +59,38 @@ object TriWheels : API() {
     fun drive(
         radians: Double,
         magnitude: Double,
+        rotation: Double = 0.0,
     ) {
-        this.driveWithRotation(radians, magnitude, 0.0)
+        val (r, g, b) = this.wheelRatio(radians, magnitude, rotation)
+        this.power(r, g, b)
     }
 
     /**
      * Does the same thing as [drive] but it rotates the robot with a given [rotation] too.
      */
+    @Deprecated(
+        message = "driveWithRotation is deprecated, use drive with rotation parameter instead.",
+        replaceWith = ReplaceWith("TriWheels.drive(radius, magnitude, rotation = rotation)"),
+        level = DeprecationLevel.ERROR,
+    )
     fun driveWithRotation(
         radians: Double,
         magnitude: Double,
         rotation: Double,
     ) {
-        this.power(
+        this.drive(radians, magnitude, rotation)
+    }
+
+    private fun wheelRatio(
+        radians: Double,
+        magnitude: Double,
+        rotation: Double = 0.0,
+    ): Triple<Double, Double, Double> =
+        Triple(
             magnitude * sin(this.RED_ANGLE - radians) + rotation,
             magnitude * sin(this.GREEN_ANGLE - radians) + rotation,
             magnitude * sin(this.BLUE_ANGLE - radians) + rotation,
         )
-    }
 
     /**
      * Makes all 3 wheels stop.

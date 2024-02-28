@@ -98,7 +98,7 @@ object AprilMovement : API() {
             val magnitude = sqrt(range * range + strafe * strafe)
 
             // Set the power of the wheels
-            TriWheels.driveWithRotation(radians, magnitude, heading)
+            TriWheels.drive(radians, magnitude, rotation = heading)
         }
 
         // Stop the wheels from moving, the target has been reached!

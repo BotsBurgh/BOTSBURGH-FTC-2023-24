@@ -78,10 +78,10 @@ class TeleOpMain : OpMode() {
         }
 
         // movement of all wheels
-        TriWheels.driveWithRotation(
+        TriWheels.drive(
             joyRadians,
             joyMagnitude * RobotConfig.TeleOpMain.DRIVE_SPEED,
-            rotationPower * RobotConfig.TeleOpMain.ROTATE_SPEED,
+            rotation = rotationPower * RobotConfig.TeleOpMain.ROTATE_SPEED,
         )
 
         // Log that we are running
