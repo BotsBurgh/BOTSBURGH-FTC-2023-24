@@ -197,13 +197,10 @@ object RobotConfig {
 
     @Config
     object MotorController {
-        // @JvmField
-        // var pid = PIDCoefficients(0.0004, 0.0000000125, 0.0)
+        @JvmField
+        var POWER_LIMIT = 1.0
 
         @JvmField
-        var powerLimit = 1.0
-
-        @JvmField
-        var iLimit = 0.1
+        var I_LIMIT = 0.1
     }
 }
