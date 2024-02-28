@@ -3,29 +3,21 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
-import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
+import org.firstinspires.ftc.teamcode.utils.RobotConfig.debug
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
 
 /**
  * This is an immutable object representing robot configuration.
  *
- * It is meant to orchestrate FTC Dashboard and other configuration together, as well as enable the
- * use of multiple different robots with the same code. (See [model].)
+ * It is meant to orchestrate FTC Dashboard and other configuration together.
  *
  * Certain sub-objects are annotated with `@Config`. This designates them as FTC Dashboard
- * configuration that can be modified at runtime. **The permanently change these values, you must
- * also modify the code!** The configuration can also change during initialization depending on the
- * [model] of the robot and other values.
+ * configuration that can be modified at runtime. **To permanently change these values, you must
+ * also modify the code!** The configuration can also change during initialization depending on
+ * various build constants like [debug].
  */
 object RobotConfig {
-    /**
-     * Which model of the robot is running the code.
-     *
-     * @see Model
-     */
-    val model: Model = Model.MiniRobot
-
     /**
      * When true, enables debugging features like camera streaming and more logs.
      *
@@ -34,12 +26,9 @@ object RobotConfig {
     const val debug: Boolean = true
 
     /**
-     * Creates a string representing the current robot configuration.
-     *
-     * This should include all standalone properties like [model] and [debug], but should not
-     * contain any FTC Dashboard configuration due to how much more complicated they are.
+     * Creates a string representing the current robot build constants.
      */
-    override fun toString() = "RobotConfig(model=$model, debug=$debug)"
+    override fun toString() = "RobotConfig(debug=$debug)"
 
     /** Configuration related to moving the wheels using encoders. */
     @Config
@@ -216,21 +205,5 @@ object RobotConfig {
 
         @JvmField
         var iLimit = 0.1
-    }
-
-    /**
-     * Represents what model of robot is running the code.
-     *
-     * @see model
-     */
-    enum class Model {
-        /** This year's small triangle robot. */
-        MiniRobot,
-
-        /** This year's triangle robot. */
-        RobotA,
-
-        /** Last year's triangle robot. */
-        RobotB,
     }
 }
