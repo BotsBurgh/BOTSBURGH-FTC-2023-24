@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
+import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -105,5 +106,5 @@ object AprilMovement : API() {
         TriWheels.stop()
     }
 
-    override fun dependencies() = setOf(TriWheels, AprilVision)
+    override fun dependencies() = setOf(TriWheels, AprilVision, Vision)
 }
