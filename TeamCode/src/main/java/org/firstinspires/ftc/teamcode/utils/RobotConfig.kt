@@ -37,11 +37,11 @@ object RobotConfig {
          * How many ticks a wheel needs to rotate for the robot to travel an inch when moving along
          * one of it's three axis.
          *
-         * This value was calculated by guessing and checking, and may be further changed to
-         * increase accuracy.
+         * This value was calculated by getting the encoder resolution and dividing by the wheels
+         * circumference.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 15.5
+        var TICKS_PER_INCH: Double = 145.1 / (1.5 * 2 * Math.PI)
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
