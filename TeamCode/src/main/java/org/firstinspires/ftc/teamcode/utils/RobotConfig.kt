@@ -3,6 +3,7 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import org.firstinspires.ftc.teamcode.utils.RobotConfig.debug
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
@@ -202,5 +203,16 @@ object RobotConfig {
 
         @JvmField
         var I_LIMIT = 0.1
+    }
+
+    @Config
+    object Omnicoders {
+        // TODO: Calculate this number.
+        @JvmField
+        var TICKS_PER_INCH = 0
+
+        // Taken from Encoders.driveTo2, may be adjusted in the future.
+        @JvmField
+        var PID = PIDCoefficients(0.0004, 0.0000000125, 0.0)
     }
 }
