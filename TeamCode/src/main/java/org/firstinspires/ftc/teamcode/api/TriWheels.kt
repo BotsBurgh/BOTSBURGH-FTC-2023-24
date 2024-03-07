@@ -81,7 +81,7 @@ object TriWheels : API() {
         this.drive(radians, magnitude, rotation)
     }
 
-    private fun wheelRatio(
+    fun wheelRatio(
         radians: Double,
         magnitude: Double,
         rotation: Double = 0.0,
