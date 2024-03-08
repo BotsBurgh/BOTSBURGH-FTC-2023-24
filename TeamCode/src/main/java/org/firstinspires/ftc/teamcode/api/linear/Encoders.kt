@@ -165,6 +165,40 @@ object Encoders : API() {
         }
     }
 
+    /**
+     * strafeTo is a robust and experimental function that allows strafing towards pi/2 and
+     * 3pi/2 using encoders. This function will be replaced by moveTo which will have no
+     * restrictions on direction.
+     */
+    fun strafeTo(
+        direction: Direction,
+        inches: Double
+    ) {
+        TriWheels.stopAndResetMotors()
+
+        val (left, right, back) = this.defineWheels(direction)
+        val ticks = this.inchesToTick(inches)
+        val d: Int
+
+        if (direction == Direction.Left) {
+            d = 1
+            while (back.currentPosition > -ticks && linearOpMode.opModeIsActive()) {
+                left.power = 0.09 * d
+                right.power = 0.09 * d
+                back.power = -0.18 * d
+            }
+        } else {
+            d = -1
+            while (back.currentPosition < ticks && linearOpMode.opModeIsActive()) {
+                left.power = 0.09 * d
+                right.power = 0.09 * d
+                back.power = -0.18 * d
+            }
+
+        }
+        TriWheels.stopAndResetMotors()
+    }
+
     fun driveTo2(
         direction: Direction,
         inches: Double,
