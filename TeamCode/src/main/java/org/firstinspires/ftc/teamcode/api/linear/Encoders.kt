@@ -53,6 +53,12 @@ object Encoders : API() {
         val leftTarget = left.currentPosition + ticks
         val rightTarget = right.currentPosition + ticks
 
+        val d: Int = if (inches > 0) {
+            1
+        } else {
+            -1
+        }
+
         // Set left direction to reverse, undoing it at the end even if an exception is thrown
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
