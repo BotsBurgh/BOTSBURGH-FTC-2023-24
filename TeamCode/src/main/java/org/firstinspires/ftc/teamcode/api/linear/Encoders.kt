@@ -300,6 +300,8 @@ object Encoders : API() {
             Direction.Red -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
             Direction.Green -> Triple(TriWheels.red, TriWheels.blue, TriWheels.green)
             Direction.Blue -> Triple(TriWheels.green, TriWheels.red, TriWheels.blue)
+            Direction.Left -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
+            Direction.Right -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
         }
 
     /**
@@ -311,5 +313,7 @@ object Encoders : API() {
         Red,
         Green,
         Blue,
+        Left,
+        Right,
     }
 }
