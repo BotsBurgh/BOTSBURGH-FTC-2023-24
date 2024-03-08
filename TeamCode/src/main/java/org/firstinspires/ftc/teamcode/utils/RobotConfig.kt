@@ -80,7 +80,7 @@ object RobotConfig {
          * The maximum power a wheel can spin at when the robot is driving with encoders.
          */
         @JvmField
-        var MAX_DRIVE_SPEED: Double = 0.3
+        var MAX_DRIVE_SPEED: Double = 0.25
 
         /**
          * The maximum power a wheel can spin at when the robot spinning with encoders.
@@ -135,7 +135,7 @@ object RobotConfig {
          * This will only be applied if `Vision.optimizeForAprilTags` is called.
          */
         @JvmField
-        var OPTIMUM_EXPOSURE: Long = 1
+        var OPTIMUM_EXPOSURE: Long = 10
 
         /**
          * Sets the gain that should be used when scanning april tags.
@@ -182,13 +182,13 @@ object RobotConfig {
     @Config
     object CubeVision {
         @JvmField
-        var LEFT_REGION = Rect(50, 300, 75, 75)
+        var LEFT_REGION = Rect(0, 230, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(290, 285, 75, 75)
+        var CENTER_REGION = Rect(243, 212, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(510, 295, 75, 75)
+        var RIGHT_REGION = Rect(560, 230, 75, 75)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
