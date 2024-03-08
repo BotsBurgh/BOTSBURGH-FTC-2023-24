@@ -70,25 +70,9 @@ object Encoders : API() {
                 abs(rightTarget - right.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
-                // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
+                left.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
+                right.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
 
-                left.power =
-                    min(
-                        min(
-                            (leftTarget - left.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
-                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
-                    )
-                right.power =
-                    min(
-                        min(
-                            (rightTarget - right.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
-                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
-                    )
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
