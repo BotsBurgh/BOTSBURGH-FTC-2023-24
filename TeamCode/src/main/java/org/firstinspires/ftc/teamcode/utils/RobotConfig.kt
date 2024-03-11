@@ -185,7 +185,7 @@ object RobotConfig {
         var LEFT_REGION = Rect(0, 230, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(243, 212, 75, 75)
+        var CENTER_REGION = Rect(290, 212, 75, 75)
 
         @JvmField
         var RIGHT_REGION = Rect(560, 230, 75, 75)
