@@ -131,14 +131,9 @@ object Encoders : API() {
                 val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
 
                 TriWheels.rotate(
-                    min(
-                        min(
-                            abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
                         RobotConfig.Encoders.MAX_SPIN_SPEED,
-                    ),
-                )
+                    )
+
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Rotating")
