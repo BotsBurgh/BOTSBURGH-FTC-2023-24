@@ -12,15 +12,23 @@ import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
 import org.firstinspires.ftc.teamcode.api.vision.CubeVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
+import org.firstinspires.ftc.teamcode.utils.auto.Position
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
-import org.firstinspires.ftc.teamcode.utils.Team
+import org.firstinspires.ftc.teamcode.utils.auto.Park
+import org.firstinspires.ftc.teamcode.utils.auto.Team
+import org.firstinspires.ftc.teamcode.utils.auto.Truss
 import kotlin.math.PI
 
 abstract class AutoMain : LinearOpMode() {
     abstract val team: Team
+    private var position = Position.Back
+    private var park = Park.Right
+    private var truss = Truss.Big
 
     /** The axis the robot should move along. */
     private val forward = Encoders.Direction.Red
+    private val left = Encoders.Direction.Left
+    private val right = Encoders.Direction.Right
 
     /** The length and width of a tile in inches. */
     private val tileSize = 24.0
@@ -43,6 +51,37 @@ abstract class AutoMain : LinearOpMode() {
 
         while (opModeInInit()) {
             telemetry.addData("Cube", CubeVision.output)
+            telemetry.addLine("Front Stage: A / Back Stage :B")
+            telemetry.addLine("Park Left: Left Dpad / Park Center: Up Dpad / Park Right: Right Dpad")
+            telemetry.addLine("Truss: X / Gate: Y")
+            telemetry.addData("Position", position)
+            telemetry.addData("Park", park)
+            telemetry.addData("Truss", truss)
+
+
+            //change statring position using a/b
+            if (gamepad1.a) {
+                position = Position.Front
+            } else if (gamepad1.b) {
+                position = Position.Back
+            }
+
+            //change parking position with dpad
+            if (gamepad1.dpad_left) {
+                park = Park.Left
+            } else if (gamepad1.dpad_up) {
+                park = Park.Center
+            } else if (gamepad1.dpad_right) {
+                park = Park.Right
+            }
+
+            //change truss to drive through with x/y
+            if (gamepad1.x) {
+                truss = Truss.Small
+            } else if (gamepad1.y) {
+                truss = Truss.Big
+            }
+
             telemetry.update()
 
             sleep(100)
@@ -56,8 +95,53 @@ abstract class AutoMain : LinearOpMode() {
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
         // Drive to spike tile and turn
-        Encoders.driveTo2(forward, tiles(1) + 6.0)
-        Encoders.spinTo2(pickTeam(90.0, -90.0))
+        when (cubePosition) {
+            CubeVision.CubePlacement.Left -> {
+
+                Encoders.driveTo2(forward, tiles(1) + 4.0)
+                //turn towards pike
+                Encoders.spinTo2(pickTeam(-90.0, 90.0))
+                Encoders.driveTo2(forward, 12.0)
+                //back up and face backdrop
+                Encoders.driveTo(forward, -24.0)
+                sleep(250)
+                Encoders.spinTo(180.0)
+            }
+            CubeVision.CubePlacement.Center -> {
+
+                Encoders.spinTo(pickTeam(10.0, -10.0))
+                Encoders.driveTo(forward, tiles(1.75))
+                Encoders.driveTo(forward, -2.0)
+                sleep(250)
+                Encoders.spinTo(pickTeam(90.0, -90.0))
+
+                when (position) {
+                    Position.Back -> {
+                        //Back Stage movement
+                        Encoders.driveTo(forward, tiles(1))
+                    }
+                    Position.Front -> {
+                        //Front Stage movement
+                    }
+                }
+
+            }
+            CubeVision.CubePlacement.Right -> {
+
+                Encoders.driveTo(forward, 2.0)
+                sleep(250)
+                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
+                sleep(250)
+                //drive towards spike
+                Encoders.driveTo(forward, tiles(1))
+                Encoders.driveTo(forward, -2.0)
+                //strafe towards backdrop
+                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
+                //turn towards backdrop
+                Encoders.spinTo(pickTeam(90.0, -90.0))
+
+            }
+        }
 
         // Move hook to upright position
         Hook.moveHook(0.5)
@@ -65,7 +149,7 @@ abstract class AutoMain : LinearOpMode() {
         Hook.stop()
 
         // Drive forward a bit so april tags are visible
-        Encoders.driveTo2(forward, tiles(0.7))
+        //Encoders.driveTo(forward, tiles(1))
 
         // Drive to april tag
         Vision.optimizeForAprilTags()
@@ -77,25 +161,19 @@ abstract class AutoMain : LinearOpMode() {
         sleep(500)
         TriWheels.stop()
 
+        Encoders.strafeTo(right, 1.0)
+
         // Place pixel
         PixelPlacer.place()
         sleep(1000)
         PixelPlacer.reset()
 
         // Back up a bit
-        Encoders.driveTo2(forward, tiles(-0.3))
+        Encoders.driveTo(forward, tiles(-0.1))
+        sleep(250)
 
         // Spin and park
-        Encoders.spinTo2(pickTeam(90.0, -90.0))
-        Encoders.driveTo2(
-            forward,
-            tiles(1) +
-                when (cubePosition) {
-                    CubeVision.CubePlacement.Left -> 6.0
-                    CubeVision.CubePlacement.Center -> 0.0
-                    CubeVision.CubePlacement.Right -> -6.0
-                },
-        )
+        Encoders.strafeTo(Encoders.Direction.Right, 24.0)
         // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
 
         // Put hook back in resting position
@@ -122,6 +200,35 @@ abstract class AutoMain : LinearOpMode() {
         when (team) {
             Team.Red -> red
             Team.Blue -> blue
+        }
+
+    private fun <P> pickPosition(
+        front: P,
+        back: P,
+    ): P =
+        when (position) {
+            Position.Front -> front
+            Position.Back -> back
+        }
+
+    private fun <L> pickPark(
+        left: L,
+        center: L,
+        right: L,
+    ): L =
+        when (park) {
+            Park.Left -> left
+            Park.Center -> center
+            Park.Right -> right
+        }
+
+    private fun <R> pickTruss(
+        big: R,
+        small: R,
+    ): R =
+        when (truss) {
+            Truss.Big -> big
+            Truss.Small -> small
         }
 }
 
