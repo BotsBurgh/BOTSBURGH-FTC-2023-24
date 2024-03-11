@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.api.LinearSlide
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
-import org.firstinspires.ftc.teamcode.utils.Team
+import org.firstinspires.ftc.teamcode.utils.auto.Team
 
 abstract class JankAuto : LinearOpMode() {
     abstract val team: Team
