@@ -94,18 +94,45 @@ abstract class AutoMain : LinearOpMode() {
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
+        // Move hook to upright position
+
+
         // Drive to spike tile and turn
         when (cubePosition) {
             CubeVision.CubePlacement.Left -> {
 
-                Encoders.driveTo2(forward, tiles(1) + 4.0)
-                //turn towards pike
-                Encoders.spinTo2(pickTeam(-90.0, 90.0))
-                Encoders.driveTo2(forward, 12.0)
-                //back up and face backdrop
-                Encoders.driveTo(forward, -24.0)
-                sleep(250)
-                Encoders.spinTo(180.0)
+                when (position) {
+                    Position.Back -> {
+                        Hook.moveHook(0.5)
+                        sleep(400)
+                        Hook.stop()
+                        Encoders.driveTo2(forward, tiles(1) + 4.0)
+                        //turn towards pike
+                        Encoders.spinTo2(pickTeam(-90.0, 90.0))
+                        Encoders.driveTo(forward, 10.0)
+                        Hook.moveHook(-0.5)
+                        sleep(400)
+                        Hook.stop()
+                        //back up and face backdrop
+                        Encoders.driveTo2(forward, -tiles(1))
+                        sleep(250)
+                        Encoders.spinTo(180.0)
+                    }
+
+                    Position.Front -> {
+                        Encoders.driveTo2(forward, tiles(1) + 8.0)
+                        //turn towards pike
+                        Encoders.spinTo2(pickTeam(-95.0, 95.0))
+                        Encoders.driveTo(forward, 8.0)
+                        Hook.moveHook(-0.5)
+                        sleep(400)
+                        Hook.stop()
+                        //back up and face backdrop
+                        Encoders.driveTo(forward, -tiles(3))
+                        sleep(250)
+                        Encoders.spinTo2(180.0)
+                    }
+                }
             }
             CubeVision.CubePlacement.Center -> {
 
@@ -143,17 +170,15 @@ abstract class AutoMain : LinearOpMode() {
             }
         }
 
-        // Move hook to upright position
+
+
         Hook.moveHook(0.5)
         sleep(400)
         Hook.stop()
 
-        // Drive forward a bit so april tags are visible
-        //Encoders.driveTo(forward, tiles(1))
-
         // Drive to april tag
         Vision.optimizeForAprilTags()
-        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 4.0)
+        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 5.0)
         Vision.close()
 
         // Slam against backboard, getting as close as possible
