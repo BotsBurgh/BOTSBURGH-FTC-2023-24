@@ -122,7 +122,7 @@ abstract class AutoMain : LinearOpMode() {
                                 //Back Stage Blue Left
                                 Encoders.driveTo2(forward, tiles(1) + 4.0)
                                 //turn towards spike
-                                Encoders.spinTo( -90.0)
+                                Encoders.spinTo(-90.0)
                                 Encoders.driveTo(forward, 10.0)
                                 Encoders.driveTo(forward, -3.0)
                                 Encoders.strafeTo(left, 10.0)
@@ -140,11 +140,12 @@ abstract class AutoMain : LinearOpMode() {
                                 //turn towards pike
                                 Encoders.spinTo2(pickTeam(-95.0, 95.0))
                                 Encoders.driveTo(forward, 8.0)
-                                Hook.moveHook(-0.5)
-                                sleep(400)
-                                Hook.stop()
                                 //back up and face backdrop
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
+                                sleep(250)
                                 Encoders.driveTo(forward, -tiles(3))
+                                sleep(250)
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(12.0, 12.0))
                                 sleep(250)
                                 Encoders.spinTo2(180.0)
                             }
