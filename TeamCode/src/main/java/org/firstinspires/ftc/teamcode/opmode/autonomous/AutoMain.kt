@@ -59,7 +59,7 @@ abstract class AutoMain : LinearOpMode() {
             telemetry.addData("Truss", truss)
 
 
-            //change statring position using a/b
+            //change starting position using a/b
             if (gamepad1.a) {
                 position = Position.Front
             } else if (gamepad1.b) {
@@ -94,46 +94,69 @@ abstract class AutoMain : LinearOpMode() {
 
         sleep(RobotConfig.AutoMain.WAIT_TIME)
 
-        // Move hook to upright position
-
-
-        // Drive to spike tile and turn
+        // Drive to spike tile and position in-front of back drop
         when (cubePosition) {
             CubeVision.CubePlacement.Left -> {
-
                 when (position) {
                     Position.Back -> {
-                        Hook.moveHook(0.5)
-                        sleep(400)
-                        Hook.stop()
-                        Encoders.driveTo2(forward, tiles(1) + 4.0)
-                        //turn towards pike
-                        Encoders.spinTo2(pickTeam(-90.0, 90.0))
-                        Encoders.driveTo(forward, 10.0)
-                        Hook.moveHook(-0.5)
-                        sleep(400)
-                        Hook.stop()
-                        //back up and face backdrop
-                        Encoders.driveTo2(forward, -tiles(1))
-                        sleep(250)
-                        Encoders.spinTo(180.0)
+                        when (team) {
+                            Team.Red -> {
+                                //Back Stage Red Left
+                                Hook.moveHook(0.5)
+                                sleep(400)
+                                Hook.stop()
+                                Encoders.driveTo2(forward, tiles(1) + 4.0)
+                                //turn towards spike
+                                Encoders.spinTo2(pickTeam(-90.0, 90.0))
+                                Encoders.driveTo(forward, 10.0)
+                                Hook.moveHook(-0.5)
+                                sleep(400)
+                                Hook.stop()
+                                //back up and face backdrop
+                                Encoders.driveTo2(forward, tiles(-1))
+                                sleep(250)
+                                Encoders.spinTo(180.0)
+                            }
+
+                            Team.Blue -> {
+                                //Back Stage Blue Left
+                                Encoders.driveTo2(forward, tiles(1) + 4.0)
+                                //turn towards spike
+                                Encoders.spinTo( -90.0)
+                                Encoders.driveTo(forward, 10.0)
+                                Encoders.driveTo(forward, -3.0)
+                                Encoders.strafeTo(left, 10.0)
+                                Encoders.driveTo2(forward, tiles(1))
+                                Encoders.strafeTo(right, 10.0)
+                            }
+                        }
                     }
 
                     Position.Front -> {
-                        Encoders.driveTo2(forward, tiles(1) + 8.0)
-                        //turn towards pike
-                        Encoders.spinTo2(pickTeam(-95.0, 95.0))
-                        Encoders.driveTo(forward, 8.0)
-                        Hook.moveHook(-0.5)
-                        sleep(400)
-                        Hook.stop()
-                        //back up and face backdrop
-                        Encoders.driveTo(forward, -tiles(3))
-                        sleep(250)
-                        Encoders.spinTo2(180.0)
+                        when (team) {
+                            Team.Red -> {
+                                //Front Stage Red Left
+                                Encoders.driveTo2(forward, tiles(1) + 8.0)
+                                //turn towards pike
+                                Encoders.spinTo2(pickTeam(-95.0, 95.0))
+                                Encoders.driveTo(forward, 8.0)
+                                Hook.moveHook(-0.5)
+                                sleep(400)
+                                Hook.stop()
+                                //back up and face backdrop
+                                Encoders.driveTo(forward, -tiles(3))
+                                sleep(250)
+                                Encoders.spinTo2(180.0)
+                            }
+
+                            Team.Blue -> {
+                                //Front Stage Blue Left
+                            }
+                        }
                     }
                 }
             }
+
             CubeVision.CubePlacement.Center -> {
 
                 Encoders.spinTo(pickTeam(10.0, -10.0))
@@ -147,25 +170,80 @@ abstract class AutoMain : LinearOpMode() {
                         //Back Stage movement
                         Encoders.driveTo(forward, tiles(1))
                     }
+
                     Position.Front -> {
                         //Front Stage movement
+                        Encoders.driveTo(forward, tiles(3))
                     }
                 }
 
             }
-            CubeVision.CubePlacement.Right -> {
 
-                Encoders.driveTo(forward, 2.0)
+            CubeVision.CubePlacement.Right -> {
+                when (position) {
+                    Position.Back -> {
+                        when (team) {
+                            Team.Red -> {
+                                //Back Stage Right Red
+                            }
+
+                            Team.Blue -> {
+                                //Back Stage Right Blue
+                            }
+                        }
+                    }
+
+                    Position.Front -> {
+                        when (team) {
+                            Team.Red -> {
+                                //Front Stage Right Red
+                                Encoders.driveTo(forward, 2.0)
+                                sleep(250)
+                                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
+                                sleep(250)
+                                //drive towards spike
+                                Encoders.driveTo(forward, tiles(1))
+                                Encoders.driveTo(forward, -2.0)
+                                //strafe towards backdrop
+                                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
+                                //turn towards backdrop
+                                Encoders.spinTo(pickTeam(90.0, -90.0))
+                            }
+
+                            Team.Blue -> {
+                                //Front Stage Right Blue
+                                Encoders.driveTo2(forward, tiles(1) + 8.0)
+                                //turn towards pike
+                                Encoders.spinTo2(pickTeam(-95.0, 95.0))
+                                Encoders.driveTo(forward, 8.0)
+                                Hook.moveHook(-0.5)
+                                sleep(400)
+                                Hook.stop()
+                                //back up and face backdrop
+                                Encoders.driveTo(forward, -tiles(3))
+                                sleep(250)
+                                Encoders.spinTo2(180.0)
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+                Encoders.driveTo2(forward, tiles(1) + 8.0)
+                //turn towards spike
+                Encoders.spinTo2(pickTeam(-95.0, 95.0))
+                Encoders.driveTo(forward, 8.0)
+                Hook.moveHook(-0.5)
+                sleep(400)
+                Hook.stop()
+                //back up and face backdrop
+                Encoders.driveTo(forward, -tiles(3))
                 sleep(250)
-                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
-                sleep(250)
-                //drive towards spike
-                Encoders.driveTo(forward, tiles(1))
-                Encoders.driveTo(forward, -2.0)
-                //strafe towards backdrop
-                Encoders.strafeTo(pickTeam(right, left), tiles(0.5))
-                //turn towards backdrop
-                Encoders.spinTo(pickTeam(90.0, -90.0))
+                Encoders.spinTo2(180.0)
+
 
             }
         }
