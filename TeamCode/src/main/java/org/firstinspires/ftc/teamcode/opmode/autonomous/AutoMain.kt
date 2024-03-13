@@ -152,6 +152,14 @@ abstract class AutoMain : LinearOpMode() {
 
                             Team.Blue -> {
                                 //Front Stage Blue Left
+                                Encoders.driveTo2(forward, tiles(1) + 4.0)
+                                //turn towards spike
+                                Encoders.spinTo(-90.0)
+                                Encoders.driveTo(forward, 10.0)
+                                Encoders.driveTo(forward, -3.0)
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(10.0, 10.0))
+                                Encoders.driveTo2(forward, tiles(3))
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(10.0, 10.0))
                             }
                         }
                     }
