@@ -182,7 +182,19 @@ abstract class AutoMain : LinearOpMode() {
 
                     Position.Front -> {
                         //Front Stage movement
-                        Encoders.driveTo(forward, tiles(3))
+                        when (team) {
+                            Team.Red -> {
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(12.0, 12.0))
+                                Encoders.driveTo(forward, tiles(3))
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
+                            }
+
+                            Team.Blue -> {
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
+                                Encoders.driveTo(forward, tiles(3))
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(12.0, 12.0))
+                            }
+                        }
                     }
                 }
 
