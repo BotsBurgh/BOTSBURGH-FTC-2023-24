@@ -30,8 +30,13 @@ abstract class AutoMain : LinearOpMode() {
     private val left = Encoders.Direction.Left
     private val right = Encoders.Direction.Right
 
+
     /** The length and width of a tile in inches. */
     private val tileSize = 24.0
+
+    private var backOffset = 0.0
+
+
 
     override fun runOpMode() {
         Telemetry.init(this)
@@ -97,6 +102,7 @@ abstract class AutoMain : LinearOpMode() {
         // Drive to spike tile and position in-front of back drop
         when (cubePosition) {
             CubeVision.CubePlacement.Left -> {
+                backOffset = pickPark(8.0, 0.0, 12.0)
                 when (position) {
                     Position.Back -> {
                         when (team) {
@@ -138,6 +144,7 @@ abstract class AutoMain : LinearOpMode() {
                                 Hook.moveHook(-0.5)
                                 sleep(400)
                                 Hook.stop()
+                                Encoders.spinTo(10.0)
                             }
                         }
                     }
@@ -177,18 +184,19 @@ abstract class AutoMain : LinearOpMode() {
             }
 
             CubeVision.CubePlacement.Center -> {
+                backOffset = pickPark(24.0, 0.0, 6.0)
 
                 Encoders.spinTo(pickTeam(10.0, 10.0))
                 sleep(100)
-                Encoders.driveTo2(forward, tiles(1.75))
+                Encoders.driveTo2(forward, tiles(1.8))
                 Encoders.driveTo(forward, -6.0)
-                sleep(250)
+                sleep(100)
                 Encoders.spinTo2(pickTeam(90.0, -90.0))
 
                 when (position) {
                     Position.Back -> {
                         //Back Stage movement
-                        Encoders.driveTo(forward, tiles(1))
+                        Encoders.driveTo(forward, tiles(0.75))
                     }
 
                     Position.Front -> {
@@ -212,6 +220,7 @@ abstract class AutoMain : LinearOpMode() {
             }
 
             CubeVision.CubePlacement.Right -> {
+                backOffset = pickPark(12.0, 0.0, 4.0)
                 when (position) {
                     Position.Back -> {
                         when (team) {
@@ -290,11 +299,11 @@ abstract class AutoMain : LinearOpMode() {
         Vision.close()
 
         //Move right slightly
-        Encoders.strafeTo(right, 1.0)
+        //Encoders.strafeTo(right, 0.5 )
 
         // Slam against backboard, getting as close as possible
         TriWheels.drive(PI / 2.0, 0.4)
-        sleep(500)
+        sleep(1000)
         TriWheels.stop()
 
         // Place pixel
@@ -303,13 +312,17 @@ abstract class AutoMain : LinearOpMode() {
         PixelPlacer.reset()
 
         // Back up a bit
-        Encoders.driveTo(forward, tiles(-0.1))
+        Encoders.driveTo(forward, -3.0)
         sleep(250)
 
         // Spin and park
-        Encoders.strafeTo(Encoders.Direction.Right, 24.0)
+        Encoders.strafeTo(pickPark(left, left, right), pickPark(
+            12.0 + backOffset,
+            0.0,
+            12.0 + backOffset,
+        ))
         // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
-
+        Encoders.driveTo(forward, 3.0)
         // Put hook back in resting position
         Hook.moveHook(-0.5)
         sleep(400)
