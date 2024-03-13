@@ -226,7 +226,7 @@ object RobotConfig {
         var DEFAULT_POSITION = 0.45
 
         @JvmField
-        var PLACE_POSITION = 0.85
+        var PLACE_POSITION = 0.9
     }
 
     @Config
