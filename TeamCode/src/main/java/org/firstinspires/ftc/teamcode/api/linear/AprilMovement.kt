@@ -36,6 +36,8 @@ object AprilMovement : API() {
         var headingError = Double.MAX_VALUE
         var strafeError = Double.MAX_VALUE
 
+        var time = System.currentTimeMillis()
+
         // Drive while opmode is active and target has not been reached
         while (
             opModeIsActive() &&
@@ -51,6 +53,11 @@ object AprilMovement : API() {
             // Try scanning for the april tag
             val tag = AprilVision.detect(tagId)
 
+            // Stop if runtime is more than 7 seconds
+            if (System.currentTimeMillis() - time > 9000) {
+                break
+            }
+
             // If no tag of the expected ID is found
             if (tag == null) {
                 // Stop moving, hoping that the tag will be scanned
@@ -62,6 +69,7 @@ object AprilMovement : API() {
                 }
 
                 sleep(100)
+
 
                 continue
             }
