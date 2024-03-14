@@ -254,6 +254,26 @@ abstract class AutoMain : LinearOpMode() {
                         when (team) {
                             Team.Red -> {
                                 //Back Stage Right Red
+
+                                Encoders.driveTo2(forward, tiles(1) + 8.0)
+                                Hook.moveHook(0.5)
+                                sleep(400)
+                                Hook.stop()
+                                //turn towards spike
+                                Encoders.spinTo2(90.0)
+                                Encoders.driveTo(forward, 8.0)
+                                Encoders.driveTo(forward, -3.0)
+                                checkSleep(sleepBack)
+                                sleep(100)
+                                Encoders.strafeTo(right, 10.0)
+                                sleep(100)
+                                Encoders.driveTo(forward, tiles(1))
+                                sleep(100)
+                                Encoders.strafeTo(left, tiles(0.5))
+                                Hook.moveHook(-0.5)
+                                sleep(400)
+                                Hook.stop()
+                                Encoders.spinTo(-10.0)
                             }
 
                             Team.Blue -> {
