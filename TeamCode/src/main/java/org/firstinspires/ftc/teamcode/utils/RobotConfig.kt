@@ -172,10 +172,10 @@ object RobotConfig {
     @Config
     object Drone {
         @JvmField
-        var OPEN_PIN: Double = 0.05
+        var OPEN_PIN: Double = 0.0
 
         @JvmField
-        var CLOSE_PIN: Double = 0.4
+        var CLOSE_PIN: Double = 0.175
     }
 
     /** Configuration related to the CubeVision API. */
