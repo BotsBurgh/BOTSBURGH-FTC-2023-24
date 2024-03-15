@@ -67,9 +67,7 @@ object AprilMovement : API() {
                     addData("Status", "Tag not found")
                     update()
                 }
-                if (System.currentTimeMillis() - time < 4000) {
-                    Encoders.spinTo(5.0)
-                }
+
 
                 sleep(100)
 
