@@ -196,8 +196,8 @@ abstract class AutoMain : LinearOpMode() {
                                 Encoders.driveTo(forward, 11.0)
                                 Encoders.driveTo(forward, -3.0)
                                 checkSleep(sleepFront)
-                                Encoders.strafeTo(pickTruss(right, left), pickTruss(28.0, 20.0))
-                                sleep(100)
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(28.0, 21.0))
+                                sleep(500)
                                 Encoders.driveTo(forward, tiles(3))
                                 sleep(100)
                                 Encoders.strafeTo(pickTruss(left, right), pickTruss(28.0, 20.0))
@@ -214,9 +214,9 @@ abstract class AutoMain : LinearOpMode() {
                 //Encoders.spinTo(pickTeam(8.0, 10.0))
                 sleep(100)
                 Encoders.driveTo2(forward, tiles(1.6))
-                Encoders.driveTo(forward, -6.0)
+                Encoders.driveTo(forward, -7.0)
                 sleep(100)
-                Encoders.spinTo2(pickTeam(95.0, -90.0))
+                Encoders.spinTo2(pickTeam(95.0, -95.0))
 
                 when (position) {
                     Position.Back -> {
@@ -236,9 +236,7 @@ abstract class AutoMain : LinearOpMode() {
 
                             Team.Blue -> {
                                 checkSleep(sleepFront)
-                                Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
                                 Encoders.driveTo(forward, tiles(3))
-                                Encoders.strafeTo(pickTruss(left, right), pickTruss(12.0, 12.0))
                                 checkSleep(sleepBack)
                             }
                         }
@@ -326,11 +324,11 @@ abstract class AutoMain : LinearOpMode() {
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 //turn towards pike
                                 Encoders.spinTo2(pickTeam(-95.0, 90.0))
-                                Encoders.driveTo(forward, 6.0)
+                                Encoders.driveTo(forward, 4.0)
                                 Hook.moveHook(-0.5)
                                 sleep(400)
                                 Hook.stop()
-                                Encoders.driveTo(forward, -1.0)
+                                Encoders.driveTo(forward, -6.0)
                                 Encoders.strafeTo(right, 2.0)
                                 checkSleep(sleepFront)
                                 //back up and face backdrop
@@ -437,7 +435,7 @@ abstract class AutoMain : LinearOpMode() {
 
     private fun checkSleep(b: Boolean) {
         if (b) {
-            sleep(7000)
+            sleep(1300)
         }
     }
 }

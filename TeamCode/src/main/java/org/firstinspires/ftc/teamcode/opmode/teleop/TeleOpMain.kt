@@ -4,9 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.Drone
 import org.firstinspires.ftc.teamcode.api.Hook
+import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
+import org.firstinspires.ftc.teamcode.utils.opModeSleep
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -20,7 +22,11 @@ class TeleOpMain : OpMode() {
         TriWheels.init(this)
         Hook.init(this)
         Drone.init(this)
-        // PixelPlacer.init(this)
+        PixelPlacer.init(this)
+
+        PixelPlacer.place()
+        opModeSleep(this)(500)
+        PixelPlacer.reset()
 
         // Log that we are initialized
         Telemetry.sayInitialized()
