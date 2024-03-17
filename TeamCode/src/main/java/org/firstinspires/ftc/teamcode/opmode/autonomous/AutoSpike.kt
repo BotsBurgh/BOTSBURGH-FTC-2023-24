@@ -2,11 +2,10 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
-import org.firstinspires.ftc.teamcode.utils.Team
+import org.firstinspires.ftc.teamcode.utils.auto.Team
 
 abstract class AutoSpike : LinearOpMode() {
     abstract val team: Team
@@ -22,8 +21,6 @@ abstract class AutoSpike : LinearOpMode() {
         Telemetry.sayInitialized()
 
         waitForStart()
-
-        val runtime = ElapsedTime()
 
         Telemetry.sayStarted()
 

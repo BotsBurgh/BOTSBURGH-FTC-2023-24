@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.api.linear
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.PIDCoefficients
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
@@ -68,8 +67,6 @@ object Encoders : API() {
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
 
-            val runtime = ElapsedTime()
-
             while (
                 abs(leftTarget - left.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
                 abs(rightTarget - right.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
@@ -128,17 +125,12 @@ object Encoders : API() {
         TriWheels.blue.targetPosition = ticks
 
         try {
-            val runtime = ElapsedTime()
-
             while (
                 TriWheels.red.isBusy &&
                 TriWheels.green.isBusy &&
                 TriWheels.blue.isBusy &&
                 linearOpMode.opModeIsActive()
             ) {
-                // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
-
                 TriWheels.rotate(
                     RobotConfig.Encoders.MAX_SPIN_SPEED,
                 )
