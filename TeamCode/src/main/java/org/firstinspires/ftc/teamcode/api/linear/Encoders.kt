@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.api.linear
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.PIDCoefficients
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders.driveTo
@@ -12,7 +11,6 @@ import org.firstinspires.ftc.teamcode.utils.MotorController
 import org.firstinspires.ftc.teamcode.utils.MotorControllerGroup
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
-import kotlin.math.min
 
 /**
  * An API for manipulating wheels using encoders.
@@ -58,36 +56,24 @@ object Encoders : API() {
         val leftTarget = left.currentPosition + ticks
         val rightTarget = right.currentPosition + ticks
 
+        val d: Int =
+            if (inches > 0) {
+                1
+            } else {
+                -1
+            }
+
         // Set left direction to reverse, undoing it at the end even if an exception is thrown
         try {
             right.direction = DcMotorSimple.Direction.REVERSE
-
-            val runtime = ElapsedTime()
 
             while (
                 abs(leftTarget - left.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
                 abs(rightTarget - right.currentPosition) > RobotConfig.Encoders.ENCODER_ERROR &&
                 linearOpMode.opModeIsActive()
             ) {
-                // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
-
-                left.power =
-                    min(
-                        min(
-                            (leftTarget - left.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
-                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
-                    )
-                right.power =
-                    min(
-                        min(
-                            (rightTarget - right.currentPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
-                        RobotConfig.Encoders.MAX_DRIVE_SPEED,
-                    )
+                left.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
+                right.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
@@ -139,25 +125,14 @@ object Encoders : API() {
         TriWheels.blue.targetPosition = ticks
 
         try {
-            val runtime = ElapsedTime()
-
             while (
                 TriWheels.red.isBusy &&
                 TriWheels.green.isBusy &&
                 TriWheels.blue.isBusy &&
                 linearOpMode.opModeIsActive()
             ) {
-                // Accelerate the longer the robot has been running
-                val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
-
                 TriWheels.rotate(
-                    min(
-                        min(
-                            abs(TriWheels.red.currentPosition - TriWheels.red.targetPosition) * RobotConfig.Encoders.ENCODER_GAIN,
-                            timeSpeed,
-                        ),
-                        RobotConfig.Encoders.MAX_SPIN_SPEED,
-                    ),
+                    RobotConfig.Encoders.MAX_SPIN_SPEED,
                 )
 
                 with(linearOpMode.telemetry) {
@@ -183,6 +158,39 @@ object Encoders : API() {
         } finally {
             TriWheels.stopAndResetMotors()
         }
+    }
+
+    /**
+     * strafeTo is a robust and experimental function that allows strafing towards pi/2 and
+     * 3pi/2 using encoders. This function will be replaced by moveTo which will have no
+     * restrictions on direction.
+     */
+    fun strafeTo(
+        direction: Direction,
+        inches: Double,
+    ) {
+        TriWheels.stopAndResetMotors()
+
+        val (left, right, back) = this.defineWheels(direction)
+        val ticks = this.inchesToTick(inches)
+        val d: Int
+
+        if (direction == Direction.Left) {
+            d = 1
+            while (back.currentPosition > -ticks && linearOpMode.opModeIsActive()) {
+                left.power = 0.09 * d
+                right.power = 0.09 * d
+                back.power = -0.18 * d
+            }
+        } else {
+            d = -1
+            while (back.currentPosition < ticks && linearOpMode.opModeIsActive()) {
+                left.power = 0.09 * d
+                right.power = 0.09 * d
+                back.power = -0.18 * d
+            }
+        }
+        TriWheels.stopAndResetMotors()
     }
 
     fun driveTo2(
@@ -286,6 +294,8 @@ object Encoders : API() {
             Direction.Red -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
             Direction.Green -> Triple(TriWheels.red, TriWheels.blue, TriWheels.green)
             Direction.Blue -> Triple(TriWheels.green, TriWheels.red, TriWheels.blue)
+            Direction.Left -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
+            Direction.Right -> Triple(TriWheels.blue, TriWheels.green, TriWheels.red)
         }
 
     /**
@@ -297,5 +307,7 @@ object Encoders : API() {
         Red,
         Green,
         Blue,
+        Left,
+        Right,
     }
 }

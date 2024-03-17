@@ -69,13 +69,13 @@ object RobotConfig {
          * The maximum power a wheel can spin at when the robot is driving with encoders.
          */
         @JvmField
-        var MAX_DRIVE_SPEED: Double = 0.3
+        var MAX_DRIVE_SPEED: Double = 0.25
 
         /**
          * The maximum power a wheel can spin at when the robot spinning with encoders.
          */
         @JvmField
-        var MAX_SPIN_SPEED: Double = 0.4
+        var MAX_SPIN_SPEED: Double = 0.2
 
         /**
          * A multiplier that calculates the power of the wheel relative to the amount of time that
@@ -124,7 +124,7 @@ object RobotConfig {
          * This will only be applied if `Vision.optimizeForAprilTags` is called.
          */
         @JvmField
-        var OPTIMUM_EXPOSURE: Long = 3
+        var OPTIMUM_EXPOSURE: Long = 10
 
         /**
          * Sets the gain that should be used when scanning april tags.
@@ -161,23 +161,23 @@ object RobotConfig {
     @Config
     object Drone {
         @JvmField
-        var OPEN_PIN: Double = 0.05
+        var OPEN_PIN: Double = 0.0
 
         @JvmField
-        var CLOSE_PIN: Double = 0.4
+        var CLOSE_PIN: Double = 0.175
     }
 
     /** Configuration related to the CubeVision API. */
     @Config
     object CubeVision {
         @JvmField
-        var LEFT_REGION = Rect(50, 285, 75, 75)
+        var LEFT_REGION = Rect(0, 230, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(295, 265, 75, 75)
+        var CENTER_REGION = Rect(260, 212, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(510, 275, 75, 75)
+        var RIGHT_REGION = Rect(480, 210, 75, 75)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.5, -0.5)
@@ -192,7 +192,7 @@ object RobotConfig {
         var DEFAULT_POSITION = 0.45
 
         @JvmField
-        var PLACE_POSITION = 0.85
+        var PLACE_POSITION = 0.9
     }
 
     @Config
