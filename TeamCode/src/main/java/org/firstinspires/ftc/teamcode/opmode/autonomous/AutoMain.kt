@@ -21,10 +21,10 @@ import kotlin.math.PI
 
 abstract class AutoMain : LinearOpMode() {
     abstract val team: Team
-    private var position = Position.Back
+    private var position = Position.Front
     private var park = Park.Right
-    private var truss = Truss.Big
-    private var sleepFront = false
+    private var truss = Truss.Small
+    private var sleepFront = true
     private var sleepBack = false
 
     /** The axis the robot should move along. */
@@ -175,7 +175,7 @@ abstract class AutoMain : LinearOpMode() {
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 //turn towards pike
                                 Encoders.spinTo2(pickTeam(-95.0, 95.0))
-                                Encoders.driveTo(forward, 8.0)
+                                Encoders.driveTo(forward, 10.0)
                                 checkSleep(sleepFront)
                                 //back up and face backdrop
                                 Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
@@ -193,12 +193,14 @@ abstract class AutoMain : LinearOpMode() {
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 //turn towards spike
                                 Encoders.spinTo(-90.0)
-                                Encoders.driveTo(forward, 10.0)
+                                Encoders.driveTo(forward, 11.0)
                                 Encoders.driveTo(forward, -3.0)
                                 checkSleep(sleepFront)
-                                Encoders.strafeTo(pickTruss(right, left), pickTruss(10.0, 10.0))
-                                Encoders.driveTo2(forward, tiles(3))
-                                Encoders.strafeTo(pickTruss(left, right), pickTruss(10.0, 10.0))
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(28.0, 20.0))
+                                sleep(100)
+                                Encoders.driveTo(forward, tiles(3))
+                                sleep(100)
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(28.0, 20.0))
                                 checkSleep(sleepBack)
                             }
                         }
@@ -209,9 +211,9 @@ abstract class AutoMain : LinearOpMode() {
             CubeVision.CubePlacement.Center -> {
                 backOffset = pickPark(8.0, 0.0, 8.0)
 
-                Encoders.spinTo(pickTeam(8.0, 10.0))
+                //Encoders.spinTo(pickTeam(8.0, 10.0))
                 sleep(100)
-                Encoders.driveTo2(forward, tiles(1.8))
+                Encoders.driveTo2(forward, tiles(1.6))
                 Encoders.driveTo(forward, -6.0)
                 sleep(100)
                 Encoders.spinTo2(pickTeam(95.0, -90.0))
@@ -228,9 +230,7 @@ abstract class AutoMain : LinearOpMode() {
                         when (team) {
                             Team.Red -> {
                                 checkSleep(sleepFront)
-                                Encoders.strafeTo(pickTruss(left, right), pickTruss(12.0, 12.0))
                                 Encoders.driveTo(forward, tiles(3))
-                                Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
                                 checkSleep(sleepBack)
                             }
 
@@ -305,28 +305,33 @@ abstract class AutoMain : LinearOpMode() {
                         when (team) {
                             Team.Red -> {
                                 //Front Stage Right Red
+                                Encoders.spinTo(-10.0)
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 //turn towards spike
-                                Encoders.spinTo(-90.0)
+                                Encoders.spinTo2(90.0)
                                 sleep(100)
-                                Encoders.driveTo(forward, 10.0)
-                                Encoders.driveTo(forward, -3.0)
+                                Encoders.driveTo(forward, 8.0)
+                                sleep(250)
+                                Encoders.driveTo(forward, -8.0)
                                 checkSleep(sleepFront)
-                                Encoders.strafeTo(pickTruss(right, left), pickTruss(10.0, 10.0))
+                                Encoders.strafeTo(pickTruss(left, right), pickTruss(10.0, 20.0))
                                 Encoders.driveTo2(forward, tiles(3))
-                                Encoders.strafeTo(pickTruss(left, right), pickTruss(10.0, 10.0))
+                                Encoders.strafeTo(pickTruss(right, left), pickTruss(10.0, 10.0))
                                 checkSleep(sleepBack)
+                                Encoders.strafeTo(left, 24.0)
                             }
 
                             Team.Blue -> {
                                 //Front Stage Right Blue
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 //turn towards pike
-                                Encoders.spinTo2(pickTeam(-95.0, 95.0))
-                                Encoders.driveTo(forward, 8.0)
+                                Encoders.spinTo2(pickTeam(-95.0, 90.0))
+                                Encoders.driveTo(forward, 6.0)
                                 Hook.moveHook(-0.5)
                                 sleep(400)
                                 Hook.stop()
+                                Encoders.driveTo(forward, -1.0)
+                                Encoders.strafeTo(right, 2.0)
                                 checkSleep(sleepFront)
                                 //back up and face backdrop
                                 Encoders.driveTo(forward, -tiles(3))
@@ -432,7 +437,7 @@ abstract class AutoMain : LinearOpMode() {
 
     private fun checkSleep(b: Boolean) {
         if (b) {
-            sleep(5000)
+            sleep(7000)
         }
     }
 }

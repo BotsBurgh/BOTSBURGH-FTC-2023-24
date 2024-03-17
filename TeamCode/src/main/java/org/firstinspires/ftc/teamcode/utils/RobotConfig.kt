@@ -185,10 +185,10 @@ object RobotConfig {
         var LEFT_REGION = Rect(0, 230, 75, 75)
 
         @JvmField
-        var CENTER_REGION = Rect(290, 212, 75, 75)
+        var CENTER_REGION = Rect(260, 212, 75, 75)
 
         @JvmField
-        var RIGHT_REGION = Rect(560, 230, 75, 75)
+        var RIGHT_REGION = Rect(480, 210, 75, 75)
 
         @JvmField
         var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
