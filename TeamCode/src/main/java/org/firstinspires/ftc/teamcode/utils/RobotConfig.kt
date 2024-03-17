@@ -3,29 +3,21 @@
 package org.firstinspires.ftc.teamcode.utils
 
 import com.acmerobotics.dashboard.config.Config
-import org.firstinspires.ftc.teamcode.utils.RobotConfig.model
+import org.firstinspires.ftc.teamcode.utils.RobotConfig.debug
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
 
 /**
  * This is an immutable object representing robot configuration.
  *
- * It is meant to orchestrate FTC Dashboard and other configuration together, as well as enable the
- * use of multiple different robots with the same code. (See [model].)
+ * It is meant to orchestrate FTC Dashboard and other configuration together.
  *
  * Certain sub-objects are annotated with `@Config`. This designates them as FTC Dashboard
- * configuration that can be modified at runtime. **The permanently change these values, you must
- * also modify the code!** The configuration can also change during initialization depending on the
- * [model] of the robot and other values.
+ * configuration that can be modified at runtime. **To permanently change these values, you must
+ * also modify the code!** The configuration can also change during initialization depending on
+ * various build constants like [debug].
  */
 object RobotConfig {
-    /**
-     * Which model of the robot is running the code.
-     *
-     * @see Model
-     */
-    val model: Model = Model.MiniRobot
-
     /**
      * When true, enables debugging features like camera streaming and more logs.
      *
@@ -34,12 +26,9 @@ object RobotConfig {
     const val debug: Boolean = true
 
     /**
-     * Creates a string representing the current robot configuration.
-     *
-     * This should include all standalone properties like [model] and [debug], but should not
-     * contain any FTC Dashboard configuration due to how much more complicated they are.
+     * Creates a string representing the current robot build constants.
      */
-    override fun toString() = "RobotConfig(model=$model, debug=$debug)"
+    override fun toString() = "RobotConfig(debug=$debug)"
 
     /** Configuration related to moving the wheels using encoders. */
     @Config
@@ -48,11 +37,11 @@ object RobotConfig {
          * How many ticks a wheel needs to rotate for the robot to travel an inch when moving along
          * one of it's three axis.
          *
-         * This value was calculated by guessing and checking, and may be further changed to
-         * increase accuracy.
+         * This value was calculated by getting the encoder resolution and dividing by the wheels
+         * circumference.
          */
         @JvmField
-        var TICKS_PER_INCH: Double = 15.5
+        var TICKS_PER_INCH: Double = 145.1 / (1.5 * 2 * Math.PI)
 
         /**
          * How many ticks a wheel needs to rotate for the robot to spin a single degree.
@@ -191,33 +180,10 @@ object RobotConfig {
         var RIGHT_REGION = Rect(480, 210, 75, 75)
 
         @JvmField
-        var RED_WEIGHT = Scalar(1.0, -0.2, -0.2)
+        var RED_WEIGHT = Scalar(1.0, -0.5, -0.5)
 
         @JvmField
-        var BLUE_WEIGHT = Scalar(-0.2, -0.2, 1.0)
-    }
-
-    /** Configuration related to Claw API. **/
-    @Config
-    @Deprecated(message = "Claw is deprecated")
-    object Claw {
-        @JvmField
-        var OPEN_POSITION_LEFT = 1.0
-
-        @JvmField
-        var CLOSE_POSITION_LEFT = 0.5
-
-        @JvmField
-        var OPEN_POSITION_RIGHT = 0.8
-
-        @JvmField
-        var CLOSE_POSITION_RIGHT = 0.45
-
-        @JvmField
-        var UP_POSITION = 0.82
-
-        @JvmField
-        var DOWN_POSITION = 0.45
+        var BLUE_WEIGHT = Scalar(-0.5, -0.5, 1.0)
     }
 
     @Config
@@ -231,29 +197,10 @@ object RobotConfig {
 
     @Config
     object MotorController {
-        // @JvmField
-        // var pid = PIDCoefficients(0.0004, 0.0000000125, 0.0)
+        @JvmField
+        var POWER_LIMIT = 1.0
 
         @JvmField
-        var powerLimit = 1.0
-
-        @JvmField
-        var iLimit = 0.1
-    }
-
-    /**
-     * Represents what model of robot is running the code.
-     *
-     * @see model
-     */
-    enum class Model {
-        /** This year's small triangle robot. */
-        MiniRobot,
-
-        /** This year's triangle robot. */
-        RobotA,
-
-        /** Last year's triangle robot. */
-        RobotB,
+        var I_LIMIT = 0.1
     }
 }

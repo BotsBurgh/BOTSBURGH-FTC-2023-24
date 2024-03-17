@@ -44,11 +44,11 @@ class MotorController(
         i += pid.i * currentError * (currentTime - previousTime)
 
         // Clamp between [-MAX_I, MAX_I]
-        i = max(min(i, RobotConfig.MotorController.iLimit), -RobotConfig.MotorController.iLimit)
+        i = max(min(i, RobotConfig.MotorController.I_LIMIT), -RobotConfig.MotorController.I_LIMIT)
 
         val d = pid.d * (currentError - previousError) / (currentTime - previousTime)
 
-        motor.power = max(min(p + i + d, RobotConfig.MotorController.powerLimit), -RobotConfig.MotorController.powerLimit)
+        motor.power = max(min(p + i + d, RobotConfig.MotorController.POWER_LIMIT), -RobotConfig.MotorController.POWER_LIMIT)
 
         previousTime = currentTime
         previousError = currentError

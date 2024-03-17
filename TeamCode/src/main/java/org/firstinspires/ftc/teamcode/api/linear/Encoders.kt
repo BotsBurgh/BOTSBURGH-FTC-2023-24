@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.utils.MotorController
 import org.firstinspires.ftc.teamcode.utils.MotorControllerGroup
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
-import kotlin.math.min
 
 /**
  * An API for manipulating wheels using encoders.
@@ -41,6 +40,11 @@ object Encoders : API() {
      *
      * Due to current restrictions, [inches] cannot be a negative number.
      */
+    @Deprecated(
+        message = "driveTo is slower than driveTo2",
+        replaceWith = ReplaceWith("Encoders.driveTo2(direction, inches)"),
+        level = DeprecationLevel.WARNING,
+    )
     fun driveTo(
         direction: Direction,
         inches: Double,
@@ -104,6 +108,11 @@ object Encoders : API() {
      * Unlike [driveTo], [degrees] can be a negative or positive number. Positive moves the robot
      * **counter-clockwise**, negative moves the robot **clockwise**.
      */
+    @Deprecated(
+        message = "spinTo is slower than spinTo2",
+        replaceWith = ReplaceWith("Encoders.spinTo2(degrees)"),
+        level = DeprecationLevel.WARNING,
+    )
     fun spinTo(degrees: Double) {
         TriWheels.stopAndResetMotors()
 

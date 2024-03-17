@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.utils.APIDependencies
 import org.firstinspires.ftc.teamcode.utils.Resettable
 
@@ -52,14 +51,6 @@ abstract class API {
 
             return this.opMode as LinearOpMode
         }
-
-    @Deprecated(
-        message = "Accessing the hardwareMap indirectly is not supported.",
-        replaceWith = ReplaceWith("this.opMode.hardwareMap"),
-        level = DeprecationLevel.ERROR,
-    )
-    protected val hardwareMap: HardwareMap
-        get() = this.opMode.hardwareMap
 
     /**
      * Specifies whether this API requires a [LinearOpMode] to function.

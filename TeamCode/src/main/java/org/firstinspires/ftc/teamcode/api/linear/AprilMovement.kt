@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.api.API
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision
+import org.firstinspires.ftc.teamcode.api.vision.Vision
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -107,15 +108,12 @@ object AprilMovement : API() {
             val magnitude = sqrt(range * range + strafe * strafe)
 
             // Set the power of the wheels
-            TriWheels.driveWithRotation(radians, magnitude, heading)
-
-            // Sleep for 0.1s before repeating again
-            sleep(100)
+            TriWheels.drive(radians, magnitude, rotation = heading)
         }
 
         // Stop the wheels from moving, the target has been reached!
         TriWheels.stop()
     }
 
-    override fun dependencies() = setOf(TriWheels, AprilVision)
+    override fun dependencies() = setOf(TriWheels, AprilVision, Vision)
 }

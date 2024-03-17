@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.api.PixelPlacer
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
-import org.firstinspires.ftc.teamcode.utils.opModeSleep
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -23,10 +22,6 @@ class TeleOpMain : OpMode() {
         Hook.init(this)
         Drone.init(this)
         PixelPlacer.init(this)
-
-        PixelPlacer.place()
-        opModeSleep(this)(500)
-        PixelPlacer.reset()
 
         // Log that we are initialized
         Telemetry.sayInitialized()
@@ -70,6 +65,12 @@ class TeleOpMain : OpMode() {
             telemetry.addData("Hook", "Not hanging")
         }
 
+        if (gamepad.dpad_up) {
+            PixelPlacer.place()
+        } else if (gamepad.dpad_down) {
+            PixelPlacer.reset()
+        }
+
         if (gamepad.x && gamepad.y) {
             Drone.release()
         } else if (gamepad.y) {
@@ -77,10 +78,10 @@ class TeleOpMain : OpMode() {
         }
 
         // movement of all wheels
-        TriWheels.driveWithRotation(
+        TriWheels.drive(
             joyRadians,
             joyMagnitude * RobotConfig.TeleOpMain.DRIVE_SPEED,
-            rotationPower * RobotConfig.TeleOpMain.ROTATE_SPEED,
+            rotation = rotationPower * RobotConfig.TeleOpMain.ROTATE_SPEED,
         )
 
         // Log that we are running

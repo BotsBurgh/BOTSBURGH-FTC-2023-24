@@ -33,9 +33,6 @@ object CubeVision : API(), VisionAPI {
 
     private lateinit var cubeProcessor: CubeProcessor
 
-    /**
-     * Same as [API.init], but allows specifying which [cubeColor] the processor will be scanning for.
-     */
     fun init(
         opMode: OpMode,
         cubeColor: Team,
@@ -51,7 +48,7 @@ object CubeVision : API(), VisionAPI {
     @Deprecated(
         message = "Please initialize CubeVision with cubeColor.",
         replaceWith = ReplaceWith("CubeVision.init(this, cubeColor)"),
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
     )
     override fun init(opMode: OpMode) {
     }
@@ -74,12 +71,13 @@ object CubeVision : API(), VisionAPI {
         private lateinit var regionCenter: Mat
         private lateinit var regionRight: Mat
 
-        private val colorWeight: Scalar
-            get() =
-                when (this.cubeColor) {
-                    Team.Red -> RobotConfig.CubeVision.RED_WEIGHT
-                    Team.Blue -> RobotConfig.CubeVision.BLUE_WEIGHT
-                }
+        private val white = Scalar(255.0, 255.0, 255.0, 255.0)
+
+        private val colorWeight =
+            when (this.cubeColor) {
+                Team.Red -> RobotConfig.CubeVision.RED_WEIGHT
+                Team.Blue -> RobotConfig.CubeVision.BLUE_WEIGHT
+            }
 
         override fun init(
             width: Int,
@@ -112,12 +110,14 @@ object CubeVision : API(), VisionAPI {
             val scoreCenter = Core.mean(this.regionCenter).mul(colorWeight).sumRGB()
             val scoreRight = Core.mean(this.regionRight).mul(colorWeight).sumRGB()
 
-            // Possible data-race, commenting out
             /*
+            // Possible data-race, commenting out
+
             with(t) {
                 addData("Score Left", scoreLeft)
                 addData("Score Center", scoreCenter)
                 addData("Score Right", scoreRight)
+                update()
             }
              */
 
@@ -132,17 +132,17 @@ object CubeVision : API(), VisionAPI {
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.LEFT_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0),
+                white,
             )
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.CENTER_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0),
+                white,
             )
             Imgproc.rectangle(
                 frame,
                 RobotConfig.CubeVision.RIGHT_REGION,
-                Scalar(255.0, 255.0, 255.0, 255.0),
+                white,
             )
 
             // This return value is passed to [onDrawFrame].
@@ -162,14 +162,6 @@ object CubeVision : API(), VisionAPI {
         private fun Scalar.sumRGB(): Double = this.`val`.sum()
 
         private operator fun Rect.times(rhs: Int): Rect = Rect(this.x * rhs, this.y * rhs, this.width * rhs, this.height * rhs)
-
-        private fun Rect.toAndroidRect(): android.graphics.Rect =
-            android.graphics.Rect(
-                this.x,
-                this.y,
-                this.x + this.width,
-                this.y + this.height,
-            )
     }
 
     /**

@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.api.vision.AprilVision
 import org.firstinspires.ftc.teamcode.api.vision.AprilVision.optimizeForAprilTags
 import org.firstinspires.ftc.teamcode.api.vision.CubeVision
 import org.firstinspires.ftc.teamcode.api.vision.Vision
-import org.firstinspires.ftc.teamcode.utils.auto.Position
 import org.firstinspires.ftc.teamcode.utils.RobotConfig
 import org.firstinspires.ftc.teamcode.utils.auto.Park
+import org.firstinspires.ftc.teamcode.utils.auto.Position
 import org.firstinspires.ftc.teamcode.utils.auto.Team
 import org.firstinspires.ftc.teamcode.utils.auto.Truss
 import kotlin.math.PI
@@ -36,8 +36,6 @@ abstract class AutoMain : LinearOpMode() {
     private val tileSize = 24.0
 
     private var backOffset = 0.0
-
-
 
     override fun runOpMode() {
         Telemetry.init(this)
@@ -350,7 +348,7 @@ abstract class AutoMain : LinearOpMode() {
 
         // Drive to april tag
         Vision.optimizeForAprilTags()
-        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 5.0)
+        AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 4.0)
         Vision.close()
 
         //Move right slightly
@@ -358,7 +356,7 @@ abstract class AutoMain : LinearOpMode() {
 
         // Slam against backboard, getting as close as possible
         TriWheels.drive(PI / 2.0, 0.4)
-        sleep(1000)
+        sleep(500)
         TriWheels.stop()
 
         // Place pixel
@@ -440,12 +438,12 @@ abstract class AutoMain : LinearOpMode() {
     }
 }
 
-@Autonomous(name = "AutoMain - Red")
+@Autonomous(name = "AutoMain - Red", group = "AutoMain")
 class AutoMainRed : AutoMain() {
     override val team = Team.Red
 }
 
-@Autonomous(name = "AutoMain - Blue")
+@Autonomous(name = "AutoMain - Blue", group = "AutoMain")
 class AutoMainBlue : AutoMain() {
     override val team = Team.Blue
 }

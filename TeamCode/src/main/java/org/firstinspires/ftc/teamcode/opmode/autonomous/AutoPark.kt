@@ -5,16 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.Telemetry
 import org.firstinspires.ftc.teamcode.api.TriWheels
 import org.firstinspires.ftc.teamcode.api.linear.Encoders
-import org.firstinspires.ftc.teamcode.utils.RobotConfig
 
-@Autonomous(name = "Auto Forward")
-class AutoForward : LinearOpMode() {
-    private val forward =
-        when (RobotConfig.model) {
-            RobotConfig.Model.MiniRobot -> Encoders.Direction.Red
-            RobotConfig.Model.RobotA -> Encoders.Direction.Green
-            RobotConfig.Model.RobotB -> Encoders.Direction.Red
-        }
+@Autonomous(name = "AutoPark")
+class AutoPark : LinearOpMode() {
+    private val forward = Encoders.Direction.Red
 
     override fun runOpMode() {
         Telemetry.init(this)
@@ -27,16 +21,9 @@ class AutoForward : LinearOpMode() {
 
         Telemetry.sayStarted()
 
-        Encoders.driveTo(
+        Encoders.driveTo2(
             forward,
             42.0,
-        )
-
-        sleep(1000)
-
-        Encoders.driveTo(
-            forward,
-            -4.0,
         )
     }
 }
