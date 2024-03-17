@@ -55,7 +55,7 @@ object AprilMovement : API() {
             val tag = AprilVision.detect(tagId)
 
             // Stop if runtime is more than 7 seconds
-            if (System.currentTimeMillis() - time >11000) {
+            if (System.currentTimeMillis() - time > 11000) {
                 break
             }
 
@@ -69,9 +69,7 @@ object AprilMovement : API() {
                     update()
                 }
 
-
                 sleep(100)
-
 
                 continue
             }

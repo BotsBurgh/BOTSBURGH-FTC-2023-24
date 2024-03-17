@@ -57,11 +57,12 @@ object Encoders : API() {
         val leftTarget = left.currentPosition + ticks
         val rightTarget = right.currentPosition + ticks
 
-        val d: Int = if (inches > 0) {
-            1
-        } else {
-            -1
-        }
+        val d: Int =
+            if (inches > 0) {
+                1
+            } else {
+                -1
+            }
 
         // Set left direction to reverse, undoing it at the end even if an exception is thrown
         try {
@@ -76,7 +77,6 @@ object Encoders : API() {
             ) {
                 left.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
                 right.power = RobotConfig.Encoders.MAX_DRIVE_SPEED * d
-
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Driving")
@@ -140,9 +140,8 @@ object Encoders : API() {
                 val timeSpeed = runtime.seconds() * RobotConfig.Encoders.TIME_GAIN
 
                 TriWheels.rotate(
-                        RobotConfig.Encoders.MAX_SPIN_SPEED,
-                    )
-
+                    RobotConfig.Encoders.MAX_SPIN_SPEED,
+                )
 
                 with(linearOpMode.telemetry) {
                     addData("Status", "Encoder Rotating")
@@ -176,7 +175,7 @@ object Encoders : API() {
      */
     fun strafeTo(
         direction: Direction,
-        inches: Double
+        inches: Double,
     ) {
         TriWheels.stopAndResetMotors()
 
@@ -198,7 +197,6 @@ object Encoders : API() {
                 right.power = 0.09 * d
                 back.power = -0.18 * d
             }
-
         }
         TriWheels.stopAndResetMotors()
     }

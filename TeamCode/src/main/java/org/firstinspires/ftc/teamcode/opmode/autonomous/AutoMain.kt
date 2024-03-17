@@ -64,15 +64,14 @@ abstract class AutoMain : LinearOpMode() {
             telemetry.addData("Wait Back", sleepBack)
             telemetry.addData("Wait Front", sleepFront)
 
-
-            //change starting position using a/b
+            // change starting position using a/b
             if (gamepad1.a) {
                 position = Position.Front
             } else if (gamepad1.b) {
                 position = Position.Back
             }
 
-            //change parking position with dpad
+            // change parking position with dpad
             if (gamepad1.dpad_left) {
                 park = Park.Left
             } else if (gamepad1.dpad_up) {
@@ -81,21 +80,21 @@ abstract class AutoMain : LinearOpMode() {
                 park = Park.Right
             }
 
-            //change truss to drive through with x/y
+            // change truss to drive through with x/y
             if (gamepad1.x) {
                 truss = Truss.Small
             } else if (gamepad1.y) {
                 truss = Truss.Big
             }
 
-            //changes sleepBack
+            // changes sleepBack
             if (gamepad1.left_bumper) {
                 sleepBack = true
             } else if (gamepad1.left_trigger > 0) {
                 sleepBack = false
             }
 
-            //changes sleepFront
+            // changes sleepFront
             if (gamepad1.right_bumper) {
                 sleepFront = true
             } else if (gamepad1.right_trigger > 0) {
@@ -122,18 +121,18 @@ abstract class AutoMain : LinearOpMode() {
                     Position.Back -> {
                         when (team) {
                             Team.Red -> {
-                                //Back Stage Red Left
+                                // Back Stage Red Left
                                 Hook.moveHook(0.5)
                                 sleep(400)
                                 Hook.stop()
                                 Encoders.driveTo2(forward, tiles(1) + 4.0)
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo2(pickTeam(-90.0, 90.0))
                                 Encoders.driveTo(forward, 10.0)
                                 Hook.moveHook(-0.5)
                                 sleep(400)
                                 Hook.stop()
-                                //back up and face backdrop
+                                // back up and face backdrop
                                 checkSleep(sleepBack)
                                 Encoders.driveTo2(forward, tiles(-1))
                                 sleep(250)
@@ -141,13 +140,13 @@ abstract class AutoMain : LinearOpMode() {
                             }
 
                             Team.Blue -> {
-                                //Back Stage Blue Left
+                                // Back Stage Blue Left
 
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 Hook.moveHook(0.5)
                                 sleep(400)
                                 Hook.stop()
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo2(-90.0)
                                 Encoders.driveTo(forward, 13.0)
                                 Encoders.driveTo(forward, -3.0)
@@ -169,13 +168,13 @@ abstract class AutoMain : LinearOpMode() {
                     Position.Front -> {
                         when (team) {
                             Team.Red -> {
-                                //Front Stage Red Left
+                                // Front Stage Red Left
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
-                                //turn towards pike
+                                // turn towards pike
                                 Encoders.spinTo2(pickTeam(-95.0, 95.0))
                                 Encoders.driveTo(forward, 10.0)
                                 checkSleep(sleepFront)
-                                //back up and face backdrop
+                                // back up and face backdrop
                                 Encoders.strafeTo(pickTruss(right, left), pickTruss(12.0, 12.0))
                                 sleep(250)
                                 Encoders.driveTo(forward, -tiles(3))
@@ -187,9 +186,9 @@ abstract class AutoMain : LinearOpMode() {
                             }
 
                             Team.Blue -> {
-                                //Front Stage Blue Left
+                                // Front Stage Blue Left
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo(-90.0)
                                 Encoders.driveTo(forward, 11.0)
                                 Encoders.driveTo(forward, -3.0)
@@ -209,7 +208,7 @@ abstract class AutoMain : LinearOpMode() {
             CubeVision.CubePlacement.Center -> {
                 backOffset = pickPark(8.0, 0.0, 8.0)
 
-                //Encoders.spinTo(pickTeam(8.0, 10.0))
+                // Encoders.spinTo(pickTeam(8.0, 10.0))
                 sleep(100)
                 Encoders.driveTo2(forward, tiles(1.6))
                 Encoders.driveTo(forward, -7.0)
@@ -218,13 +217,13 @@ abstract class AutoMain : LinearOpMode() {
 
                 when (position) {
                     Position.Back -> {
-                        //Back Stage movement
+                        // Back Stage movement
                         checkSleep(sleepBack)
                         Encoders.driveTo(forward, tiles(0.75))
                     }
 
                     Position.Front -> {
-                        //Front Stage movement
+                        // Front Stage movement
                         when (team) {
                             Team.Red -> {
                                 checkSleep(sleepFront)
@@ -240,7 +239,6 @@ abstract class AutoMain : LinearOpMode() {
                         }
                     }
                 }
-
             }
 
             CubeVision.CubePlacement.Right -> {
@@ -249,14 +247,14 @@ abstract class AutoMain : LinearOpMode() {
                     Position.Back -> {
                         when (team) {
                             Team.Red -> {
-                                //Back Stage Right Red
+                                // Back Stage Right Red
 
                                 Encoders.spinTo(10.0)
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 Hook.moveHook(0.5)
                                 sleep(400)
                                 Hook.stop()
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo2(90.0)
                                 Encoders.driveTo(forward, 8.0)
                                 Encoders.driveTo(forward, -3.0)
@@ -274,17 +272,17 @@ abstract class AutoMain : LinearOpMode() {
                             }
 
                             Team.Blue -> {
-                                //Back Stage Right Blue
+                                // Back Stage Right Blue
                                 Encoders.spinTo(7.0)
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
                                 Hook.moveHook(0.5)
                                 sleep(400)
                                 Hook.stop()
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo2(pickTeam(-95.0, 95.0))
                                 sleep(100)
                                 Encoders.driveTo(forward, 10.5)
-                                //back up and face backdrop
+                                // back up and face backdrop
                                 Encoders.driveTo(forward, -tiles(1))
                                 sleep(250)
                                 checkSleep(sleepBack)
@@ -300,10 +298,10 @@ abstract class AutoMain : LinearOpMode() {
                     Position.Front -> {
                         when (team) {
                             Team.Red -> {
-                                //Front Stage Right Red
+                                // Front Stage Right Red
                                 Encoders.spinTo(-10.0)
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
-                                //turn towards spike
+                                // turn towards spike
                                 Encoders.spinTo2(90.0)
                                 sleep(100)
                                 Encoders.driveTo(forward, 8.0)
@@ -318,9 +316,9 @@ abstract class AutoMain : LinearOpMode() {
                             }
 
                             Team.Blue -> {
-                                //Front Stage Right Blue
+                                // Front Stage Right Blue
                                 Encoders.driveTo2(forward, tiles(1) + 8.0)
-                                //turn towards pike
+                                // turn towards pike
                                 Encoders.spinTo2(pickTeam(-95.0, 90.0))
                                 Encoders.driveTo(forward, 4.0)
                                 Hook.moveHook(-0.5)
@@ -329,7 +327,7 @@ abstract class AutoMain : LinearOpMode() {
                                 Encoders.driveTo(forward, -6.0)
                                 Encoders.strafeTo(right, 2.0)
                                 checkSleep(sleepFront)
-                                //back up and face backdrop
+                                // back up and face backdrop
                                 Encoders.driveTo(forward, -tiles(3))
                                 sleep(250)
                                 Encoders.spinTo2(180.0)
@@ -345,14 +343,13 @@ abstract class AutoMain : LinearOpMode() {
         sleep(400)
         Hook.stop()
 
-
         // Drive to april tag
         Vision.optimizeForAprilTags()
         AprilMovement.driveTo(cubePosition.toInt() + pickTeam(3, 0), 4.0)
         Vision.close()
 
-        //Move right slightly
-        Encoders.strafeTo(right, 0.25 )
+        // Move right slightly
+        Encoders.strafeTo(right, 0.25)
 
         // Slam against backboard, getting as close as possible
         TriWheels.drive(PI / 2.0, 0.4)
@@ -369,11 +366,14 @@ abstract class AutoMain : LinearOpMode() {
         sleep(250)
 
         // Spin and park
-        Encoders.strafeTo(pickPark(left, left, right), pickPark(
-            12.0 + backOffset,
-            0.0,
-            12.0 + backOffset,
-        ))
+        Encoders.strafeTo(
+            pickPark(left, left, right),
+            pickPark(
+                12.0 + backOffset,
+                0.0,
+                12.0 + backOffset,
+            ),
+        )
         // Encoders.driveTo2(pickTeam(Encoders.Direction.Blue, Encoders.Direction.Green), tiles(0.3))
         Encoders.driveTo(forward, 3.0)
         // Put hook back in resting position
